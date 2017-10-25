@@ -12,7 +12,7 @@ import com.wt.piaoliuping.base.BaseActivity;
 import com.wt.piaoliuping.fragment.BottleFragment;
 import com.wt.piaoliuping.fragment.MessageFragment;
 import com.wt.piaoliuping.fragment.NearbyFragment;
-import com.wt.piaoliuping.fragment.SettingFragment;
+import com.wt.piaoliuping.fragment.MineFragment;
 import com.wt.piaoliuping.widgt.CustomViewPager;
 
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class HomeActivity extends BaseActivity {
             fragments.add(new MessageFragment());
             fragments.add(new BottleFragment());
             fragments.add(new NearbyFragment());
-            fragments.add(new SettingFragment());
+            fragments.add(new MineFragment());
         }
 
         @Override

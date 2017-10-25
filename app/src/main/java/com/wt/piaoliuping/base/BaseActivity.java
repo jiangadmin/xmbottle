@@ -31,6 +31,12 @@ public abstract class BaseActivity extends AppCompatActivity {
                 titleText = (TextView) findViewById(R.id.text_title);
                 backBtn = (ImageButton) findViewById(R.id.btn_back);
                 backBtn.setVisibility(View.VISIBLE);
+                backBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
             } catch (Exception e) {
 
             }

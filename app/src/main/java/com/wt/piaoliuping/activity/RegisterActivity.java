@@ -120,7 +120,7 @@ public class RegisterActivity extends BaseActivity {
             }, this);
         } else {
             Map<String, Object> map = new HashMap<>();
-            map.put("username", textTel.getText().toString());
+            map.put("telephone", textTel.getText().toString());
             map.put("verify_code", textCode.getText().toString());
             map.put("password", HaoUtility.encodeMD5String(textPassword.getText().toString()));
             HaoConnect.loadContent("user/reset_password", map, "post", new HaoResultHttpResponseHandler() {
