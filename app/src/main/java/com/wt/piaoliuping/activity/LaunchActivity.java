@@ -6,6 +6,7 @@ import android.os.Handler;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseActivity;
+import com.wt.piaoliuping.manager.UserManager;
 
 /**
  * Created by wangtao on 2017/10/18.
@@ -29,9 +30,15 @@ public class LaunchActivity extends BaseActivity implements Runnable {
 
     @Override
     public void run() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        if (UserManager.getInstance().isLogin()) {
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
         finish();
     }
 }

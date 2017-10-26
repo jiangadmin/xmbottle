@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wt.piaoliuping" >
+    package="com.wt.piaoliuping">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -15,9 +15,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/LaunchTheme" >
+        android:theme="@style/LaunchTheme">
 
-        <activity android:name=".activity.LaunchActivity" >
+        <activity android:name=".activity.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,20 +25,47 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.RegisterActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.HomeActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.WebActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.SettingActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.PointActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.WebActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PointActivity"
+            android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.WithdrewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.UserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FeedbackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ApplyVipActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MoreSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ChangePasswordActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

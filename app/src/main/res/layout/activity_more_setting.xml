@@ -9,7 +9,6 @@
 
     <LinearLayout
         android:id="@+id/layout_1"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/bolder_white_view_bg"
@@ -22,13 +21,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="个人资料" />
+            android:text="消息提示音" />
 
-        <ImageView
+        <CheckBox
+            android:id="@+id/checkbox_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_right" />
-
+            android:background="@drawable/check_bg"
+            android:button="@null" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,12 +45,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="关于我们" />
+            android:text="震动提示" />
 
-        <ImageView
+        <CheckBox
+            android:id="@+id/checkbox_shark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_right" />
+            android:background="@drawable/check_bg"
+            android:button="@null" />
 
     </LinearLayout>
 
@@ -68,7 +70,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="更多设置" />
+            android:text="反馈问题" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -76,6 +78,7 @@
             android:src="@drawable/arrow_right" />
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/layout_4"
         android:layout_width="match_parent"
@@ -90,7 +93,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="修改密码" />
+            android:text="申请成为高级会员" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -99,15 +102,11 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_logout"
+    <TextView
+        style="@style/text_14_999999"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/corner_red_bg"
-        android:text="退出登录"
-        android:textColor="@color/white" />
-
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="备注：消息提示音又关闭和开启的功能
+震动提示消息可以关闭和开启" />
 </LinearLayout>

@@ -60,6 +60,12 @@ public class HaoConnect {
      */
     public static void init(Context context) {
         Ctx = context;
+
+        if (Userid == null || Userid.equals("")) {
+            Userid = getString("userID");
+            Logintime = getString("loginTime");
+            Checkcode = getString("checkCode");
+        }
     }
 
     /**

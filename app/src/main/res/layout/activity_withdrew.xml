@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title" />
+
+    <TextView
+        android:id="@+id/text_star"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/layout_1"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bolder_white_view_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edit_money"
+            style="@style/text_14_222222"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:hint="请输入提现支付宝账户姓名"
+            android:paddingLeft="10dp"
+            android:textColorHint="@color/darKGrayColor" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bolder_white_view_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edit_account"
+            style="@style/text_14_222222"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:hint="请输入提现支付宝账户"
+            android:paddingLeft="10dp"
+            android:textColorHint="@color/darKGrayColor" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_charge"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/corner_red_bg"
+        android:text="提现"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:layout_marginTop="20dp"
+        style="@style/text_14_999999"
+        android:text="提现功能只有高级会员可以看到，用户自己在后台进行人工发放现金的方式"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

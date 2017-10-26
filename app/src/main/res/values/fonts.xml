@@ -10,6 +10,10 @@
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">#ffffff</item>
     </style>
+    <style name="text_14_ffffff">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
 
     <style name="text_12_555555">
         <item name="android:textSize">12sp</item>

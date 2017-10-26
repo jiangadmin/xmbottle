@@ -8,12 +8,14 @@ import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.haoxitech.HaoConnect.HaoUtility;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseActivity;
+import com.wt.piaoliuping.manager.UserManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -71,6 +73,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         HaoConnect.loadContent("user/login", map, "post", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
+                if (result.isResultsOK()) {
+                    Object authInfo = result.find("extraInfo>authInfo");
+                    HaoConnect.setCurrentUserInfo(((JsonObject) authInfo).get("Userid").getAsString(), ((JsonObject) authInfo).get("Logintime").getAsString(), ((JsonObject) authInfo).get("Checkcode").getAsString());
+
+                }
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(intent);
                 finish();
