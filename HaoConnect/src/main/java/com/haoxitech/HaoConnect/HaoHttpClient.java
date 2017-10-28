@@ -28,7 +28,7 @@ import cz.msebera.android.httpclient.ParseException;
  */
 public class HaoHttpClient {
 
-    private static AsyncHttpClient client = new AsyncHttpClient();
+    public static AsyncHttpClient client = new AsyncHttpClient();
 
     private static String tempCacheDictionary = "temp";
 

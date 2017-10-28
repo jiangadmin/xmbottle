@@ -20,7 +20,7 @@ public class QiniuConnect extends HaoConnect {
     */
     public static RequestHandle requestGetUploadTokenForQiniu(Map<String, Object> params,  HaoResultHttpResponseHandler response, Context context)
     {
-        return request("qiniu/getUploadTokenForQiniu", params, METHOD_POST, response, context);
+        return request("axapi/up_file", params, METHOD_POST, response, context);
     }
 
 

@@ -2,8 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_title"/>
+    <include layout="@layout/layout_title" />
+
+
+    <TextView
+        android:id="@+id/text_send"
+        android:layout_width="100dp"
+        android:layout_marginTop="100dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bolder_white_view_bg"
+        android:gravity="center"
+        android:text="扔一个" />
+
+    <TextView
+        android:id="@+id/text_received"
+        android:layout_width="100dp"
+        android:layout_marginTop="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bolder_white_view_bg"
+        android:gravity="center"
+        android:text="捡一个" />
 
 </LinearLayout>

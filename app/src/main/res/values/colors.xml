@@ -12,4 +12,5 @@
     <color name="redColor">#FF7D77</color>
     <color name="blueColor">#4D9DFF</color>
     <color name="transparent">#00ffffff</color>
+    <color name="textBlackColor">#4a4a4a</color>
 </resources>

@@ -8,6 +8,10 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -66,6 +70,33 @@
         <activity
             android:name=".activity.ChangePasswordActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NameListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SendBottleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ShowBottleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ShowUserActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.EditActivity"
+            android:screenOrientation="portrait" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.wt.piaoliuping.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>

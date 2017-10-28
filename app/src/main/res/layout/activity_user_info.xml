@@ -27,8 +27,15 @@
         <ImageView
             android:id="@+id/image_head"
             android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
             android:background="#eeeeee"
-            android:layout_height="50dp" />
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_right" />
 
     </LinearLayout>
 
@@ -47,6 +54,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="昵称" />
+
+        <TextView
+            android:id="@+id/text_name"
+            style="@style/text_14_999999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -71,6 +85,14 @@
             android:layout_weight="1"
             android:text="性别" />
 
+        <TextView
+            android:id="@+id/text_sex"
+            style="@style/text_14_999999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp" />
+
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,6 +116,14 @@
             android:layout_weight="1"
             android:text="所在城市" />
 
+        <TextView
+            android:id="@+id/text_city"
+            style="@style/text_14_999999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp" />
+
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -115,7 +145,78 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="生日" />
+
+        <TextView
+            android:id="@+id/text_birthday"
+            style="@style/text_14_999999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_right" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_6"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/bolder_white_view_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            style="@style/text_14_222222"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="星座" />
+
+        <TextView
+            android:id="@+id/text_star"
+            style="@style/text_14_999999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_right" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layout_7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bolder_white_view_bg"
+        android:gravity="center_vertical"
+        android:minHeight="45dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            style="@style/text_14_222222"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="个性签名" />
+
+        <TextView
+            android:id="@+id/text_sign"
+            style="@style/text_14_999999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:maxWidth="180dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -133,6 +234,7 @@
         android:layout_marginTop="80dp"
         android:background="@drawable/corner_red_bg"
         android:text="提交"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:visibility="gone" />
 
 </LinearLayout>

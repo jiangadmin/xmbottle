@@ -10,6 +10,8 @@ import com.loopj.android.http.RequestHandle;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -180,6 +182,38 @@ public class HaoConnect {
             }
         }
         return HaoHttpClient.loadContent("http://" + HaoConfig.getApiHost() + "/" + urlParam, requestParams, method, getSecretHeaders(params, urlParam), resonpse, context);
+    }
+
+    public static RequestHandle loadImageContent(String urlParam, List<File> files, String method, TextHttpResponseHandler resonpse, Context context) {
+
+        if (Ctx == null) {
+            Toast.makeText(context, "请先初始化HaoConnect,在程序开始的地方调用init()方法", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+        RequestParams requestParams = new RequestParams();
+        try {
+            for (File file : files) {
+                requestParams.put("file", file);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return HaoHttpClient.loadContent("http://" + HaoConfig.getApiHost() + "/" + urlParam, requestParams, method, getSecretHeaders(null, urlParam), resonpse, context);
+    }
+
+    public static RequestHandle loadImageContent(String urlParam, File file, String method, TextHttpResponseHandler resonpse, Context context) {
+
+        if (Ctx == null) {
+            Toast.makeText(context, "请先初始化HaoConnect,在程序开始的地方调用init()方法", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+        RequestParams requestParams = new RequestParams();
+        try {
+            requestParams.put("file", file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return HaoHttpClient.loadContent("http://" + HaoConfig.getApiHost() + "/" + urlParam, requestParams, method, getSecretHeaders(null, urlParam), resonpse, context);
     }
 
     public static RequestHandle loadJson(String urlParam, Map<String, Object> params, String method, JsonHttpResponseHandler response, Context context) {

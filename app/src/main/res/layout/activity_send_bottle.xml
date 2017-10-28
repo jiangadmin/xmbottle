@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title"/>
+
+    <EditText
+        android:id="@+id/text_content"
+        android:layout_margin="10dp"
+        android:hint="说点什么吧..."
+        android:textColorHint="@color/darKGrayColor"
+        style="@style/text_14_222222"
+        android:gravity="top"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/bolder_white_view_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/text_rand"
+            android:text="随机生成内容"
+            android:gravity="center"
+            style="@style/text_14_999999"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/corner_big_white_bg"
+            android:layout_width="100dp"
+            android:layout_height="30dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_send"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/corner_red_bg"
+        android:text="扔出去"
+        android:textColor="@color/white" />
+</LinearLayout>
