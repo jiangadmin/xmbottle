@@ -71,7 +71,7 @@
             android:name=".activity.ChangePasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.NameListActivity"
+            android:name=".activity.RevokeListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SendBottleActivity"
@@ -87,6 +87,14 @@
             android:name=".activity.EditActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.FriendListActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.SearchUserActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.FollowListActivity"
+            android:screenOrientation="portrait"/>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.wt.piaoliuping.provider"
@@ -96,6 +104,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
 
     </application>
 

@@ -1,11 +1,8 @@
 package com.wt.piaoliuping.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,18 +12,13 @@ import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wt.piaoliuping.R;
-import com.wt.piaoliuping.activity.NameListActivity;
+import com.wt.piaoliuping.activity.RevokeListActivity;
 import com.wt.piaoliuping.activity.PointActivity;
 import com.wt.piaoliuping.activity.SettingActivity;
-import com.wt.piaoliuping.activity.WithdrewActivity;
 import com.wt.piaoliuping.base.PageFragment;
 
-import java.util.HashMap;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * Created by wangtao on 2017/10/25.
@@ -72,13 +64,12 @@ public class MineFragment extends PageFragment {
             case R.id.image_head:
                 break;
             case R.id.layout_1:
-                startActivity(new Intent(getActivity(), PointActivity.class));
                 break;
             case R.id.layout_2:
-                startActivity(new Intent(getActivity(), NameListActivity.class));
+                startActivity(new Intent(getActivity(), RevokeListActivity.class));
                 break;
             case R.id.layout_3:
-                startActivity(new Intent(getActivity(), WithdrewActivity.class));
+                startActivity(new Intent(getActivity(), PointActivity.class));
                 break;
             case R.id.layout_4:
                 break;

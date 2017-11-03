@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseActivity;
 
@@ -76,6 +77,15 @@ public class ShowUserActivity extends BaseActivity {
                 textAge.setText(result.findAsString("age"));
                 textStar.setText(result.findAsString("constellation"));
                 textSign.setText(result.findAsString("declaration"));
+                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead);
+                int userFriendType = result.findAsInt("userFriendType");
+                if (userFriendType == 0) {
+                    isFriend = false;
+                    textAddFriend.setText("关注");
+                } else {
+                    isFriend = true;
+                    textAddFriend.setText("已关注");
+                }
             }
 
             @Override

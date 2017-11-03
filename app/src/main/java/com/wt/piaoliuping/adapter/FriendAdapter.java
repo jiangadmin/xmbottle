@@ -18,9 +18,9 @@ import butterknife.ButterKnife;
  * Created by wangtao on 2017/10/26.
  */
 
-public class NameAdapter extends BaseItemAdapter {
+public class FriendAdapter extends BaseItemAdapter {
 
-    public NameAdapter(Context context) {
+    public FriendAdapter(Context context) {
         super(context);
     }
 

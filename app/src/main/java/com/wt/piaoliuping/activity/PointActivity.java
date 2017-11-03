@@ -1,5 +1,6 @@
 package com.wt.piaoliuping.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -56,6 +57,7 @@ public class PointActivity extends BaseActivity {
             case R.id.btn_charge:
                 break;
             case R.id.btn_withdrew:
+                startActivity(new Intent(this, WithdrewActivity.class));
                 break;
         }
     }

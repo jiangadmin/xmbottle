@@ -420,7 +420,6 @@ public class UserInfoActivity extends BaseActivity {
                 } catch (Exception e) {
 
                 }
-                ImageLoader.getInstance().displayImage(result.findAsString("avatar"), imageHead);
             }
         }, this);
     }

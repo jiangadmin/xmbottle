@@ -18,9 +18,9 @@ import butterknife.ButterKnife;
  * Created by wangtao on 2017/10/26.
  */
 
-public class NameAdapter extends BaseItemAdapter {
+public class FollowAdapter extends BaseItemAdapter {
 
-    public NameAdapter(Context context) {
+    public FollowAdapter(Context context) {
         super(context);
     }
 
@@ -38,6 +38,12 @@ public class NameAdapter extends BaseItemAdapter {
         ImageLoader.getInstance().displayImage(result.findAsString("toUserLocal>avatarPreView"), holder.itemImage);
         holder.textName.setText(result.findAsString("toUserLocal>nickname"));
         holder.textDesc.setText(result.findAsString("toUserLocal>declaration"));
+        int type = result.findAsInt("type");
+        if (type == 1) {
+            holder.textTime.setText("已关注");
+        } else {
+            holder.textTime.setText("互相关注");
+        }
         return convertView;
     }
 

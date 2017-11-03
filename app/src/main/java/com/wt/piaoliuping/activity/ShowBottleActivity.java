@@ -72,7 +72,7 @@ public class ShowBottleActivity extends BaseActivity {
         HaoConnect.loadContent("user_get_bottle/detail", map, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                ImageLoader.getInstance().displayImage(result.findAsString("throwUserLocal>avatar"), imageHead);
+                ImageLoader.getInstance().displayImage(result.findAsString("throwUserLocal>avatarPreView"), imageHead);
                 String[] area = result.findAsString("throwUserLocal>areaLabel").split("-");
                 String city = "";
                 if (area.length > 0) {
