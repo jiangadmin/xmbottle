@@ -12,6 +12,23 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <!-- 环信 Required -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -21,7 +38,7 @@
         android:supportsRtl="true"
         android:theme="@style/LaunchTheme">
 
-        <activity android:name=".activity.LaunchActivity">
+        <activity android:name=".activity.LaunchTitleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,70 +47,79 @@
         </activity>
 
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.LoginTitleActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name=".activity.RegisterTitleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.HomeActivity"
+            android:name=".activity.HomeTitleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.WebActivity"
+            android:name=".activity.WebTitleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SettingActivity"
+            android:name=".activity.SettingTitleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.PointActivity"
+            android:name=".activity.PointTitleActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.WithdrewActivity"
+            android:name=".activity.WithdrewTitleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.UserInfoActivity"
+            android:name=".activity.UserInfoTitleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.FeedbackActivity"
+            android:name=".activity.FeedbackTitleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ApplyVipActivity"
+            android:name=".activity.ApplyVipTitleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.AboutActivity"
+            android:name=".activity.AboutTitleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.MoreSettingActivity"
+            android:name=".activity.MoreSettingTitleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ChangePasswordActivity"
+            android:name=".activity.ChangePasswordTitleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.RevokeListActivity"
+            android:name=".activity.RevokeListTitleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SendBottleActivity"
+            android:name=".activity.SendBottleTitleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ShowBottleActivity"
+            android:name=".activity.ShowBottleTitleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ShowUserActivity"
+            android:name=".activity.ShowUserTitleActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.EditActivity"
+            android:name=".activity.EditTitleActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.FriendListActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.FriendListTitleActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.SearchUserActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.FollowListActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.SearchUserTitleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FollowListTitleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NearbyTitleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ChatTitleActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -105,7 +131,30 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-
+        <!-- 设置环信应用的AppKey -->
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="1175171019178944#comxmbottle" />
+        <!-- 声明SDK所需的service SDK核心功能-->
+        <service
+            android:name="com.hyphenate.chat.EMChatService"
+            android:exported="true" />
+        <service
+            android:name="com.hyphenate.chat.EMJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />-->
+        <!-- 声明SDK所需的receiver -->
+        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+            <!-- 可选filter -->
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

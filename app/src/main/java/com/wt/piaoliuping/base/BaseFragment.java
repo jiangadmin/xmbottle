@@ -67,4 +67,9 @@ public abstract class BaseFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }

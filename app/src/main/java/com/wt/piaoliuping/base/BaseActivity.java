@@ -18,47 +18,12 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private TextView titleText;
-    private ImageButton backBtn;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewID());
         ButterKnife.bind(this);
-        if (titleText == null) {
-            try {
-                titleText = (TextView) findViewById(R.id.text_title);
-                backBtn = (ImageButton) findViewById(R.id.btn_back);
-                backBtn.setVisibility(View.VISIBLE);
-                backBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                    }
-                });
-            } catch (Exception e) {
-
-            }
-        }
         initView();
-    }
-
-    public void setTitle(final String title) {
-        if (titleText != null) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    titleText.setText(title);
-                }
-            });
-        }
-    }
-
-    public void hideBackBtn() {
-        if (backBtn != null) {
-            backBtn.setVisibility(View.GONE);
-        }
     }
 
     public void showToast(String msg) {

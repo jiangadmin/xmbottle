@@ -3,10 +3,18 @@ package com.wt.piaoliuping;
 import android.app.Application;
 import android.graphics.Bitmap;
 
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMOptions;
+import com.hyphenate.easeui.controller.EaseUI;
+import com.hyphenate.exceptions.HyphenateException;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.wt.piaoliuping.database.DataBaseHelper;
+
+import java.io.IOException;
 
 /**
  * Created by wangtao on 2017/10/20.
@@ -19,6 +27,8 @@ public class App extends Application {
         super.onCreate();
 
         initImageLoader();
+        initDataBase();
+        initHX();
     }
 
     /**
@@ -51,4 +61,18 @@ public class App extends Application {
         ImageLoader.getInstance().init(config); // 初始化
     }
 
+
+    private void initDataBase() {
+        try {
+            DataBaseHelper.copyDataBase(this, "zipArea.db");
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    private void initHX() {
+        EMOptions options = new EMOptions();
+        EaseUI.getInstance().init(this, options);
+
+    }
 }

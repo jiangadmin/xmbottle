@@ -1,31 +1,22 @@
 package com.wt.piaoliuping.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.JsonObject;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
-import com.haoxitech.HaoConnect.HaoUtility;
 import com.wt.piaoliuping.R;
-import com.wt.piaoliuping.activity.HomeActivity;
-import com.wt.piaoliuping.activity.LoginActivity;
-import com.wt.piaoliuping.activity.SendBottleActivity;
-import com.wt.piaoliuping.activity.ShowBottleActivity;
+import com.wt.piaoliuping.activity.SendBottleTitleActivity;
+import com.wt.piaoliuping.activity.ShowBottleTitleActivity;
 import com.wt.piaoliuping.base.PageFragment;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * Created by wangtao on 2017/10/25.
@@ -50,7 +41,7 @@ public class BottleFragment extends PageFragment {
 
     @OnClick(R.id.text_send)
     public void onTextSendClicked() {
-        startActivity(new Intent(getActivity(), SendBottleActivity.class));
+        startActivity(new Intent(getActivity(), SendBottleTitleActivity.class));
     }
 
     @OnClick(R.id.text_received)
@@ -60,7 +51,7 @@ public class BottleFragment extends PageFragment {
         HaoConnect.loadContent("bottle_message/get", map, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                Intent intent = new Intent(getActivity(), ShowBottleActivity.class);
+                Intent intent = new Intent(getActivity(), ShowBottleTitleActivity.class);
                 intent.putExtra("msgId", result.findAsString("id"));
                 startActivity(intent);
             }

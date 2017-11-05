@@ -10,12 +10,14 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
+        android:background="@drawable/bolder_white_view_bg"
         android:paddingRight="10dp">
 
         <ImageView
             android:id="@+id/item_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:scaleType="centerCrop"
             android:layout_centerVertical="true" />
 
         <LinearLayout
@@ -29,13 +31,14 @@
 
             <TextView
                 android:id="@+id/text_name"
-                style="@style/text_14_222222"
+                style="@style/text_16_222222"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/text_desc"
                 style="@style/text_14_999999"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

@@ -27,7 +27,7 @@ public class FriendAdapter extends BaseItemAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        if (convertView != null)  {
+        if (convertView == null)  {
             convertView = LayoutInflater.from(context).inflate(R.layout.adapter_name, null);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);

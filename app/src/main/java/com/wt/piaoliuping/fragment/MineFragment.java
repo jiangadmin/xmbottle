@@ -12,9 +12,10 @@ import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wt.piaoliuping.R;
-import com.wt.piaoliuping.activity.RevokeListActivity;
-import com.wt.piaoliuping.activity.PointActivity;
-import com.wt.piaoliuping.activity.SettingActivity;
+import com.wt.piaoliuping.activity.FollowListTitleActivity;
+import com.wt.piaoliuping.activity.RevokeListTitleActivity;
+import com.wt.piaoliuping.activity.PointTitleActivity;
+import com.wt.piaoliuping.activity.SettingTitleActivity;
 import com.wt.piaoliuping.base.PageFragment;
 
 import butterknife.BindView;
@@ -64,12 +65,13 @@ public class MineFragment extends PageFragment {
             case R.id.image_head:
                 break;
             case R.id.layout_1:
+                startActivity(new Intent(getActivity(), FollowListTitleActivity.class));
                 break;
             case R.id.layout_2:
-                startActivity(new Intent(getActivity(), RevokeListActivity.class));
+                startActivity(new Intent(getActivity(), RevokeListTitleActivity.class));
                 break;
             case R.id.layout_3:
-                startActivity(new Intent(getActivity(), PointActivity.class));
+                startActivity(new Intent(getActivity(), PointTitleActivity.class));
                 break;
             case R.id.layout_4:
                 break;
@@ -80,7 +82,7 @@ public class MineFragment extends PageFragment {
             case R.id.layout_7:
                 break;
             case R.id.layout_8:
-                startActivity(new Intent(getActivity(), SettingActivity.class));
+                startActivity(new Intent(getActivity(), SettingTitleActivity.class));
                 break;
         }
     }

@@ -1,20 +1,17 @@
 package com.wt.piaoliuping.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.wt.piaoliuping.R;
-import com.wt.piaoliuping.activity.FriendListActivity;
+import com.wt.piaoliuping.activity.FriendListTitleActivity;
+import com.wt.piaoliuping.activity.NearbyTitleActivity;
+import com.wt.piaoliuping.activity.SearchUserTitleActivity;
 import com.wt.piaoliuping.base.PageFragment;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * Created by wangtao on 2017/10/25.
@@ -44,11 +41,13 @@ public class NearbyFragment extends PageFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layout_1:
+                startActivity(new Intent(getActivity(), NearbyTitleActivity.class));
                 break;
             case R.id.layout_2:
+                startActivity(new Intent(getActivity(), SearchUserTitleActivity.class));
                 break;
             case R.id.layout_3:
-                startActivity(new Intent(getActivity(), FriendListActivity.class));
+                startActivity(new Intent(getActivity(), FriendListTitleActivity.class));
                 break;
         }
     }
