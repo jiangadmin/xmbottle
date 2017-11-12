@@ -8,7 +8,7 @@ import com.wt.piaoliuping.base.BaseActivity;
  * Created by wangtao on 2017/11/5.
  */
 
-public class ChatTitleActivity extends BaseActivity {
+public class ChatActivity extends BaseActivity {
     @Override
     public void initView() {
 

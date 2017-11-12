@@ -22,7 +22,6 @@ public class App extends Application {
 
     public static App app;
     public String userName;
-    public String userId;
 
     @Override
     public void onCreate() {
@@ -95,6 +94,5 @@ public class App extends Application {
         options.allowChatroomOwnerLeave(true);
 
         EaseUI.getInstance().init(this, options);
-
     }
 }

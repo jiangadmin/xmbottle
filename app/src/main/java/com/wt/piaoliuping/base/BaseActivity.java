@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wt.piaoliuping.R;
+import com.wt.piaoliuping.widgt.CustomProgressDialog;
 
 import butterknife.ButterKnife;
 
@@ -18,9 +19,12 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+    public CustomProgressDialog customProgressDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        customProgressDialog = new CustomProgressDialog(this);
         setContentView(getContentViewID());
         ButterKnife.bind(this);
         initView();
@@ -33,4 +37,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract void initView();
 
     public abstract int getContentViewID();
+
+    public void startLoading() {
+        customProgressDialog.startProgressDialog();
+    }
+
+    public void stopLoading() {
+        customProgressDialog.stopProgressDialog();
+    }
 }

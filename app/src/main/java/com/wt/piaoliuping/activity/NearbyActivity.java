@@ -10,7 +10,7 @@ import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.wt.piaoliuping.R;
-import com.wt.piaoliuping.adapter.FollowAdapter;
+import com.wt.piaoliuping.adapter.NearbyAdapter;
 import com.wt.piaoliuping.base.BaseTitleActivity;
 
 import java.util.ArrayList;
@@ -23,18 +23,18 @@ import butterknife.BindView;
  * Created by wangtao on 2017/11/3.
  */
 
-public class FollowListTitleActivity extends BaseTitleActivity implements AdapterView.OnItemClickListener {
+public class NearbyActivity extends BaseTitleActivity implements AdapterView.OnItemClickListener {
     @BindView(R.id.list_view)
     PullToRefreshListView listView;
 
-    FollowAdapter friendAdapter;
+    NearbyAdapter nearbyAdapter;
 
     @Override
     public void initView() {
 
-        setTitle("关注");
-        friendAdapter = new FollowAdapter(this);
-        listView.setAdapter(friendAdapter);
+        setTitle("附近的人");
+        nearbyAdapter = new NearbyAdapter(this);
+        listView.setAdapter(nearbyAdapter);
 
         listView.setMode(PullToRefreshBase.Mode.DISABLED);
         listView.setOnItemClickListener(this);
@@ -50,12 +50,11 @@ public class FollowListTitleActivity extends BaseTitleActivity implements Adapte
         Map<String, Object> map = new HashMap<>();
         map.put("page", "1");
         map.put("size", "999");
-        map.put("type", "1");
-        HaoConnect.loadContent("user_friends/list", map, "get", new HaoResultHttpResponseHandler() {
+        HaoConnect.loadContent("user/list", map, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
                 ArrayList<Object> lists = result.findAsList("results>");
-                friendAdapter.setData(lists);
+                nearbyAdapter.setData(lists);
             }
 
             @Override
@@ -68,8 +67,9 @@ public class FollowListTitleActivity extends BaseTitleActivity implements Adapte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         HaoResult result = (HaoResult) parent.getAdapter().getItem(position);
-        Intent intent = new Intent(this, ShowUserTitleActivity.class);
+        Intent intent = new Intent(this, ShowUserActivity.class);
         intent.putExtra("userId", result.findAsString("toUserLocal>id"));
+        intent.putExtra("userName", result.findAsString("toUserLocal>nickname"));
         startActivity(intent);
     }
 }

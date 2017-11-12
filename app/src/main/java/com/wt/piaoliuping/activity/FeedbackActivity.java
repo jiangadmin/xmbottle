@@ -20,7 +20,7 @@ import butterknife.OnClick;
  * Created by wangtao on 2017/10/26.
  */
 
-public class FeedbackTitleActivity extends BaseTitleActivity {
+public class FeedbackActivity extends BaseTitleActivity {
     @BindView(R.id.text_input)
     EditText textInput;
     @BindView(R.id.btn_submit)
@@ -41,16 +41,19 @@ public class FeedbackTitleActivity extends BaseTitleActivity {
         if (TextUtils.isEmpty(textInput.getText().toString())) {
             return;
         }
+        startLoading();
         Map<String, Object> map = new HashMap<>();
         map.put("content", textInput.getText().toString());
         HaoConnect.request("feedback/add", map, "post", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
+                stopLoading();
                 showToast("反馈成功");
                 finish();
             }
             @Override
             public void onFail(HaoResult result) {
+                stopLoading();
                 showToast(result.errorStr);
             }
         }, this);

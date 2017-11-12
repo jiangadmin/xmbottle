@@ -38,7 +38,7 @@
         android:supportsRtl="true"
         android:theme="@style/LaunchTheme">
 
-        <activity android:name=".activity.LaunchTitleActivity">
+        <activity android:name=".activity.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,83 +47,89 @@
         </activity>
 
         <activity
-            android:name=".activity.LoginTitleActivity"
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.RegisterTitleActivity"
+            android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.HomeTitleActivity"
+            android:name=".activity.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.WebTitleActivity"
+            android:name=".activity.WebActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SettingTitleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.PointTitleActivity"
+            android:name=".activity.PointActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.WithdrewTitleActivity"
+            android:name=".activity.WithdrewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.UserInfoTitleActivity"
+            android:name=".activity.UserInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.FeedbackTitleActivity"
+            android:name=".activity.FeedbackActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ApplyVipTitleActivity"
+            android:name=".activity.ApplyVipActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.AboutTitleActivity"
+            android:name=".activity.AboutActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.MoreSettingTitleActivity"
+            android:name=".activity.MoreSettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ChangePasswordTitleActivity"
+            android:name=".activity.ChangePasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.RevokeListTitleActivity"
+            android:name=".activity.RevokeListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SendBottleTitleActivity"
+            android:name=".activity.SendBottleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ShowBottleTitleActivity"
+            android:name=".activity.ShowBottleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ShowUserTitleActivity"
+            android:name=".activity.ShowUserActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.EditTitleActivity"
+            android:name=".activity.EditActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.FriendListTitleActivity"
+            android:name=".activity.FriendListActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.SearchUserTitleActivity"
+            android:name=".activity.SearchUserActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.FollowListTitleActivity"
+            android:name=".activity.FollowListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.NearbyTitleActivity"
+            android:name=".activity.NearbyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ChatTitleActivity"
+            android:name=".activity.ChatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.WithdrewListActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.WarningActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.wt.piaoliuping.provider"
+            android:authorities="com.xm.bottle.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

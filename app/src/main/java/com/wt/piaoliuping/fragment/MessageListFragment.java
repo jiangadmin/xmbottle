@@ -19,7 +19,7 @@ import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.util.NetUtils;
 import com.wt.piaoliuping.R;
-import com.wt.piaoliuping.activity.ChatTitleActivity;
+import com.wt.piaoliuping.activity.ChatActivity;
 
 /**
  * Created by wangtao on 2017/11/5.
@@ -60,7 +60,7 @@ public class MessageListFragment extends EaseConversationListFragment {
                 if (username.equals(EMClient.getInstance().getCurrentUser()))
                     Toast.makeText(getActivity(), R.string.Cant_chat_with_yourself, Toast.LENGTH_SHORT).show();
                 else {
-                    Intent intent = new Intent(getActivity(), ChatTitleActivity.class);
+                    Intent intent = new Intent(getActivity(), ChatActivity.class);
                     if (conversation.isGroup()) {
                         if (conversation.getType() == EMConversation.EMConversationType.ChatRoom) {
                             intent.putExtra("chatType", EMMessage.ChatType.ChatRoom);
@@ -106,14 +106,12 @@ public class MessageListFragment extends EaseConversationListFragment {
         if (tobeDeleteCons.getType() == EMConversation.EMConversationType.GroupChat) {
             EaseAtMessageHelper.get().removeAtMeGroup(tobeDeleteCons.conversationId());
         }
-//        try {
-//            // delete conversation
-//            EMClient.getInstance().chatManager().deleteConversation(tobeDeleteCons.conversationId(), deleteMessage);
-//            InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(getActivity());
-//            inviteMessgeDao.deleteMessage(tobeDeleteCons.conversationId());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            // delete conversation
+            EMClient.getInstance().chatManager().deleteConversation(tobeDeleteCons.conversationId(), deleteMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         refresh();
 
         // update unread count

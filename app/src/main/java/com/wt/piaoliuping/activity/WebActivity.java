@@ -12,7 +12,7 @@ import butterknife.BindView;
  * Created by wangtao on 2017/10/25.
  */
 
-public class WebTitleActivity extends BaseTitleActivity {
+public class WebActivity extends BaseTitleActivity {
     @BindView(R.id.web_view)
     WebView webView;
 

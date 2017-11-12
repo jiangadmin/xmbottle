@@ -4,8 +4,10 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.KeyEvent;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseTitleActivity;
@@ -24,7 +26,7 @@ import butterknife.BindView;
  * Created by wangtao on 2017/10/20.
  */
 
-public class HomeTitleActivity extends BaseTitleActivity {
+public class HomeActivity extends BaseTitleActivity {
 
     @BindView(R.id.message_btn)
     RadioButton messageBtn;
@@ -90,5 +92,23 @@ public class HomeTitleActivity extends BaseTitleActivity {
         public int getCount() {
             return fragments.size();
         }
+    }
+
+    private long exitTime = 0;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_LONG).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                exitTime = 0;
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

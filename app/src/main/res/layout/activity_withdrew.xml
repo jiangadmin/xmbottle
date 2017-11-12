@@ -74,6 +74,7 @@
         style="@style/text_14_999999"
         android:text="提现功能只有高级会员可以看到，用户自己在后台进行人工发放现金的方式"
         android:layout_width="wrap_content"
+        android:visibility="gone"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

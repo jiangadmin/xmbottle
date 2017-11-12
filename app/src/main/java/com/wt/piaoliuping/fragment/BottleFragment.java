@@ -8,8 +8,8 @@ import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.wt.piaoliuping.R;
-import com.wt.piaoliuping.activity.SendBottleTitleActivity;
-import com.wt.piaoliuping.activity.ShowBottleTitleActivity;
+import com.wt.piaoliuping.activity.SendBottleActivity;
+import com.wt.piaoliuping.activity.ShowBottleActivity;
 import com.wt.piaoliuping.base.PageFragment;
 
 import java.util.HashMap;
@@ -41,7 +41,7 @@ public class BottleFragment extends PageFragment {
 
     @OnClick(R.id.text_send)
     public void onTextSendClicked() {
-        startActivity(new Intent(getActivity(), SendBottleTitleActivity.class));
+        startActivity(new Intent(getActivity(), SendBottleActivity.class));
     }
 
     @OnClick(R.id.text_received)
@@ -51,7 +51,7 @@ public class BottleFragment extends PageFragment {
         HaoConnect.loadContent("bottle_message/get", map, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                Intent intent = new Intent(getActivity(), ShowBottleTitleActivity.class);
+                Intent intent = new Intent(getActivity(), ShowBottleActivity.class);
                 intent.putExtra("msgId", result.findAsString("id"));
                 startActivity(intent);
             }

@@ -23,11 +23,11 @@
             style="@style/text_14_222222"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@color/white"
             android:gravity="center_vertical"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:hint="我的星星"
+            android:text="我的星星："
             android:textColorHint="@color/darKGrayColor" />
     </LinearLayout>
 
@@ -47,11 +47,11 @@
             style="@style/text_14_222222"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
             android:gravity="center_vertical"
-            android:hint="系统积分"
+            android:text="系统积分："
             android:textColorHint="@color/darKGrayColor" />
     </LinearLayout>
 
@@ -71,8 +71,8 @@
             style="@style/text_14_222222"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@color/white"
             android:hint="请输入充值金额"
@@ -101,12 +101,12 @@
             style="@style/text_14_222222"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@color/white"
             android:gravity="center_vertical"
             android:hint="积分"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
             android:textColorHint="@color/darKGrayColor" />
 
         <TextView
@@ -151,7 +151,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:lineSpacingExtra="3dp"
-        android:visibility="gone"
-        android:text="备注：技术注意。这里的充值比例为1元兑换100星星，比例用户可以在后台自定义。" />
+        android:text="备注：技术注意。这里的充值比例为1元兑换100星星，比例用户可以在后台自定义。"
+        android:visibility="gone" />
 
 </LinearLayout>

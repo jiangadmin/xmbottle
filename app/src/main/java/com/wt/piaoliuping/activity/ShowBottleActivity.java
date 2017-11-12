@@ -23,7 +23,7 @@ import butterknife.OnClick;
  * Created by wangtao on 2017/10/28.
  */
 
-public class ShowBottleTitleActivity extends BaseTitleActivity {
+public class ShowBottleActivity extends BaseTitleActivity {
     @BindView(R.id.image_head)
     ImageView imageHead;
     @BindView(R.id.text_name)
@@ -69,6 +69,7 @@ public class ShowBottleTitleActivity extends BaseTitleActivity {
     private void loadDetail() {
         Map<String, Object> map = new HashMap<>();
         map.put("id", msgId);
+        startLoading();
         HaoConnect.loadContent("user_get_bottle/detail", map, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
@@ -83,11 +84,13 @@ public class ShowBottleTitleActivity extends BaseTitleActivity {
                 textTime.setText(result.findAsString("throwUserLocal>createTime"));
 
                 textContent.setText(result.findAsString("message"));
+                stopLoading();
             }
 
             @Override
             public void onFail(HaoResult result) {
                 showToast(result.errorStr);
+                stopLoading();
             }
         }, this);
     }
@@ -114,8 +117,9 @@ public class ShowBottleTitleActivity extends BaseTitleActivity {
         HaoConnect.loadContent("bottle_message/view", map, "post", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                Intent intent = new Intent(ShowBottleTitleActivity.this, ShowUserTitleActivity.class);
+                Intent intent = new Intent(ShowBottleActivity.this, ShowUserActivity.class);
                 intent.putExtra("userId", result.findAsString("throwUserLocal>id"));
+                intent.putExtra("userName", result.findAsString("throwUserLocal>nickname"));
                 startActivity(intent);
             }
 

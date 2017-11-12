@@ -14,7 +14,7 @@ import butterknife.OnClick;
  * Created by wangtao on 2017/10/26.
  */
 
-public class MoreSettingTitleActivity extends BaseTitleActivity {
+public class MoreSettingActivity extends BaseTitleActivity {
 
     @BindView(R.id.checkbox_msg)
     CheckBox checkboxMsg;
@@ -41,11 +41,11 @@ public class MoreSettingTitleActivity extends BaseTitleActivity {
 
     @OnClick(R.id.layout_3)
     public void onLayout3Clicked() {
-        startActivity(new Intent(this, FeedbackTitleActivity.class));
+        startActivity(new Intent(this, FeedbackActivity.class));
     }
 
     @OnClick(R.id.layout_4)
     public void onLayout4Clicked() {
-        startActivity(new Intent(this, ApplyVipTitleActivity.class));
+        startActivity(new Intent(this, ApplyVipActivity.class));
     }
 }

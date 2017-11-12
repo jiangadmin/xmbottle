@@ -21,9 +21,7 @@ public abstract class BaseTitleActivity extends BaseActivity {
     private TextView titleText;
     private ImageButton backBtn;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void setTitle(final String title) {
         if (titleText == null) {
             try {
                 titleText = (TextView) findViewById(R.id.text_title);
@@ -39,17 +37,12 @@ public abstract class BaseTitleActivity extends BaseActivity {
 
             }
         }
-    }
-
-    public void setTitle(final String title) {
-        if (titleText != null) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    titleText.setText(title);
-                }
-            });
-        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                titleText.setText(title);
+            }
+        });
     }
 
     public void hideBackBtn() {

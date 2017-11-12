@@ -19,7 +19,7 @@ import butterknife.OnClick;
  * Created by wangtao on 2017/10/29.
  */
 
-public class EditTitleActivity extends BaseTitleActivity {
+public class EditActivity extends BaseTitleActivity {
     @BindView(R.id.text_right_title)
     TextView textRightTitle;
     @BindView(R.id.text_edit)

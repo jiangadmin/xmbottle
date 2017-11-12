@@ -22,6 +22,7 @@
         <item name="android:windowEnterAnimation">@anim/pop_from_button_up</item>
         <item name="android:windowExitAnimation">@anim/pop_from_button_down</item>
     </style>
+
     <style name="dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -33,4 +34,15 @@
         <item name="android:backgroundDimAmount">0.6</item>
     </style>
 
+    <style name="CustomDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+
+    <style name="CustomProgressDialog" parent="@style/CustomDialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>

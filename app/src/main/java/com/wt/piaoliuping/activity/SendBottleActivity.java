@@ -21,7 +21,7 @@ import butterknife.OnClick;
  * Created by wangtao on 2017/10/28.
  */
 
-public class SendBottleTitleActivity extends BaseTitleActivity {
+public class SendBottleActivity extends BaseTitleActivity {
     @BindView(R.id.text_content)
     EditText textContent;
     @BindView(R.id.text_rand)
@@ -70,15 +70,18 @@ public class SendBottleTitleActivity extends BaseTitleActivity {
         if (!TextUtils.isEmpty(randId)) {
             map.put("bottle_text_id", randId);
         }
+        startLoading();
         HaoConnect.loadContent("bottle_message/add", map, "post", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
                 finish();
+                stopLoading();
             }
 
             @Override
             public void onFail(HaoResult result) {
                 showToast(result.errorStr);
+                stopLoading();
             }
         }, this);
     }

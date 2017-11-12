@@ -20,58 +20,56 @@ import butterknife.OnClick;
  * Created by wangtao on 2017/10/26.
  */
 
-public class PointTitleActivity extends BaseTitleActivity {
-    @BindView(R.id.text_mine_star)
-    TextView textMineStar;
-    @BindView(R.id.layout_1)
-    LinearLayout layout1;
-    @BindView(R.id.text_mine_point)
-    TextView textMinePoint;
-    @BindView(R.id.layout_2)
-    LinearLayout layout2;
+public class WithdrewActivity extends BaseTitleActivity {
+    @BindView(R.id.text_right_title)
+    TextView textRightTitle;
+    @BindView(R.id.text_star)
+    TextView textStar;
     @BindView(R.id.edit_money)
     EditText editMoney;
-    @BindView(R.id.layout_3)
-    LinearLayout layout3;
-    @BindView(R.id.text_point)
-    TextView textPoint;
-    @BindView(R.id.layout_4)
-    LinearLayout layout4;
+    @BindView(R.id.layout_1)
+    LinearLayout layout1;
+    @BindView(R.id.edit_account)
+    EditText editAccount;
+    @BindView(R.id.layout_2)
+    LinearLayout layout2;
     @BindView(R.id.btn_charge)
     Button btnCharge;
-    @BindView(R.id.btn_withdrew)
-    Button btnWithdrew;
 
     @Override
     public void initView() {
-        setTitle("我的积分");
-
-        loadUser();
+        setTitle("提现");
+        textRightTitle.setText("提现记录");
     }
 
     @Override
     public int getContentViewID() {
-        return R.layout.activity_point;
+        return R.layout.activity_withdrew;
     }
 
-    @OnClick({R.id.btn_charge, R.id.btn_withdrew})
+    @OnClick({R.id.text_right_title, R.id.btn_charge})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.text_right_title:
+                Intent intent = new Intent(this, WithdrewListActivity.class);
+                startActivity(intent);
+                break;
             case R.id.btn_charge:
                 break;
-            case R.id.btn_withdrew:
-                startActivity(new Intent(this, WithdrewTitleActivity.class));
-                break;
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadUser();
     }
 
     private void loadUser() {
         HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-//                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead);
-                textMineStar.setText(result.findAsString("amount"));
-                textPoint.setText(result.findAsString("score"));
+                textStar.setText("我的星星：" + result.findAsString("amount"));
             }
         }, this);
     }

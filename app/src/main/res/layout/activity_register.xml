@@ -9,10 +9,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="135dp"
+        android:layout_height="180dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="30dp"
+        android:id="@+id/layout_content"
         android:background="@drawable/corner_bg"
         android:orientation="vertical">
 
@@ -48,9 +49,9 @@
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:hint="输入验证码"
-                android:padding="10dp"
-                android:maxLength="6"
                 android:inputType="phone"
+                android:maxLength="6"
+                android:padding="10dp"
                 android:textColorHint="@color/darKGrayColor" />
 
             <TextView
@@ -81,6 +82,44 @@
             android:padding="10dp"
             android:textColorHint="@color/darKGrayColor" />
 
+        <include layout="@layout/layout_line_horizontal" />
+
+        <LinearLayout
+            android:id="@+id/layout_sex"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/text_15_999999"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="3dp"
+                android:background="@color/white"
+                android:text="性别"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/text_sex"
+                style="@style/text_15_999999"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="3dp"
+                android:background="@color/white"
+                android:text="男"
+                android:textColor="@color/darKGrayColor" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <TextView
@@ -100,12 +139,13 @@
         android:text="提    交"
         android:textColor="@color/white" />
 
-    <CheckedTextView
+    <CheckBox
         android:id="@+id/btn_agreement"
         style="@style/text_14_999999"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:checked="true"
         android:text="我同意用户协议" />
 
     <LinearLayout

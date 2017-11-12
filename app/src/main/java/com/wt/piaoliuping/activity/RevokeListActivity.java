@@ -10,7 +10,7 @@ import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.wt.piaoliuping.R;
-import com.wt.piaoliuping.adapter.NearbyAdapter;
+import com.wt.piaoliuping.adapter.NameAdapter;
 import com.wt.piaoliuping.base.BaseTitleActivity;
 
 import java.util.ArrayList;
@@ -20,21 +20,20 @@ import java.util.Map;
 import butterknife.BindView;
 
 /**
- * Created by wangtao on 2017/11/3.
+ * Created by wangtao on 2017/10/26.
  */
 
-public class NearbyTitleActivity extends BaseTitleActivity implements AdapterView.OnItemClickListener {
+public class RevokeListActivity extends BaseTitleActivity implements AdapterView.OnItemClickListener {
     @BindView(R.id.list_view)
     PullToRefreshListView listView;
 
-    NearbyAdapter nearbyAdapter;
+    NameAdapter nameAdapter;
 
     @Override
     public void initView() {
-
-        setTitle("附近的人");
-        nearbyAdapter = new NearbyAdapter(this);
-        listView.setAdapter(nearbyAdapter);
+        setTitle("黑名单");
+        nameAdapter = new NameAdapter(this);
+        listView.setAdapter(nameAdapter);
 
         listView.setMode(PullToRefreshBase.Mode.DISABLED);
         listView.setOnItemClickListener(this);
@@ -43,18 +42,19 @@ public class NearbyTitleActivity extends BaseTitleActivity implements AdapterVie
 
     @Override
     public int getContentViewID() {
-        return R.layout.activity_friend_list;
+        return R.layout.activity_name_list;
     }
 
     private void loadData() {
         Map<String, Object> map = new HashMap<>();
         map.put("page", "1");
         map.put("size", "999");
-        HaoConnect.loadContent("user/list", map, "get", new HaoResultHttpResponseHandler() {
+        map.put("type", "7");
+        HaoConnect.loadContent("user_friends/list", map, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
                 ArrayList<Object> lists = result.findAsList("results>");
-                nearbyAdapter.setData(lists);
+                nameAdapter.setData(lists);
             }
 
             @Override
@@ -67,8 +67,9 @@ public class NearbyTitleActivity extends BaseTitleActivity implements AdapterVie
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         HaoResult result = (HaoResult) parent.getAdapter().getItem(position);
-        Intent intent = new Intent(this, ShowUserTitleActivity.class);
+        Intent intent = new Intent(this, ShowUserActivity.class);
         intent.putExtra("userId", result.findAsString("toUserLocal>id"));
+        intent.putExtra("userName", result.findAsString("toUserLocal>nickname"));
         startActivity(intent);
     }
 }

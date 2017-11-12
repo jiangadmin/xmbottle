@@ -21,7 +21,7 @@ import butterknife.OnClick;
  * Created by wangtao on 2017/10/26.
  */
 
-public class ChangePasswordTitleActivity extends BaseTitleActivity {
+public class ChangePasswordActivity extends BaseTitleActivity {
     @BindView(R.id.old_password)
     EditText oldPassword;
     @BindView(R.id.current_password)
@@ -49,18 +49,21 @@ public class ChangePasswordTitleActivity extends BaseTitleActivity {
             showToast("新密码不能为空");
             return;
         }
+        startLoading();
         Map<String, Object> map = new HashMap<>();
         map.put("old_password", HaoUtility.encodeMD5String(oldPassword.getText().toString()));
         map.put("password", HaoUtility.encodeMD5String(currentPassword.getText().toString()));
         HaoConnect.loadContent("user/update_password", map, "post", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
+                stopLoading();
                 showToast("修改成功");
                 finish();
             }
 
             @Override
             public void onFail(HaoResult result) {
+                stopLoading();
                 showToast(result.errorStr);
             }
         }, this);

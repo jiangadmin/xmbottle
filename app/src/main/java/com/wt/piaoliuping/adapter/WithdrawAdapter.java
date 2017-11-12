@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.haoxitech.HaoConnect.HaoResult;
 import com.wt.piaoliuping.R;
 
 import butterknife.BindView;
@@ -31,6 +32,10 @@ public class WithdrawAdapter extends BaseItemAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        HaoResult haoResult = (HaoResult) dataList.get(position);
+        holder.textPoint.setText("-" + haoResult.findAsString("extrMoney"));
+        holder.textTime.setText(haoResult.findAsString("createTime"));
+        holder.textStatus.setText(haoResult.findAsString("extrStatusLabel"));
         return convertView;
     }
 

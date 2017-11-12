@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.haoxitech.HaoConnect.HaoConnect;
@@ -15,12 +15,12 @@ import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.haoxitech.HaoConnect.HaoUtility;
 import com.hyphenate.EMCallBack;
-import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.exceptions.HyphenateException;
 import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseTitleActivity;
+import com.wt.piaoliuping.manager.HXManager;
+import com.wt.piaoliuping.manager.UserManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +31,7 @@ import butterknife.BindView;
  * Created by wangtao on 2017/10/17.
  */
 
-public class LoginTitleActivity extends BaseTitleActivity implements View.OnClickListener {
+public class LoginActivity extends BaseTitleActivity implements View.OnClickListener {
 
     @BindView(R.id.text_tel)
     EditText textTel;
@@ -42,7 +42,7 @@ public class LoginTitleActivity extends BaseTitleActivity implements View.OnClic
     @BindView(R.id.btn_login)
     Button btnLogin;
     @BindView(R.id.btn_agreement)
-    CheckedTextView btnAgreement;
+    CheckBox btnAgreement;
     @BindView(R.id.btn_register)
     TextView btnRegister;
 
@@ -70,7 +70,12 @@ public class LoginTitleActivity extends BaseTitleActivity implements View.OnClic
             showToast("密码不能为空");
             return;
         }
+        if (!btnAgreement.isChecked()) {
+            showToast("请先同意相关协议");
+            return;
+        }
 
+        startLoading();
         Map<String, Object> map = new HashMap<>();
         map.put("username", textTel.getText().toString());
         map.put("password", HaoUtility.encodeMD5String(textPassword.getText().toString()));
@@ -81,22 +86,34 @@ public class LoginTitleActivity extends BaseTitleActivity implements View.OnClic
                 if (result.isResultsOK()) {
                     Object authInfo = result.find("extraInfo>authInfo");
                     HaoConnect.setCurrentUserInfo(((JsonObject) authInfo).get("Userid").getAsString(), ((JsonObject) authInfo).get("Logintime").getAsString(), ((JsonObject) authInfo).get("Checkcode").getAsString());
-                    App.app.userId = HaoConnect.getUserid();
                 }
-
+                UserManager.getInstance().setPassword(HaoUtility.encodeMD5String(textPassword.getText().toString()));
                 new Thread(new Runnable() {
                     public void run() {
-                        EMClient.getInstance().login(App.app.userId, textPassword.getText().toString(), new EMCallBack() {
+                        EMClient.getInstance().login(UserManager.getInstance().getUserId(), HXManager.getInstance().formatPassword(textPassword.getText().toString()), new EMCallBack() {
                             @Override
                             public void onSuccess() {
-                                Intent intent = new Intent(LoginTitleActivity.this, HomeTitleActivity.class);
-                                startActivity(intent);
-                                finish();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        UserManager.getInstance().setPassword(textPassword.getText().toString());
+                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                        stopLoading();
+                                    }
+                                });
                             }
 
                             @Override
-                            public void onError(int code, String error) {
-                                showToast(error);
+                            public void onError(int code, final String error) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showToast(error);
+                                        stopLoading();
+                                    }
+                                });
                             }
 
                             @Override
@@ -105,9 +122,7 @@ public class LoginTitleActivity extends BaseTitleActivity implements View.OnClic
                             }
                         });
                     }
-
                 }).start();
-
             }
 
             @Override
@@ -118,13 +133,13 @@ public class LoginTitleActivity extends BaseTitleActivity implements View.OnClic
     }
 
     public void onTextForgetClicked() {
-        Intent intent = new Intent(this, RegisterTitleActivity.class);
+        Intent intent = new Intent(this, RegisterActivity.class);
         intent.putExtra("type", 1);
         startActivity(intent);
     }
 
     public void onBtnRegisterClicked() {
-        startActivity(new Intent(this, RegisterTitleActivity.class));
+        startActivity(new Intent(this, RegisterActivity.class));
     }
 
     @Override
@@ -140,7 +155,7 @@ public class LoginTitleActivity extends BaseTitleActivity implements View.OnClic
                 onTextForgetClicked();
                 break;
             case R.id.btn_agreement: {
-                Intent intent = new Intent(this, WebTitleActivity.class);
+                Intent intent = new Intent(this, WebActivity.class);
                 intent.putExtra("title", "注册协议");
                 startActivity(intent);
                 break;

@@ -81,12 +81,13 @@
         android:text="登 录"
         android:textColor="@color/white" />
 
-    <CheckedTextView
+    <CheckBox
         android:id="@+id/btn_agreement"
         style="@style/text_14_999999"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:checked="true"
         android:text="我同意用户协议" />
 
     <LinearLayout

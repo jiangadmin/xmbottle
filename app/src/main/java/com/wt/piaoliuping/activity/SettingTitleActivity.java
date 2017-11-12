@@ -51,22 +51,29 @@ public class SettingTitleActivity extends BaseTitleActivity {
         EMClient.getInstance().logout(false, new EMCallBack() {
             @Override
             public void onSuccess() {
-                Map<String, Object> map = new HashMap<>();
-                HaoConnect.loadContent("user/logout", map, "get", new HaoResultHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(HaoResult result) {
-                        UserManager.getInstance().logout();
-                        Intent intent = new Intent(SettingTitleActivity.this, LoginTitleActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        startActivity(intent);
-                        finish();
-                    }
 
-                    @Override
-                    public void onFail(HaoResult result) {
-                        showToast(result.errorStr);
-                    }
-                }, SettingTitleActivity.this);
+                runOnUiThread(new Runnable() {
+                                  public void run() {
+
+                                      Map<String, Object> map = new HashMap<>();
+                                      HaoConnect.loadContent("user/logout", map, "get", new HaoResultHttpResponseHandler() {
+                                          @Override
+                                          public void onSuccess(HaoResult result) {
+                                              UserManager.getInstance().logout();
+                                              Intent intent = new Intent(SettingTitleActivity.this, LoginActivity.class);
+                                              intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                              startActivity(intent);
+                                              finish();
+                                          }
+
+                                          @Override
+                                          public void onFail(HaoResult result) {
+                                              showToast(result.errorStr);
+                                          }
+                                      }, SettingTitleActivity.this);
+                                  }
+                              }
+                    );
             }
 
             @Override
@@ -85,16 +92,16 @@ public class SettingTitleActivity extends BaseTitleActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layout_1:
-                startActivity(new Intent(this, UserInfoTitleActivity.class));
+                startActivity(new Intent(this, UserInfoActivity.class));
                 break;
             case R.id.layout_2:
-                startActivity(new Intent(this, AboutTitleActivity.class));
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
             case R.id.layout_3:
-                startActivity(new Intent(this, MoreSettingTitleActivity.class));
+                startActivity(new Intent(this, MoreSettingActivity.class));
                 break;
             case R.id.layout_4:
-                startActivity(new Intent(this, ChangePasswordTitleActivity.class));
+                startActivity(new Intent(this, ChangePasswordActivity.class));
                 break;
         }
     }

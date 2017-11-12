@@ -2,22 +2,23 @@ package com.wt.piaoliuping.activity;
 
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckedTextView;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.haoxitech.HaoConnect.HaoUtility;
-import com.hyphenate.EMError;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.exceptions.HyphenateException;
 import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseTitleActivity;
+import com.wt.piaoliuping.utils.DisplayUtil;
+import com.wt.piaoliuping.widgt.SexDialog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +30,7 @@ import butterknife.OnClick;
  * Created by wangtao on 2017/10/18.
  */
 
-public class RegisterTitleActivity extends BaseTitleActivity {
+public class RegisterActivity extends BaseTitleActivity {
     @BindView(R.id.text_tel)
     EditText textTel;
     @BindView(R.id.text_code)
@@ -41,9 +42,11 @@ public class RegisterTitleActivity extends BaseTitleActivity {
     @BindView(R.id.btn_submit)
     Button btnSubmit;
     @BindView(R.id.btn_agreement)
-    CheckedTextView btnAgreement;
+    CheckBox btnAgreement;
     @BindView(R.id.btn_login)
     TextView btnLogin;
+    @BindView(R.id.text_sex)
+    TextView textSex;
 
     private int type;
 
@@ -54,6 +57,9 @@ public class RegisterTitleActivity extends BaseTitleActivity {
             setTitle("注册");
         } else {
             setTitle("忘记密码");
+            findViewById(R.id.layout_sex).setVisibility(View.GONE);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtil.dip2px(this, 135));
+            findViewById(R.id.layout_content).setLayoutParams(layoutParams);
         }
     }
 
@@ -105,49 +111,31 @@ public class RegisterTitleActivity extends BaseTitleActivity {
             showToast("密码不能为空");
             return;
         }
+        if (!btnAgreement.isChecked()) {
+
+            showToast("请先同意相关协议");
+            return;
+        }
+
+        startLoading();
 
         if (type == 0) {
             Map<String, Object> map = new HashMap<>();
             map.put("username", textTel.getText().toString());
             map.put("verify_code", textCode.getText().toString());
+            if (textSex.getText().toString().equals("男")) {
+                map.put("sex", "1");
+            } else {
+                map.put("sex", "2");
+            }
             map.put("password", HaoUtility.encodeMD5String(textPassword.getText().toString()));
             HaoConnect.loadContent("user/register", map, "post", new HaoResultHttpResponseHandler() {
                 @Override
                 public void onSuccess(HaoResult result) {
-                    new Thread(new Runnable() {
-                        public void run() {
-                            try {
-                                // call method in SDK
-                                EMClient.getInstance().createAccount(textTel.getText().toString(), HaoUtility.encodeMD5String(textPassword.getText().toString()));
-                                runOnUiThread(new Runnable() {
-                                    public void run() {
-
-                                        // save current user
-                                        App.app.userName = textTel.getText().toString();
-                                        showToast("注册成功");
-                                        finish();
-                                    }
-                                });
-                            } catch (final HyphenateException e) {
-                                runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        int errorCode = e.getErrorCode();
-                                        if (errorCode == EMError.NETWORK_ERROR) {
-                                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_anomalies), Toast.LENGTH_SHORT).show();
-                                        } else if (errorCode == EMError.USER_ALREADY_EXIST) {
-                                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.User_already_exists), Toast.LENGTH_SHORT).show();
-                                        } else if (errorCode == EMError.USER_AUTHENTICATION_FAILED) {
-                                            Toast.makeText(getApplicationContext(), "认证失败", Toast.LENGTH_SHORT).show();
-                                        } else if (errorCode == EMError.USER_ILLEGAL_ARGUMENT) {
-                                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.illegal_user_name), Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Toast.makeText(getApplicationContext(), "认证失败", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    }).start();
+                    App.app.userName = textTel.getText().toString();
+                    showToast("注册成功");
+                    finish();
+                    stopLoading();
                 }
 
                 @Override
@@ -165,6 +153,7 @@ public class RegisterTitleActivity extends BaseTitleActivity {
                 public void onSuccess(HaoResult result) {
                     showToast("重置成功");
                     finish();
+                    stopLoading();
                 }
 
                 @Override
@@ -182,6 +171,21 @@ public class RegisterTitleActivity extends BaseTitleActivity {
     }
 
     MyCount count = new MyCount(60000, 1000);
+
+    @OnClick(R.id.text_sex)
+    public void onViewClicked() {
+        final SexDialog dialog = SexDialog.create(this, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.layout_female) {
+                    textSex.setText("女");
+                } else if (v.getId() == R.id.layout_male) {
+                    textSex.setText("男");
+                }
+            }
+        });
+        dialog.show();
+    }
 
     class MyCount extends CountDownTimer {
         public MyCount(long millisInFuture, long countDownInterval) {

@@ -27,6 +27,7 @@ import com.wt.piaoliuping.base.BaseTitleActivity;
 import com.wt.piaoliuping.utils.DateUtils;
 import com.wt.piaoliuping.widgt.CameraDialog;
 import com.wt.piaoliuping.widgt.DatePickerDialog;
+import com.wt.piaoliuping.widgt.PickerDialog;
 import com.wt.piaoliuping.widgt.SexDialog;
 
 import java.io.File;
@@ -45,7 +46,7 @@ import rx.functions.Action1;
  * Created by wangtao on 2017/10/26.
  */
 
-public class UserInfoTitleActivity extends BaseTitleActivity {
+public class UserInfoActivity extends BaseTitleActivity {
     @BindView(R.id.image_head)
     ImageView imageHead;
     @BindView(R.id.layout_1)
@@ -109,7 +110,7 @@ public class UserInfoTitleActivity extends BaseTitleActivity {
             }
             break;
             case R.id.layout_2: {
-                Intent intent = new Intent(this, EditTitleActivity.class);
+                Intent intent = new Intent(this, EditActivity.class);
                 intent.putExtra("title", "昵称");
                 intent.putExtra("hint", "请输入昵称");
                 intent.putExtra("content", textName.getText());
@@ -133,7 +134,16 @@ public class UserInfoTitleActivity extends BaseTitleActivity {
                 dialog.show();
             }
                 break;
-            case R.id.layout_4:
+            case R.id.layout_4: {
+                PickerDialog dialog = PickerDialog.create(this, new PickerDialog.PickerResultCallBack() {
+                    @Override
+                    public void choose(String result, String resultId) {
+                        textCity.setText(result);
+                        updateUserInfo("area_id", resultId);
+                    }
+                }, 0);
+                dialog.show();
+            }
                 break;
             case R.id.layout_5: {
                 DatePickerDialog.createDialog(this, new DatePickerDialog.DatePickerResultCallBack() {
@@ -150,7 +160,7 @@ public class UserInfoTitleActivity extends BaseTitleActivity {
             }
             break;
             case R.id.layout_6: {
-                Intent intent = new Intent(this, EditTitleActivity.class);
+                Intent intent = new Intent(this, EditActivity.class);
                 intent.putExtra("title", "星座");
                 intent.putExtra("hint", "请输入星座");
                 intent.putExtra("content", textStar.getText());
@@ -161,7 +171,7 @@ public class UserInfoTitleActivity extends BaseTitleActivity {
             break;
             case R.id.layout_7: {
 
-                Intent intent = new Intent(this, EditTitleActivity.class);
+                Intent intent = new Intent(this, EditActivity.class);
                 intent.putExtra("title", "签名");
                 intent.putExtra("hint", "请输入个性签名");
                 intent.putExtra("content", textSign.getText());

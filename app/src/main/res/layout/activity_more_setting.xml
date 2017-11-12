@@ -86,6 +86,7 @@
         android:background="@drawable/bolder_white_view_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:padding="10dp">
 
         <TextView
