@@ -1,5 +1,6 @@
 package com.wt.piaoliuping.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -7,6 +8,7 @@ import android.widget.TextView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.hyphenate.chat.EMMessage;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseTitleActivity;
@@ -106,6 +108,13 @@ public class ShowUserTitleActivity extends BaseTitleActivity {
                 }
                 break;
             case R.id.text_msg:
+
+                // 跳转到聊天界面，开始聊天
+                Intent intent = new Intent(this, ChatTitleActivity.class);
+                // EaseUI封装的聊天界面需要这两个参数，聊天者的username，以及聊天类型，单聊还是群聊
+                intent.putExtra("userId", userId);
+                intent.putExtra("chatType", EMMessage.ChatType.Chat);
+                startActivity(intent);
                 break;
         }
     }

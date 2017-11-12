@@ -20,7 +20,6 @@ public class LaunchTitleActivity extends BaseTitleActivity implements Runnable {
     public void initView() {
         mHandler = new Handler();
         mHandler.postDelayed(this, 2000);
-        HaoConnect.init(getApplicationContext());
     }
 
     @Override

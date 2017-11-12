@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
     signingConfigs {
@@ -32,6 +33,10 @@ android {
     useLibrary 'org.apache.http.legacy'
 }
 
+greendao {
+    schemaVersion 1
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -52,4 +57,5 @@ dependencies {
     compile 'cn.aigestudio.wheelpicker:WheelPicker:1.1.2'
     compile 'com.hyphenate:hyphenate-sdk:3.3.0'
     compile project(path: ':easeui')
+    compile 'org.greenrobot:greendao:3.2.2' // add library
 }

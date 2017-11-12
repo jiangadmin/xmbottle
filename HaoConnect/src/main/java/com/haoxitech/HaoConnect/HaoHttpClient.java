@@ -2,6 +2,7 @@ package com.haoxitech.HaoConnect;
 
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -61,6 +62,8 @@ public class HaoHttpClient {
             e.printStackTrace();
 
         }
+        Log.d("HaoHttpClient", "request\n");
+        Log.d("HaoHttpClient", actionUrl + "parmes " + params);
 
         if (Method == null || Method.toLowerCase().equals("get")) {
             return client.get(context, actionUrl, headersArray, params, response);

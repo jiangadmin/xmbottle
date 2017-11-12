@@ -1,5 +1,7 @@
 package com.haoxitech.HaoConnect;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.loopj.android.http.AsyncHttpClient;
@@ -32,6 +34,9 @@ public abstract class HaoResultHttpResponseHandler extends TextHttpResponseHandl
         try {
             Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(responseString, JsonObject.class);
+            Log.d(LOG_TAG, "response\n");
+            Log.d(LOG_TAG, responseString);
+
             HaoResult haoResult = (HaoResult) HaoResult.instanceModel(jsonObject.get("results"), jsonObject.get("errorCode").getAsInt(), jsonObject.get("errorStr").getAsString(), jsonObject.get("extraInfo"));
             if (haoResult.isResultsOK()) {
                 onSuccess(haoResult);

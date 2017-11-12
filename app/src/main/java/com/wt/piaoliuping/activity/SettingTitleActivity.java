@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseTitleActivity;
 import com.wt.piaoliuping.manager.UserManager;
@@ -46,21 +48,37 @@ public class SettingTitleActivity extends BaseTitleActivity {
 
     @OnClick(R.id.btn_logout)
     public void onViewClicked() {
-        Map<String, Object> map = new HashMap<>();
-        HaoConnect.loadContent("user/logout", map, "get", new HaoResultHttpResponseHandler() {
+        EMClient.getInstance().logout(false, new EMCallBack() {
             @Override
-            public void onSuccess(HaoResult result) {
-                UserManager.getInstance().logout();
-                Intent intent = new Intent(SettingTitleActivity.this, LoginTitleActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-                finish();
+            public void onSuccess() {
+                Map<String, Object> map = new HashMap<>();
+                HaoConnect.loadContent("user/logout", map, "get", new HaoResultHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(HaoResult result) {
+                        UserManager.getInstance().logout();
+                        Intent intent = new Intent(SettingTitleActivity.this, LoginTitleActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                    @Override
+                    public void onFail(HaoResult result) {
+                        showToast(result.errorStr);
+                    }
+                }, SettingTitleActivity.this);
             }
+
             @Override
-            public void onFail(HaoResult result) {
-                showToast(result.errorStr);
+            public void onError(int code, String error) {
+
             }
-        }, this);
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+        });
     }
 
     @OnClick({R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4})

@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.haoxitech.HaoConnect.HaoConnect;
@@ -14,7 +15,10 @@ import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.haoxitech.HaoConnect.HaoUtility;
 import com.hyphenate.EMCallBack;
+import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
+import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseTitleActivity;
 
@@ -77,26 +81,33 @@ public class LoginTitleActivity extends BaseTitleActivity implements View.OnClic
                 if (result.isResultsOK()) {
                     Object authInfo = result.find("extraInfo>authInfo");
                     HaoConnect.setCurrentUserInfo(((JsonObject) authInfo).get("Userid").getAsString(), ((JsonObject) authInfo).get("Logintime").getAsString(), ((JsonObject) authInfo).get("Checkcode").getAsString());
-
+                    App.app.userId = HaoConnect.getUserid();
                 }
-                EMClient.getInstance().login(textTel.getText().toString(), HaoUtility.encodeMD5String(textPassword.getText().toString()), new EMCallBack() {
-                    @Override
-                    public void onSuccess() {
-                        Intent intent = new Intent(LoginTitleActivity.this, HomeTitleActivity.class);
-                        startActivity(intent);
-                        finish();
+
+                new Thread(new Runnable() {
+                    public void run() {
+                        EMClient.getInstance().login(App.app.userId, textPassword.getText().toString(), new EMCallBack() {
+                            @Override
+                            public void onSuccess() {
+                                Intent intent = new Intent(LoginTitleActivity.this, HomeTitleActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+
+                            @Override
+                            public void onError(int code, String error) {
+                                showToast(error);
+                            }
+
+                            @Override
+                            public void onProgress(int progress, String status) {
+
+                            }
+                        });
                     }
 
-                    @Override
-                    public void onError(int code, String error) {
-                        showToast(error);
-                    }
+                }).start();
 
-                    @Override
-                    public void onProgress(int progress, String status) {
-
-                    }
-                });
             }
 
             @Override

@@ -6,13 +6,16 @@ import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.haoxitech.HaoConnect.HaoUtility;
+import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
+import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseTitleActivity;
 
@@ -111,15 +114,40 @@ public class RegisterTitleActivity extends BaseTitleActivity {
             HaoConnect.loadContent("user/register", map, "post", new HaoResultHttpResponseHandler() {
                 @Override
                 public void onSuccess(HaoResult result) {
-                    try {
-                        EMClient.getInstance().createAccount(textTel.getText().toString(), HaoUtility.encodeMD5String(textPassword.getText().toString()));
+                    new Thread(new Runnable() {
+                        public void run() {
+                            try {
+                                // call method in SDK
+                                EMClient.getInstance().createAccount(textTel.getText().toString(), HaoUtility.encodeMD5String(textPassword.getText().toString()));
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
 
-//                        DemoHelper.getInstance().setCurrentUserName(username);
-                        showToast("注册成功");
-                        finish();
-                    } catch (HyphenateException e) {
-                        e.printStackTrace();
-                    }
+                                        // save current user
+                                        App.app.userName = textTel.getText().toString();
+                                        showToast("注册成功");
+                                        finish();
+                                    }
+                                });
+                            } catch (final HyphenateException e) {
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        int errorCode = e.getErrorCode();
+                                        if (errorCode == EMError.NETWORK_ERROR) {
+                                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_anomalies), Toast.LENGTH_SHORT).show();
+                                        } else if (errorCode == EMError.USER_ALREADY_EXIST) {
+                                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.User_already_exists), Toast.LENGTH_SHORT).show();
+                                        } else if (errorCode == EMError.USER_AUTHENTICATION_FAILED) {
+                                            Toast.makeText(getApplicationContext(), "认证失败", Toast.LENGTH_SHORT).show();
+                                        } else if (errorCode == EMError.USER_ILLEGAL_ARGUMENT) {
+                                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.illegal_user_name), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "认证失败", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }).start();
                 }
 
                 @Override

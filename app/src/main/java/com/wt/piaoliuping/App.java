@@ -3,11 +3,9 @@ package com.wt.piaoliuping;
 import android.app.Application;
 import android.graphics.Bitmap;
 
-import com.hyphenate.EMCallBack;
-import com.hyphenate.chat.EMClient;
+import com.haoxitech.HaoConnect.HaoConnect;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.controller.EaseUI;
-import com.hyphenate.exceptions.HyphenateException;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -22,10 +20,15 @@ import java.io.IOException;
 
 public class App extends Application {
 
+    public static App app;
+    public String userName;
+    public String userId;
+
     @Override
     public void onCreate() {
         super.onCreate();
-
+        app = this;
+        HaoConnect.init(this);
         initImageLoader();
         initDataBase();
         initHX();
@@ -72,6 +75,25 @@ public class App extends Application {
 
     private void initHX() {
         EMOptions options = new EMOptions();
+        // 设置自动登录
+        options.setAutoLogin(true);
+        // 设置是否需要发送已读回执
+        options.setRequireAck(true);
+        // 设置是否需要发送回执，
+        options.setRequireDeliveryAck(true);
+        // 设置是否需要服务器收到消息确认
+//        options.setRequireServerAck(true);
+        // 设置是否根据服务器时间排序，默认是true
+        options.setSortMessageByServerTime(false);
+        // 收到好友申请是否自动同意，如果是自动同意就不会收到好友请求的回调，因为sdk会自动处理，默认为true
+        options.setAcceptInvitationAlways(false);
+        // 设置是否自动接收加群邀请，如果设置了当收到群邀请会自动同意加入
+        options.setAutoAcceptGroupInvitation(false);
+        // 设置（主动或被动）退出群组时，是否删除群聊聊天记录
+        options.setDeleteMessagesAsExitGroup(false);
+        // 设置是否允许聊天室的Owner 离开并删除聊天室的会话
+        options.allowChatroomOwnerLeave(true);
+
         EaseUI.getInstance().init(this, options);
 
     }
