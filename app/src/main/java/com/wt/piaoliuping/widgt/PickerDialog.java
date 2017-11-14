@@ -121,7 +121,7 @@ public class PickerDialog extends Dialog {
 
     private static WheelPicker buildPicker(WheelPicker picker, Context context) {
         picker.setVisibleItemCount(5);
-        picker.setSelectedItemTextColor(context.getResources().getColor(R.color.redColor));
+        picker.setSelectedItemTextColor(context.getResources().getColor(R.color.deepBlueColor));
         picker.setCurtain(false);
         picker.setAtmospheric(true);
         picker.setCurved(true);

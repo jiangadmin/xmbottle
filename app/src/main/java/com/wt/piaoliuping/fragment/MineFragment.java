@@ -13,7 +13,9 @@ import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.activity.FollowListActivity;
+import com.wt.piaoliuping.activity.GoodsListActivity;
 import com.wt.piaoliuping.activity.PointActivity;
+import com.wt.piaoliuping.activity.PrizeListActivity;
 import com.wt.piaoliuping.activity.RevokeListActivity;
 import com.wt.piaoliuping.activity.SettingTitleActivity;
 import com.wt.piaoliuping.base.PageFragment;
@@ -74,10 +76,13 @@ public class MineFragment extends PageFragment {
                 startActivity(new Intent(getActivity(), PointActivity.class));
                 break;
             case R.id.layout_4:
+                startActivity(new Intent(getActivity(), PrizeListActivity.class));
                 break;
             case R.id.layout_5:
+                startActivity(new Intent(getActivity(), PrizeListActivity.class));
                 break;
             case R.id.layout_6:
+                startActivity(new Intent(getActivity(), GoodsListActivity.class));
                 break;
             case R.id.layout_7:
                 break;

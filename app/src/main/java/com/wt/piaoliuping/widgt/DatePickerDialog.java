@@ -50,7 +50,7 @@ public class DatePickerDialog extends Dialog {
 
         picker.setVisibleItemCount(5);
 //        picker.setSelectedItemPosition(position);
-        picker.setSelectedItemTextColor(context.getResources().getColor(R.color.redColor));
+        picker.setSelectedItemTextColor(context.getResources().getColor(R.color.deepBlueColor));
         picker.setCurtain(false);
 //        picker.setIndicator(true);
 //        picker.setIndicatorColor(context.getResources().getColor(R.color.lightWhite));

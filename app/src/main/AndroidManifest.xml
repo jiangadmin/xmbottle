@@ -8,9 +8,11 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <!-- 环信 Required -->
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -127,6 +129,14 @@
         <activity
             android:name=".activity.WarningActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.GoodsListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PrizeListActivity"
+            android:screenOrientation="portrait" />
+
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.xm.bottle.provider"
@@ -161,6 +171,18 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v2.2"></action>
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="请输入KEY" />
     </application>
 
 </manifest>

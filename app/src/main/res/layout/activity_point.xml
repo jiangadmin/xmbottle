@@ -76,6 +76,7 @@
             android:layout_weight="1"
             android:background="@color/white"
             android:hint="请输入充值金额"
+            android:inputType="numberDecimal"
             android:textColorHint="@color/darKGrayColor" />
 
         <TextView
