@@ -1,5 +1,7 @@
 package com.wt.piaoliuping.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
@@ -24,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -185,6 +188,15 @@ public class RegisterActivity extends BaseTitleActivity {
             }
         });
         dialog.show();
+    }
+
+
+    @OnClick(R.id.btn_agreement)
+    public void onBtnViewClicked() {
+
+        Intent intent = new Intent(this, WebActivity.class);
+        intent.putExtra("title", "注册协议");
+        startActivity(intent);
     }
 
     class MyCount extends CountDownTimer {

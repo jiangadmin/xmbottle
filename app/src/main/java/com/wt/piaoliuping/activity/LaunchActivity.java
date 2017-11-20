@@ -42,7 +42,7 @@ public class LaunchActivity extends BaseTitleActivity implements Runnable {
             } else {
                 new Thread(new Runnable() {
                     public void run() {
-                        EMClient.getInstance().login(UserManager.getInstance().getUserId(), HXManager.getInstance().formatPassword(UserManager.getInstance().getPassword()), new EMCallBack() {
+                        EMClient.getInstance().login(UserManager.getInstance().getUserId(), HXManager.getInstance().formatPassword(UserManager.getInstance().getUserId()), new EMCallBack() {
                             @Override
                             public void onSuccess() {
                                 runOnUiThread(new Runnable() {

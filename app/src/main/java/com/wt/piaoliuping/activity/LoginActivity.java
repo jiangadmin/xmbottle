@@ -90,7 +90,7 @@ public class LoginActivity extends BaseTitleActivity implements View.OnClickList
                 UserManager.getInstance().setPassword(HaoUtility.encodeMD5String(textPassword.getText().toString()));
                 new Thread(new Runnable() {
                     public void run() {
-                        EMClient.getInstance().login(UserManager.getInstance().getUserId(), HXManager.getInstance().formatPassword(textPassword.getText().toString()), new EMCallBack() {
+                        EMClient.getInstance().login(UserManager.getInstance().getUserId(), HXManager.getInstance().formatPassword(UserManager.getInstance().getUserId()), new EMCallBack() {
                             @Override
                             public void onSuccess() {
                                 runOnUiThread(new Runnable() {

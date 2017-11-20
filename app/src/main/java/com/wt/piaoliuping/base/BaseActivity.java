@@ -28,6 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getContentViewID());
         ButterKnife.bind(this);
         initView();
+        AppManager.getInstance().addActivity(this);
     }
 
     public void showToast(String msg) {
@@ -44,5 +45,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void stopLoading() {
         customProgressDialog.stopProgressDialog();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppManager.getInstance().finishActivity(this);
     }
 }

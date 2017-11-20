@@ -11,6 +11,7 @@ import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.wt.piaoliuping.R;
+import com.wt.piaoliuping.base.AppManager;
 import com.wt.piaoliuping.base.BaseTitleActivity;
 import com.wt.piaoliuping.manager.UserManager;
 
@@ -60,6 +61,7 @@ public class SettingTitleActivity extends BaseTitleActivity {
                                           @Override
                                           public void onSuccess(HaoResult result) {
                                               UserManager.getInstance().logout();
+                                              AppManager.getInstance().finishAllActivity();
                                               Intent intent = new Intent(SettingTitleActivity.this, LoginActivity.class);
                                               intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                               startActivity(intent);
