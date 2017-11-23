@@ -136,7 +136,9 @@
         <activity
             android:name=".activity.PrizeListActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".activity.PhotosActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

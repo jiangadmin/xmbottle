@@ -9,34 +9,28 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.wt.piaoliuping.R;
-import com.wt.piaoliuping.base.AppManager;
+import com.wt.piaoliuping.adapter.PhotoAdapter;
+import com.wt.piaoliuping.base.BaseActivity;
 import com.wt.piaoliuping.base.BaseTitleActivity;
-import com.wt.piaoliuping.manager.UserManager;
-import com.wt.piaoliuping.utils.DateUtils;
 import com.wt.piaoliuping.widgt.CameraDialog;
-import com.wt.piaoliuping.widgt.DatePickerDialog;
-import com.wt.piaoliuping.widgt.PickerDialog;
-import com.wt.piaoliuping.widgt.SexDialog;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,153 +39,79 @@ import butterknife.OnClick;
 import rx.functions.Action1;
 
 /**
- * Created by wangtao on 2017/10/26.
+ * Created by wangtao on 2017/11/23.
  */
 
-public class UserInfoActivity extends BaseTitleActivity {
-    @BindView(R.id.image_head)
-    ImageView imageHead;
-    @BindView(R.id.layout_1)
-    LinearLayout layout1;
-    @BindView(R.id.text_name)
-    TextView textName;
-    @BindView(R.id.layout_2)
-    LinearLayout layout2;
-    @BindView(R.id.text_sex)
-    TextView textSex;
-    @BindView(R.id.layout_3)
-    LinearLayout layout3;
-    @BindView(R.id.text_city)
-    TextView textCity;
-    @BindView(R.id.layout_4)
-    LinearLayout layout4;
-    @BindView(R.id.text_birthday)
-    TextView textBirthday;
-    @BindView(R.id.layout_5)
-    LinearLayout layout5;
-    @BindView(R.id.text_star)
-    TextView textStar;
-    @BindView(R.id.layout_6)
-    LinearLayout layout6;
-    @BindView(R.id.text_sign)
-    TextView textSign;
-    @BindView(R.id.layout_7)
-    LinearLayout layout7;
-    @BindView(R.id.layout_8)
-    LinearLayout layout8;
-    @BindView(R.id.btn_submit)
-    Button btnSubmit;
+public class PhotosActivity extends BaseTitleActivity {
+    @BindView(R.id.grid_view)
+    PullToRefreshGridView gridView;
 
+    PhotoAdapter photoAdapter;
+    @BindView(R.id.text_right_title)
+    TextView textRightTitle;
     RxPermissions rxPermissions;
+
+    boolean showPhoto;
+    String userId;
 
     @Override
     public void initView() {
-        setTitle("个人资料");
+        setTitle("相册");
+        loadData();
+        photoAdapter = new PhotoAdapter(this);
+        gridView.setAdapter(photoAdapter);
+
         rxPermissions = new RxPermissions(this);
-        loadUser();
+        textRightTitle.setText("添加");
+        showPhoto = getIntent().getBooleanExtra("show", false);
+        userId = getIntent().getStringExtra("userId");
+        if (showPhoto) {
+            textRightTitle.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public int getContentViewID() {
-        return R.layout.activity_user_info;
+        return R.layout.activity_photos;
     }
 
-    @OnClick({R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6, R.id.layout_7, R.id.layout_8})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.layout_1: {
-                final CameraDialog dialog = CameraDialog.create(this, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (v.getId() == R.id.layout_camera) {
-                            handleCameraPermission();
-                        } else if (v.getId() == R.id.layout_lib) {
-                            handleAlbumPermission();
-                        }
-                    }
-                });
-                dialog.show();
-            }
-            break;
-            case R.id.layout_2: {
-                Intent intent = new Intent(this, EditActivity.class);
-                intent.putExtra("title", "昵称");
-                intent.putExtra("hint", "请输入昵称");
-                intent.putExtra("content", textName.getText());
-                intent.putExtra("key", "nickname");
-                startActivityForResult(intent, 100);
-            }
-            break;
-            case R.id.layout_3: {
-                final SexDialog dialog = SexDialog.create(this, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (v.getId() == R.id.layout_female) {
-                            textSex.setText("女");
-                            updateUserInfo("sex", "0");
-                        } else if (v.getId() == R.id.layout_male) {
-                            updateUserInfo("sex", "1");
-                            textSex.setText("男");
-                        }
-                    }
-                });
-                dialog.show();
-            }
-            break;
-            case R.id.layout_4: {
-                PickerDialog dialog = PickerDialog.create(this, new PickerDialog.PickerResultCallBack() {
-                    @Override
-                    public void choose(String result, String resultId) {
-                        textCity.setText(result);
-                        updateUserInfo("area_id", resultId);
-                    }
-                }, 0);
-                dialog.show();
-            }
-            break;
-            case R.id.layout_5: {
-                DatePickerDialog.createDialog(this, new DatePickerDialog.DatePickerResultCallBack() {
-                    @Override
-                    public void choose(String time) {
-                        if (DateUtils.getTime(time) > DateUtils.getTime(new Date())) {
-                            showToast("生日不能晚于今天");
-                        } else {
-                            textBirthday.setText(time);
-                            updateUserInfo("birthday", time);
-                        }
-                    }
-                }).show();
-            }
-            break;
-            case R.id.layout_6: {
-                Intent intent = new Intent(this, EditActivity.class);
-                intent.putExtra("title", "星座");
-                intent.putExtra("hint", "请输入星座");
-                intent.putExtra("content", textStar.getText());
-                intent.putExtra("key", "constellation");
-                intent.putExtra("type", 1);
-                startActivityForResult(intent, 100);
-            }
-            break;
-            case R.id.layout_7: {
-
-                Intent intent = new Intent(this, EditActivity.class);
-                intent.putExtra("title", "签名");
-                intent.putExtra("hint", "请输入个性签名");
-                intent.putExtra("content", textSign.getText());
-                intent.putExtra("key", "declaration");
-                intent.putExtra("type", 1);
-                startActivityForResult(intent, 100);
-            }
-            break;
-            case R.id.layout_8: {
-                Intent intent = new Intent(this, PhotosActivity.class);
-                intent.putExtra("userId", UserManager.getInstance().getUserId());
-                startActivity(intent);
-            }
-            break;
+    private void loadData() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("page", "1");
+        map.put("size", "999");
+        if (!TextUtils.isEmpty(userId)) {
+            map.put("user_id", userId);
         }
+        HaoConnect.loadContent("user_photos/list", map, "get", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                ArrayList<Object> lists = result.findAsList("results>");
+                photoAdapter.setData(lists);
+            }
+
+            @Override
+            public void onFail(HaoResult result) {
+                showToast(result.errorStr);
+            }
+        }, this);
     }
+
+
+    @OnClick(R.id.text_right_title)
+    public void onViewClicked() {
+        final CameraDialog dialog = CameraDialog.create(this, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.layout_camera) {
+                    handleCameraPermission();
+                } else if (v.getId() == R.id.layout_lib) {
+                    handleAlbumPermission();
+                }
+            }
+        });
+        dialog.show();
+    }
+
 
     private void handleCameraPermission() {
         rxPermissions.request(Manifest.permission.CAMERA)
@@ -270,9 +190,8 @@ public class UserInfoActivity extends BaseTitleActivity {
         HaoConnect.loadImageContent("axapi/up_file", compressedImage(file), "post", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                Log.e("wt", "onSuccess" + " result" + result);
                 String url = result.findAsString("filePath");
-                updateUserInfo("avatar", url);
+                updatePhotos("photo", url);
             }
 
             @Override
@@ -290,30 +209,12 @@ public class UserInfoActivity extends BaseTitleActivity {
             return;
         }
         if (requestCode == 1) {
-            ImageLoader.getInstance().displayImage("file://" + data.getStringExtra("imagePath"), imageHead);
+//            ImageLoader.getInstance().displayImage("file://" + data.getStringExtra("imagePath"), imageHead);
         }
         if (requestCode == 2) {
             onPhotoBack(data.getData());
         } else if (requestCode == 3) {
             onPhotoBack(photoUri);
-        }
-        if (requestCode == 100 && resultCode == RESULT_OK) {
-            String key = data.getStringExtra("key");
-            String value = data.getStringExtra("value");
-            updateUserInfo(key, value);
-            switch (key) {
-                case "nickname":
-                    textName.setText(value);
-                    break;
-
-                case "constellation":
-                    textStar.setText(value);
-                    break;
-
-                case "declaration":
-                    textSign.setText(value);
-                    break;
-            }
         }
     }
 
@@ -338,17 +239,18 @@ public class UserInfoActivity extends BaseTitleActivity {
 
         Log.e("size", fileTemp.length() + "");
         updateImage(fileTemp);
-        ImageLoader.getInstance().displayImage("file://" + currentImagePath, imageHead);
+//        ImageLoader.getInstance().displayImage("file://" + currentImagePath, imageHead);
     }
 
-    private void updateUserInfo(String key, String value) {
+    private void updatePhotos(String key, String value) {
         Map<String, Object> map = new HashMap<>();
         map.put(key, value);
-        HaoConnect.loadContent("user/update", map, "post", new HaoResultHttpResponseHandler() {
+        HaoConnect.loadContent("user_photos/add", map, "post", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
                 if (result.isResultsOK()) {
                     showToast("更新成功");
+                    loadData();
                 }
             }
 
@@ -409,23 +311,4 @@ public class UserInfoActivity extends BaseTitleActivity {
 //        return basePath + name + "_tmp.jpg";
     }
 
-    private void loadUser() {
-        HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
-            @Override
-            public void onSuccess(HaoResult result) {
-                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead);
-                textName.setText(result.findAsString("nickname"));
-                textSex.setText(result.findAsString("sexLabel"));
-                textBirthday.setText(result.findAsString("birthday"));
-                textStar.setText(result.findAsString("constellation"));
-                textSign.setText(result.findAsString("declaration"));
-                try {
-                    textCity.setText(result.findAsString("areaLabel").split("-")[1]);
-                } catch (Exception e) {
-
-                }
-            }
-        }, this);
-    }
 }
-

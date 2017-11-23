@@ -58,4 +58,5 @@ dependencies {
     compile 'com.hyphenate:hyphenate-sdk:3.3.0'
     compile project(path: ':easeui')
     compile 'org.greenrobot:greendao:3.2.2' // add library
+//    compile 'com.github.chrisbanes:PhotoView:latest.release.here'
 }

@@ -105,6 +105,13 @@ public class MineFragment extends PageFragment {
                 ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead);
                 textName.setText("昵称：" + result.findAsString("nickname"));
                 textNo.setText("ID：" + result.findAsString("id"));
+                if (result.findAsInt("vipLevel") == 0) {
+                    layout5.setVisibility(View.GONE);
+                    layout4.setVisibility(View.VISIBLE);
+                } else {
+                    layout4.setVisibility(View.GONE);
+                    layout5.setVisibility(View.VISIBLE);
+                }
             }
         }, getActivity());
     }

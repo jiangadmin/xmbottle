@@ -87,7 +87,6 @@ public class LoginActivity extends BaseTitleActivity implements View.OnClickList
                     Object authInfo = result.find("extraInfo>authInfo");
                     HaoConnect.setCurrentUserInfo(((JsonObject) authInfo).get("Userid").getAsString(), ((JsonObject) authInfo).get("Logintime").getAsString(), ((JsonObject) authInfo).get("Checkcode").getAsString());
                 }
-                UserManager.getInstance().setPassword(HaoUtility.encodeMD5String(textPassword.getText().toString()));
                 new Thread(new Runnable() {
                     public void run() {
                         EMClient.getInstance().login(UserManager.getInstance().getUserId(), HXManager.getInstance().formatPassword(UserManager.getInstance().getUserId()), new EMCallBack() {
@@ -96,7 +95,6 @@ public class LoginActivity extends BaseTitleActivity implements View.OnClickList
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        UserManager.getInstance().setPassword(textPassword.getText().toString());
                                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                         startActivity(intent);
                                         finish();
@@ -110,7 +108,9 @@ public class LoginActivity extends BaseTitleActivity implements View.OnClickList
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        showToast(error);
+                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
                                         stopLoading();
                                     }
                                 });

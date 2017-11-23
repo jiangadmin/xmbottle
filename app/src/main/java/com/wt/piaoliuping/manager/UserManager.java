@@ -14,7 +14,6 @@ public class UserManager {
     private static UserManager userManager;
 
     private String userId;
-    private String password;
 
     public static UserManager getInstance() {
         if (userManager == null) {
@@ -41,17 +40,5 @@ public class UserManager {
 
     public void logout() {
         setUserId("");
-    }
-
-    public String getPassword() {
-        if (TextUtils.isEmpty(password)) {
-            password = HaoConnect.getString("password");
-        }
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-        HaoConnect.putString("password", userId);
     }
 }

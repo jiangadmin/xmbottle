@@ -2,8 +2,11 @@ package com.wt.piaoliuping;
 
 import android.app.Application;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 
 import com.haoxitech.HaoConnect.HaoConnect;
+import com.haoxitech.HaoConnect.HaoResult;
+import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -11,8 +14,14 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.wt.piaoliuping.database.DataBaseHelper;
+import com.wt.piaoliuping.manager.UserManager;
+import com.wt.piaoliuping.utils.DateUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by wangtao on 2017/10/20.
@@ -31,6 +40,7 @@ public class App extends Application {
         initImageLoader();
         initDataBase();
         initHX();
+        sign();
     }
 
     /**
@@ -95,4 +105,22 @@ public class App extends Application {
 
         EaseUI.getInstance().init(this, options);
     }
+
+    private void sign() {
+        if (!TextUtils.isEmpty(UserManager.getInstance().getUserId())) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("user_id", UserManager.getInstance().getUserId());
+            map.put("sign_date", DateUtils.getStringDateAndTimeFromDate(new Date()));
+            HaoConnect.loadContent("sign_in/add", map, "get", new HaoResultHttpResponseHandler() {
+                @Override
+                public void onSuccess(HaoResult result) {
+                }
+
+                @Override
+                public void onFail(HaoResult result) {
+                }
+            }, this);
+        }
+    }
+
 }

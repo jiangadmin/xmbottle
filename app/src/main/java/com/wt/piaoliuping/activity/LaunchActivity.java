@@ -34,8 +34,7 @@ public class LaunchActivity extends BaseTitleActivity implements Runnable {
     @Override
     public void run() {
         if (UserManager.getInstance().isLogin()) {
-            if (TextUtils.isEmpty(UserManager.getInstance().getUserId()) ||
-                    TextUtils.isEmpty(UserManager.getInstance().getPassword())) {
+            if (TextUtils.isEmpty(UserManager.getInstance().getUserId())) {
                 Intent intent = new Intent(this, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

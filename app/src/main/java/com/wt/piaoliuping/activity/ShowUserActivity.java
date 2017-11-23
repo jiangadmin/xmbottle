@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.haoxitech.HaoConnect.HaoConnect;
@@ -13,6 +14,7 @@ import com.hyphenate.chat.EMMessage;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseTitleActivity;
+import com.wt.piaoliuping.manager.UserManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,6 +53,8 @@ public class ShowUserActivity extends BaseTitleActivity {
     TextView textBlack;
     @BindView(R.id.text_right_title)
     TextView textRightTitle;
+    @BindView(R.id.layout_photo)
+    LinearLayout layoutPhoto;
     private String userId;
     private String userName;
 
@@ -122,7 +126,7 @@ public class ShowUserActivity extends BaseTitleActivity {
         }, this);
     }
 
-    @OnClick({R.id.text_add_friend, R.id.text_msg, R.id.text_right_title})
+    @OnClick({R.id.text_add_friend, R.id.text_msg, R.id.text_right_title, R.id.layout_photo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.text_add_friend:
@@ -132,7 +136,7 @@ public class ShowUserActivity extends BaseTitleActivity {
                     addFriend();
                 }
                 break;
-            case R.id.text_msg:
+            case R.id.text_msg: {
 
                 // 跳转到聊天界面，开始聊天
                 Intent intent = new Intent(this, ChatActivity.class);
@@ -140,11 +144,19 @@ public class ShowUserActivity extends BaseTitleActivity {
                 intent.putExtra("userId", userId);
                 intent.putExtra("chatType", EMMessage.ChatType.Chat);
                 startActivity(intent);
-                break;
+            }
+            break;
             case R.id.text_right_title: {
                 Intent intent1 = new Intent(this, WarningActivity.class);
                 intent1.putExtra("userId", userId);
                 startActivity(intent1);
+            }
+            break;
+            case R.id.layout_photo: {
+                Intent intent = new Intent(this, PhotosActivity.class);
+                intent.putExtra("show", true);
+                intent.putExtra("userId", UserManager.getInstance().getUserId());
+                startActivity(intent);
             }
             break;
         }

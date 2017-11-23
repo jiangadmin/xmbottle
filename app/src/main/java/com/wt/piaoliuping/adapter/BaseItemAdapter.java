@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public abstract class BaseItemAdapter<T> extends BaseAdapter {
 
     public Context context;
-    public ArrayList<T> dataList = null;
+    public ArrayList<T> dataList = new ArrayList<>();
 
     public int index = -1;
 
@@ -38,10 +38,10 @@ public abstract class BaseItemAdapter<T> extends BaseAdapter {
     }
 
     public void addData(ArrayList<T> addList) {
-        if (this.dataList == null) {
+        if (this.dataList == null || dataList.isEmpty()) {
             setData(addList);
         } else {
-            if(addList.size()==0){
+            if (addList.size() == 0) {
                 return;
             }
             dataList.addAll(addList);
