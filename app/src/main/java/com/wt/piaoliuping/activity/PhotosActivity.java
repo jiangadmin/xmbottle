@@ -57,7 +57,6 @@ public class PhotosActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitle("相册");
-        loadData();
         photoAdapter = new PhotoAdapter(this);
         gridView.setAdapter(photoAdapter);
 
@@ -68,6 +67,8 @@ public class PhotosActivity extends BaseTitleActivity {
         if (showPhoto) {
             textRightTitle.setVisibility(View.GONE);
         }
+
+        loadData();
     }
 
     @Override

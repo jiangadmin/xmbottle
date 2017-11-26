@@ -71,9 +71,9 @@ public class PointActivity extends BaseTitleActivity {
             case R.id.btn_charge: {
                 Map<String, Object> map = new HashMap<>();
                 map.put("pay_type", "alipay");
-                map.put("star", editMoney.getText().toString());
+                map.put("price", editMoney.getText().toString());
                 startLoading();
-                HaoConnect.loadContent("user_score_log/buy_star", map, "post", new HaoResultHttpResponseHandler() {
+                HaoConnect.loadContent("pay_order/buy_star", map, "post", new HaoResultHttpResponseHandler() {
                     @Override
                     public void onSuccess(HaoResult result) {
                         stopLoading();
