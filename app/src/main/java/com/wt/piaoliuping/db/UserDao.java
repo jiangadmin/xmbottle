@@ -10,8 +10,8 @@ import org.greenrobot.greendao.annotation.Generated;
 
 @Entity(nameInDb = "user")
 public class UserDao {
-    @Id
     private Long id;
+    @Id
     private String userName;
     private String nick;
     private String avatar;

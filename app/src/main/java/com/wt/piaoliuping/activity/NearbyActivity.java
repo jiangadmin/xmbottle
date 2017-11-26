@@ -50,7 +50,7 @@ public class NearbyActivity extends BaseTitleActivity implements AdapterView.OnI
         Map<String, Object> map = new HashMap<>();
         map.put("page", "1");
         map.put("size", "999");
-        HaoConnect.loadContent("user/list", map, "get", new HaoResultHttpResponseHandler() {
+        HaoConnect.loadContent("user_site/list_user", map, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
                 ArrayList<Object> lists = result.findAsList("results>");

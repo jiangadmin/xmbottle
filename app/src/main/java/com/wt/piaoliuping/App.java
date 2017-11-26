@@ -3,19 +3,27 @@ package com.wt.piaoliuping;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.controller.EaseUI;
+import com.hyphenate.easeui.domain.EaseUser;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.wt.piaoliuping.database.DataBaseHelper;
+import com.wt.piaoliuping.db.DaoMaster;
+import com.wt.piaoliuping.db.DaoSession;
+import com.wt.piaoliuping.db.UserDao;
+import com.wt.piaoliuping.db.UserDaoDao;
 import com.wt.piaoliuping.manager.UserManager;
 import com.wt.piaoliuping.utils.DateUtils;
+
+import org.greenrobot.greendao.database.Database;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,12 +82,22 @@ public class App extends Application {
     }
 
 
+    private DaoSession daoSession;
+
     private void initDataBase() {
         try {
             DataBaseHelper.copyDataBase(this, "zipArea.db");
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+
+        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(getApplicationContext(), "user_db");
+        Database db = devOpenHelper.getWritableDb();
+        daoSession = new DaoMaster(db).newSession();
+    }
+
+    public DaoSession getDaoSession() {
+        return daoSession;
     }
 
     private void initHX() {
@@ -104,6 +122,27 @@ public class App extends Application {
         options.allowChatroomOwnerLeave(true);
 
         EaseUI.getInstance().init(this, options);
+
+        EaseUI.getInstance().setUserProfileProvider(new EaseUI.EaseUserProfileProvider() {
+
+            @Override
+            public EaseUser getUser(String username) {
+                return getUserInfo(username);
+            }
+        });
+    }
+
+    private EaseUser getUserInfo(String username) {
+        loadUser(username);
+        UserDaoDao userDao = getDaoSession().getUserDaoDao();
+        UserDao userDao1 = userDao.load(username);
+        if (userDao1 == null) {
+            return null;
+        }
+        EaseUser user = new EaseUser(username);
+        user.setAvatar(userDao1.getAvatar());
+        user.setNickname(userDao1.getNick());
+        return user;
     }
 
     private void sign() {
@@ -123,4 +162,24 @@ public class App extends Application {
         }
     }
 
+    private void loadUser(String userId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", userId);
+        HaoConnect.loadContent("user/detail", map, "get", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+
+                UserDaoDao userDao = getDaoSession().getUserDaoDao();
+                UserDao userDao1 = new UserDao();
+                userDao1.setAvatar(result.findAsString("avatarPreView"));
+                userDao1.setUserName(result.findAsString("id"));
+                userDao1.setNick(result.findAsString("nickname"));
+                userDao.update(userDao1);
+            }
+
+            @Override
+            public void onFail(HaoResult result) {
+            }
+        }, this);
+    }
 }
