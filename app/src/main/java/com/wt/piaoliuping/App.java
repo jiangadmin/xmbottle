@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.facebook.stetho.Stetho;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
@@ -48,7 +49,7 @@ public class App extends Application {
         initImageLoader();
         initDataBase();
         initHX();
-        sign();
+        Stetho.initializeWithDefaults(this);
     }
 
     /**
@@ -145,23 +146,6 @@ public class App extends Application {
         return user;
     }
 
-    private void sign() {
-        if (!TextUtils.isEmpty(UserManager.getInstance().getUserId())) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("user_id", UserManager.getInstance().getUserId());
-            map.put("sign_date", DateUtils.getStringDateAndTimeFromDate(new Date()));
-            HaoConnect.loadContent("sign_in/add", map, "get", new HaoResultHttpResponseHandler() {
-                @Override
-                public void onSuccess(HaoResult result) {
-                }
-
-                @Override
-                public void onFail(HaoResult result) {
-                }
-            }, this);
-        }
-    }
-
     private void loadUser(String userId) {
         Map<String, Object> map = new HashMap<>();
         map.put("id", userId);
@@ -174,7 +158,7 @@ public class App extends Application {
                 userDao1.setAvatar(result.findAsString("avatarPreView"));
                 userDao1.setUserName(result.findAsString("id"));
                 userDao1.setNick(result.findAsString("nickname"));
-                userDao.update(userDao1);
+                userDao.insertOrReplace(userDao1);
             }
 
             @Override

@@ -4,21 +4,30 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.haoxitech.HaoConnect.HaoConnect;
+import com.haoxitech.HaoConnect.HaoResult;
+import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseTitleActivity;
 import com.wt.piaoliuping.fragment.BottleFragment;
 import com.wt.piaoliuping.fragment.MessageFragment;
 import com.wt.piaoliuping.fragment.NearbyFragment;
 import com.wt.piaoliuping.fragment.MineFragment;
+import com.wt.piaoliuping.manager.UserManager;
+import com.wt.piaoliuping.utils.DateUtils;
 import com.wt.piaoliuping.widgt.CustomViewPager;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -65,6 +74,8 @@ public class HomeActivity extends BaseTitleActivity {
                 }
             }
         });
+
+        sign();
     }
 
     @Override
@@ -111,4 +122,24 @@ public class HomeActivity extends BaseTitleActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+
+    private void sign() {
+        if (!TextUtils.isEmpty(UserManager.getInstance().getUserId())) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("user_id", UserManager.getInstance().getUserId());
+            map.put("sign_date", DateUtils.getStringDateAndTimeFromDate(new Date()));
+            HaoConnect.loadContent("sign_in/add", map, "get", new HaoResultHttpResponseHandler() {
+                @Override
+                public void onSuccess(HaoResult result) {
+                    showToast(result.results.toString());
+                }
+
+                @Override
+                public void onFail(HaoResult result) {
+                }
+            }, this);
+        }
+    }
+
 }

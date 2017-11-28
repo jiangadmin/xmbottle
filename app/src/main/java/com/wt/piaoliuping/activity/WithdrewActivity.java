@@ -13,6 +13,9 @@ import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseTitleActivity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -25,6 +28,8 @@ public class WithdrewActivity extends BaseTitleActivity {
     TextView textRightTitle;
     @BindView(R.id.text_star)
     TextView textStar;
+    @BindView(R.id.edit_num)
+    EditText editNum;
     @BindView(R.id.edit_money)
     EditText editMoney;
     @BindView(R.id.layout_1)
@@ -33,8 +38,12 @@ public class WithdrewActivity extends BaseTitleActivity {
     EditText editAccount;
     @BindView(R.id.layout_2)
     LinearLayout layout2;
+    @BindView(R.id.layout_3)
+    LinearLayout layout3;
     @BindView(R.id.btn_charge)
     Button btnCharge;
+
+    String amount;
 
     @Override
     public void initView() {
@@ -55,6 +64,7 @@ public class WithdrewActivity extends BaseTitleActivity {
                 startActivity(intent);
                 break;
             case R.id.btn_charge:
+                withdrew();
                 break;
         }
     }
@@ -70,7 +80,48 @@ public class WithdrewActivity extends BaseTitleActivity {
             @Override
             public void onSuccess(HaoResult result) {
                 textStar.setText("我的星星：" + result.findAsString("amount"));
+                amount = result.findAsString("amount");
             }
         }, this);
+    }
+
+    private void withdrew() {
+        if (editMoney.getText().toString().isEmpty()) {
+            showToast("用户名不能为空");
+            return;
+        }
+        if (editAccount.getText().toString().isEmpty()) {
+            showToast("账户不能为空");
+            return;
+        }
+        Map<String, Object> map = new HashMap<>();
+        String score;
+        if (editNum.getText().toString().length() == 0) {
+            score = amount;
+        } else {
+            score = editNum.getText().toString();
+        }
+        map.put("score", score);
+        map.put("extr_type", 1);
+        map.put("extr_name", editMoney.getText().toString());
+        map.put("extr_username", editAccount.getText().toString());
+        map.put("extr_notes", "支付宝直接转账给我就好，转好之后通知下 谢谢");
+        startLoading();
+        HaoConnect.loadContent("extraction/add", map, "post", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                if (result.isResultsOK()) {
+                    showToast("提现成功");
+                }
+                stopLoading();
+            }
+
+            @Override
+            public void onFail(HaoResult result) {
+                showToast(result.errorStr);
+                stopLoading();
+            }
+        }, this);
+
     }
 }

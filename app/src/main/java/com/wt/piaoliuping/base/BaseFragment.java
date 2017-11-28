@@ -3,6 +3,7 @@ package com.wt.piaoliuping.base;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,9 @@ public abstract class BaseFragment extends Fragment {
 
     public void showToast(String notice) {
         try {
+            if (TextUtils.isEmpty(notice)) {
+                return;
+            }
             Toast.makeText(getActivity(), notice, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();

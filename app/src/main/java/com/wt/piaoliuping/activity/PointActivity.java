@@ -118,7 +118,7 @@ public class PointActivity extends BaseTitleActivity {
             public void onSuccess(HaoResult result) {
 //                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead);
                 textMineStar.setText("我的星星：" + result.findAsString("amount"));
-                textPoint.setText("系统积分：" + result.findAsString("score"));
+                textMinePoint.setText("系统积分：" + result.findAsString("score"));
                 stopLoading();
             }
         }, this);

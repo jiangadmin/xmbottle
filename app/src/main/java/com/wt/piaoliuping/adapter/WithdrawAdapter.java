@@ -33,7 +33,7 @@ public class WithdrawAdapter extends BaseItemAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         HaoResult haoResult = (HaoResult) dataList.get(position);
-        holder.textPoint.setText("-" + haoResult.findAsString("extrMoney"));
+        holder.textPoint.setText(haoResult.findAsString("scoreLabel"));
         holder.textTime.setText(haoResult.findAsString("createTime"));
         holder.textStatus.setText(haoResult.findAsString("extrStatusLabel"));
         return convertView;

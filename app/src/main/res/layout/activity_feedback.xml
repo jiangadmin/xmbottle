@@ -9,16 +9,24 @@
 
     <EditText
         android:id="@+id/text_input"
+        style="@style/text_14_222222"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:background="@drawable/bolder_white_view_bg"
         android:gravity="top"
         android:hint="请输入反馈内容"
-        style="@style/text_14_222222"
         android:padding="10dp"
         android:textColorHint="@color/darKGrayColor" />
 
+    <TextView
+        android:id="@+id/text_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="3dp"
+        android:padding="10dp" />
+
     <Button
+
         android:id="@+id/btn_submit"
         android:layout_width="match_parent"
         android:layout_height="45dp"

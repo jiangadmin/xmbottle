@@ -22,7 +22,6 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.adapter.PhotoAdapter;
-import com.wt.piaoliuping.base.BaseActivity;
 import com.wt.piaoliuping.base.BaseTitleActivity;
 import com.wt.piaoliuping.widgt.CameraDialog;
 

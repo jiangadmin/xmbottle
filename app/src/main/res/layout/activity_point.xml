@@ -95,6 +95,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/bolder_white_view_bg"
         android:gravity="center_vertical"
+        android:visibility="gone"
         android:orientation="horizontal">
 
         <TextView
