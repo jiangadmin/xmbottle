@@ -9,6 +9,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.adapter.NearbyAdapter;
 import com.wt.piaoliuping.base.BaseTitleActivity;
@@ -50,6 +51,8 @@ public class NearbyActivity extends BaseTitleActivity implements AdapterView.OnI
         Map<String, Object> map = new HashMap<>();
         map.put("page", "1");
         map.put("size", "999");
+        map.put("lat", App.app.latitude);
+        map.put("lng", App.app.longitude);
         HaoConnect.loadContent("user_site/list_user", map, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {

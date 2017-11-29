@@ -11,6 +11,9 @@ import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.activity.FollowListActivity;
 import com.wt.piaoliuping.activity.GoodsListActivity;
@@ -84,8 +87,35 @@ public class MineFragment extends PageFragment {
             case R.id.layout_6:
                 startActivity(new Intent(getActivity(), GoodsListActivity.class));
                 break;
-            case R.id.layout_7:
-                break;
+            case R.id.layout_7: {
+                new ShareAction(getActivity())
+                        .withText("hello")
+                        .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
+                        .setCallback(new UMShareListener() {
+                            @Override
+                            public void onStart(SHARE_MEDIA share_media) {
+
+                            }
+
+                            @Override
+                            public void onResult(SHARE_MEDIA share_media) {
+
+                            }
+
+                            @Override
+                            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+
+                            }
+
+                            @Override
+                            public void onCancel(SHARE_MEDIA share_media) {
+
+                            }
+                        })
+                        .open();
+
+            }
+            break;
             case R.id.layout_8:
                 startActivity(new Intent(getActivity(), SettingTitleActivity.class));
                 break;
@@ -115,4 +145,5 @@ public class MineFragment extends PageFragment {
             }
         }, getActivity());
     }
+
 }

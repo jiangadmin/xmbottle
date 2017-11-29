@@ -115,7 +115,6 @@ public class RegisterActivity extends BaseTitleActivity {
             return;
         }
         if (!btnAgreement.isChecked()) {
-
             showToast("请先同意相关协议");
             return;
         }

@@ -43,7 +43,7 @@ public class ShowBottleActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
-        setTitle("来自***的瓶子");
+//        setTitle("来自***的瓶子");
 
         msgId = getIntent().getStringExtra("msgId");
         loadDetail();
@@ -82,6 +82,7 @@ public class ShowBottleActivity extends BaseTitleActivity {
                 textName.setText("[" + city + "]" + result.findAsString("throwUserLocal>nickname"));
                 textSex.setText(result.findAsString("throwUserLocal>sexLabel") + " " + result.find("throwUserLocal>age") + result.find("throwUserLocal>constellation"));
                 textTime.setText(result.findAsString("throwUserLocal>createTime"));
+                setTitle("来自" + city + "的瓶子");
 
                 textContent.setText(result.findAsString("message"));
                 stopLoading();

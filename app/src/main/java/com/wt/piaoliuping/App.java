@@ -2,9 +2,11 @@ package com.wt.piaoliuping;
 
 import android.app.Application;
 import android.graphics.Bitmap;
-import android.text.TextUtils;
-import android.view.View;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.facebook.stetho.Stetho;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
@@ -16,19 +18,17 @@ import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 import com.wt.piaoliuping.database.DataBaseHelper;
 import com.wt.piaoliuping.db.DaoMaster;
 import com.wt.piaoliuping.db.DaoSession;
 import com.wt.piaoliuping.db.UserDao;
 import com.wt.piaoliuping.db.UserDaoDao;
-import com.wt.piaoliuping.manager.UserManager;
-import com.wt.piaoliuping.utils.DateUtils;
 
 import org.greenrobot.greendao.database.Database;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +40,10 @@ public class App extends Application {
 
     public static App app;
     public String userName;
+    public LocationClient mLocationClient = null;
+    private MyLocationListener myListener = new MyLocationListener();
+    public double latitude;
+    public double longitude;
 
     @Override
     public void onCreate() {
@@ -49,7 +53,30 @@ public class App extends Application {
         initImageLoader();
         initDataBase();
         initHX();
+        initUMeng();
         Stetho.initializeWithDefaults(this);
+        initBDMap();
+    }
+
+    private void initBDMap() {
+        mLocationClient = new LocationClient(getApplicationContext());
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+        option.setCoorType("bd09ll");
+        option.setScanSpan(1000);
+        option.setOpenGps(true);
+        option.setLocationNotify(true);
+        option.setIgnoreKillProcess(false);
+        option.setEnableSimulateGps(false);
+        mLocationClient.setLocOption(option);
+        mLocationClient.registerLocationListener(myListener);
+        mLocationClient.start();
+    }
+
+    private void initUMeng() {
+        UMShareAPI.get(this);
+        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
+        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
     }
 
     /**
@@ -165,5 +192,23 @@ public class App extends Application {
             public void onFail(HaoResult result) {
             }
         }, this);
+    }
+
+    public class MyLocationListener implements BDLocationListener {
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
+            //以下只列举部分获取经纬度相关（常用）的结果信息
+            //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
+            latitude = location.getLatitude();    //获取纬度信息
+            longitude = location.getLongitude();    //获取经度信息
+            float radius = location.getRadius();    //获取定位精度，默认值为0.0f
+
+            String coorType = location.getCoorType();
+            //获取经纬度坐标类型，以LocationClientOption中设置过的坐标类型为准
+
+            int errorCode = location.getLocType();
+            //获取定位类型、定位错误返回码，具体信息可参照类参考中BDLocation类中的说明
+        }
     }
 }

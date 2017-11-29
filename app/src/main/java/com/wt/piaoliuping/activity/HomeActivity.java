@@ -1,5 +1,6 @@
 package com.wt.piaoliuping.activity;
 
+import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,12 +14,13 @@ import android.widget.Toast;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.umeng.socialize.UMShareAPI;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseTitleActivity;
 import com.wt.piaoliuping.fragment.BottleFragment;
 import com.wt.piaoliuping.fragment.MessageFragment;
-import com.wt.piaoliuping.fragment.NearbyFragment;
 import com.wt.piaoliuping.fragment.MineFragment;
+import com.wt.piaoliuping.fragment.NearbyFragment;
 import com.wt.piaoliuping.manager.UserManager;
 import com.wt.piaoliuping.utils.DateUtils;
 import com.wt.piaoliuping.widgt.CustomViewPager;
@@ -83,10 +85,10 @@ public class HomeActivity extends BaseTitleActivity {
         return R.layout.activity_home;
     }
 
-    static class ViewPagerAdapter extends FragmentPagerAdapter {
+    private static class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> fragments = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager fm) {
+        ViewPagerAdapter(FragmentManager fm) {
             super(fm);
             fragments.add(new MessageFragment());
             fragments.add(new BottleFragment());
@@ -140,6 +142,13 @@ public class HomeActivity extends BaseTitleActivity {
                 }
             }, this);
         }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 
 }
