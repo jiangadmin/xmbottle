@@ -1,12 +1,17 @@
 package com.wt.piaoliuping.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.activity.SendBottleActivity;
 import com.wt.piaoliuping.activity.ShowBottleActivity;
@@ -16,13 +21,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Created by wangtao on 2017/10/25.
  */
 
 public class BottleFragment extends PageFragment {
+    @BindView(R.id.image_head)
+    ImageView imageHead;
+    @BindView(R.id.text_name)
+    TextView textName;
+    @BindView(R.id.text_no)
+    TextView textNo;
     @BindView(R.id.text_send)
     TextView textSend;
     @BindView(R.id.text_received)
@@ -32,6 +45,7 @@ public class BottleFragment extends PageFragment {
     public void initView(View view) {
         super.initView(view);
         setTitle("瓶子");
+        loadUser();
     }
 
     @Override
@@ -59,6 +73,24 @@ public class BottleFragment extends PageFragment {
             @Override
             public void onFail(HaoResult result) {
                 showToast(result.errorStr);
+            }
+        }, getActivity());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+
+    private void loadUser() {
+        HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead);
+                textName.setText("昵称：" + result.findAsString("nickname"));
+                textNo.setText("星星：" + result.findAsString("score"));
+
             }
         }, getActivity());
     }

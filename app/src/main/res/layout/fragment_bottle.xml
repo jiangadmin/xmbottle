@@ -2,27 +2,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <include layout="@layout/layout_title" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:minHeight="160dp"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <ImageView
+            android:id="@+id/image_head"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/text_name"
+            style="@style/text_14_999999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/text_no"
+            style="@style/text_14_999999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <TextView
         android:id="@+id/text_send"
         android:layout_width="100dp"
+        android:layout_height="40dp"
         android:layout_marginTop="100dp"
-        android:layout_height="30dp"
-        android:background="@drawable/bolder_white_view_bg"
+        android:background="@drawable/bolder_white_corner_view_bg"
         android:gravity="center"
         android:text="扔一个" />
 
     <TextView
         android:id="@+id/text_received"
         android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="30dp"
         android:layout_marginTop="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/bolder_white_view_bg"
+        android:background="@drawable/bolder_white_corner_view_bg"
         android:gravity="center"
         android:text="捡一个" />
 

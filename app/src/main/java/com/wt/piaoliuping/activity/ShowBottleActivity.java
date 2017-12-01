@@ -11,6 +11,7 @@ import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wt.piaoliuping.R;
+import com.wt.piaoliuping.base.BaseActivity;
 import com.wt.piaoliuping.base.BaseTitleActivity;
 
 import java.util.HashMap;
@@ -23,7 +24,7 @@ import butterknife.OnClick;
  * Created by wangtao on 2017/10/28.
  */
 
-public class ShowBottleActivity extends BaseTitleActivity {
+public class ShowBottleActivity extends BaseActivity {
     @BindView(R.id.image_head)
     ImageView imageHead;
     @BindView(R.id.text_name)
@@ -44,7 +45,6 @@ public class ShowBottleActivity extends BaseTitleActivity {
     @Override
     public void initView() {
 //        setTitle("来自***的瓶子");
-
         msgId = getIntent().getStringExtra("msgId");
         loadDetail();
     }
