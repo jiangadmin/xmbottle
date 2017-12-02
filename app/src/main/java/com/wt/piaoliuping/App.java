@@ -1,6 +1,7 @@
 package com.wt.piaoliuping;
 
 import android.app.Application;
+import android.content.Intent;
 import android.graphics.Bitmap;
 
 import com.baidu.location.BDLocation;
@@ -12,6 +13,8 @@ import com.facebook.stetho.Stetho;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.hyphenate.EMConnectionListener;
+import com.hyphenate.EMError;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
@@ -25,11 +28,15 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.utils.Log;
+import com.wt.piaoliuping.activity.LoginActivity;
+import com.wt.piaoliuping.activity.SettingTitleActivity;
+import com.wt.piaoliuping.base.AppManager;
 import com.wt.piaoliuping.database.DataBaseHelper;
 import com.wt.piaoliuping.db.DaoMaster;
 import com.wt.piaoliuping.db.DaoSession;
 import com.wt.piaoliuping.db.UserDao;
 import com.wt.piaoliuping.db.UserDaoDao;
+import com.wt.piaoliuping.manager.UserManager;
 
 import org.greenrobot.greendao.database.Database;
 

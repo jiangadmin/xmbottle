@@ -14,8 +14,12 @@ import android.widget.Toast;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.hyphenate.EMConnectionListener;
+import com.hyphenate.EMError;
+import com.hyphenate.chat.EMClient;
 import com.umeng.socialize.UMShareAPI;
 import com.wt.piaoliuping.R;
+import com.wt.piaoliuping.base.AppManager;
 import com.wt.piaoliuping.base.BaseTitleActivity;
 import com.wt.piaoliuping.fragment.BottleFragment;
 import com.wt.piaoliuping.fragment.MessageFragment;
@@ -78,6 +82,24 @@ public class HomeActivity extends BaseTitleActivity {
         });
 
         sign();
+
+        EMClient.getInstance().addConnectionListener(new EMConnectionListener() {
+            @Override
+            public void onConnected() {
+
+            }
+
+            @Override
+            public void onDisconnected(int errorCode) {
+                if (errorCode == EMError.USER_LOGIN_ANOTHER_DEVICE) {
+                    UserManager.getInstance().logout();
+                    AppManager.getInstance().finishAllActivity();
+                    Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override

@@ -81,6 +81,7 @@
                 android:paddingRight="1dp"
                 android:paddingTop="3dp"
                 android:textSize="18sp"
+                android:textColor="#555555"
                 android:imeOptions="actionSend"/>
 
             <RelativeLayout 
