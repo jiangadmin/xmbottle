@@ -90,7 +90,7 @@ public class WarningActivity extends BaseTitleActivity implements AdapterView.On
                 map.put("user_id", userId);
                 map.put("content", textInput.getText().toString());
                 if (!images.isEmpty()) {
-                    StringBuffer stringBuffer = new StringBuffer();
+                    StringBuilder stringBuffer = new StringBuilder();
                     for (String str : images) {
                         if (stringBuffer.toString().length() > 0) {
                             stringBuffer.append(",");

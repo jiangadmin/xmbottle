@@ -1,6 +1,8 @@
 package com.wt.piaoliuping.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -29,6 +31,9 @@ public class FriendListActivity extends BaseTitleActivity implements AdapterView
 
     FriendAdapter friendAdapter;
 
+    private Boolean choose;
+    private String prizeId;
+
     @Override
     public void initView() {
 
@@ -38,6 +43,8 @@ public class FriendListActivity extends BaseTitleActivity implements AdapterView
 
         listView.setMode(PullToRefreshBase.Mode.DISABLED);
         listView.setOnItemClickListener(this);
+        choose = getIntent().getBooleanExtra("choose", false);
+        prizeId = getIntent().getStringExtra("prizeId");
         loadData();
     }
 
@@ -67,10 +74,42 @@ public class FriendListActivity extends BaseTitleActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        HaoResult result = (HaoResult) parent.getAdapter().getItem(position);
-        Intent intent = new Intent(this, ShowUserActivity.class);
-        intent.putExtra("userId", result.findAsString("toUserLocal>id"));
-        intent.putExtra("userName", result.findAsString("toUserLocal>nickname"));
-        startActivity(intent);
+        final HaoResult result = (HaoResult) parent.getAdapter().getItem(position);
+        if (choose) {
+            new AlertDialog.Builder(this)
+                    .setTitle("提示")
+                    .setMessage("确定将礼物送给该好友吗")
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            String friendId = result.findAsString("toUserLocal>id");
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("user_goods_item_id", prizeId);
+                            map.put("give_user_id", friendId);
+                            HaoConnect.loadContent("user_goods_item/give_user", map, "post", new HaoResultHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(HaoResult result) {
+                                    showToast("增送成功");
+                                    setResult(RESULT_OK);
+                                    finish();
+                                }
+
+                                @Override
+                                public void onFail(HaoResult result) {
+                                    showToast(result.errorStr);
+                                }
+                            }, FriendListActivity.this);
+                        }
+                    })
+                    .setNegativeButton("取消", null)
+                    .create()
+                    .show();
+
+        } else {
+            Intent intent = new Intent(this, ShowUserActivity.class);
+            intent.putExtra("userId", result.findAsString("toUserLocal>id"));
+            intent.putExtra("userName", result.findAsString("toUserLocal>nickname"));
+            startActivity(intent);
+        }
     }
 }

@@ -87,6 +87,11 @@ public class PhotosActivity extends BaseTitleActivity {
             public void onSuccess(HaoResult result) {
                 ArrayList<Object> lists = result.findAsList("results>");
                 photoAdapter.setData(lists);
+                if (photoAdapter.dataList.isEmpty()) {
+                    showNoData();
+                } else {
+                    hideNoData();
+                }
             }
 
             @Override

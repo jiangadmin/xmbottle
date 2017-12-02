@@ -116,9 +116,8 @@ public class PointActivity extends BaseTitleActivity {
         HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-//                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead);
-                textMineStar.setText("我的星星：" + result.findAsString("amount"));
-                textMinePoint.setText("系统积分：" + result.findAsString("score"));
+                textMinePoint.setText("我的星星：" + result.findAsString("amount"));
+                textMineStar.setText("系统积分：" + result.findAsString("score"));
                 stopLoading();
             }
         }, this);
@@ -146,27 +145,6 @@ public class PointActivity extends BaseTitleActivity {
                     }
                     break;
                 }
-//                case SDK_AUTH_FLAG: {
-//                    @SuppressWarnings("unchecked")
-//                    AuthResult authResult = new AuthResult((Map<String, String>) msg.obj, true);
-//                    String resultStatus = authResult.getResultStatus();
-//
-//                    // 判断resultStatus 为“9000”且result_code
-//                    // 为“200”则代表授权成功，具体状态码代表含义可参考授权接口文档
-//                    if (TextUtils.equals(resultStatus, "9000") && TextUtils.equals(authResult.getResultCode(), "200")) {
-//                        // 获取alipay_open_id，调支付时作为参数extern_token 的value
-//                        // 传入，则支付账户为该授权账户
-//                        Toast.makeText(PayDemoActivity.this,
-//                                "授权成功\n" + String.format("authCode:%s", authResult.getAuthCode()), Toast.LENGTH_SHORT)
-//                                .show();
-//                    } else {
-//                        // 其他状态值则为授权失败
-//                        Toast.makeText(PayDemoActivity.this,
-//                                "授权失败" + String.format("authCode:%s", authResult.getAuthCode()), Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                    break;
-//                }
                 default:
                     break;
             }

@@ -11,6 +11,9 @@ import com.facebook.stetho.Stetho;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.hyphenate.EMMessageListener;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.domain.EaseUser;
@@ -20,6 +23,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.utils.Log;
 import com.wt.piaoliuping.database.DataBaseHelper;
 import com.wt.piaoliuping.db.DaoMaster;
 import com.wt.piaoliuping.db.DaoSession;
@@ -30,6 +34,7 @@ import org.greenrobot.greendao.database.Database;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -75,7 +80,7 @@ public class App extends Application {
 
     private void initUMeng() {
         UMShareAPI.get(this);
-        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
+        PlatformConfig.setWeixin("wx4b57ed12eb6b3040", "5bb696d9ccd75a38c8a0bfe0675559b3");
         PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
     }
 
@@ -158,6 +163,8 @@ public class App extends Application {
                 return getUserInfo(username);
             }
         });
+
+
     }
 
     private EaseUser getUserInfo(String username) {

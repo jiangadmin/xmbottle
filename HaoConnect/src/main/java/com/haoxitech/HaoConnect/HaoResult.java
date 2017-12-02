@@ -121,7 +121,7 @@ public class HaoResult {
                 }
             }
 
-            if (changeValue.isJsonNull() || changeValue == null || changeValue.equals("null")) {
+            if ( changeValue == null || changeValue.isJsonNull() ||changeValue.equals("null")) {
                 return "";
             } else {
                 Object value = value(changeValue);
@@ -133,13 +133,13 @@ public class HaoResult {
 
     public Object value(JsonElement value) {
         if (value instanceof JsonObject) {
-            if (((JsonObject) value).get("modelType") != null) {
+//            if (((JsonObject) value).get("modelType") != null) {
                 return HaoResult.instanceModel(value.getAsJsonObject(), this.errorCode, this.errorStr, this.extraInfo);
-            }
-            if (value != null)
-                return value;
-            else
-                return "";
+//            }
+//            if (value != null)
+//                return value;
+//            else
+//                return "";
         } else if (value instanceof JsonArray) {
             ArrayList<Object> array = new ArrayList<>();
             for (int i = 0; i < ((JsonArray) value).size(); i++) {

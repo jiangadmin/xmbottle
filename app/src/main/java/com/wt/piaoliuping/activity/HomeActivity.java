@@ -134,7 +134,7 @@ public class HomeActivity extends BaseTitleActivity {
             HaoConnect.loadContent("sign_in/add", map, "get", new HaoResultHttpResponseHandler() {
                 @Override
                 public void onSuccess(HaoResult result) {
-                    showToast(result.results.toString());
+                    showToast(result.findAsString("results>"));
                 }
 
                 @Override

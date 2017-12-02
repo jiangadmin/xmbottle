@@ -55,6 +55,11 @@ public class RevokeListActivity extends BaseTitleActivity implements AdapterView
             public void onSuccess(HaoResult result) {
                 ArrayList<Object> lists = result.findAsList("results>");
                 nameAdapter.setData(lists);
+                if (nameAdapter.dataList.isEmpty()) {
+                    showNoData();
+                } else {
+                    hideNoData();
+                }
             }
 
             @Override

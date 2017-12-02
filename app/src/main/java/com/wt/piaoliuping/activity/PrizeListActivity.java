@@ -1,5 +1,6 @@
 package com.wt.piaoliuping.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -47,7 +48,11 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
     @Override
     public void click(View v, int position) {
         if (v.getId() == R.id.btn_submit) {
-
+            final HaoResult result = (HaoResult) adapter.dataList.get(position);
+            Intent intent = new Intent(this, FriendListActivity.class);
+            intent.putExtra("choose", true);
+            intent.putExtra("prizeId", result.findAsString("id"));
+            startActivityForResult(intent, 100);
         }
     }
 
@@ -60,6 +65,11 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
             public void onSuccess(HaoResult result) {
                 ArrayList<Object> lists = result.findAsList("results>");
                 adapter.setData(lists);
+                if (adapter.dataList.isEmpty()) {
+                    showNoData();
+                } else {
+                    hideNoData();
+                }
             }
 
             @Override
@@ -79,4 +89,11 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
         }, this);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            loadData();
+        }
+    }
 }

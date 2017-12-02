@@ -80,7 +80,7 @@ public class WithdrewActivity extends BaseTitleActivity {
             @Override
             public void onSuccess(HaoResult result) {
                 textStar.setText("我的星星：" + result.findAsString("amount"));
-                amount = result.findAsString("amount");
+                amount = result.findAsString("score");
             }
         }, this);
     }

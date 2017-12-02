@@ -28,7 +28,7 @@
             android:layout_height="36dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/corner_red_bg"
-            android:text="兑换"
+            android:text="赠送"
             android:textColor="@color/white" />
 
     </LinearLayout>

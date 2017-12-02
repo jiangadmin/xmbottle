@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,9 @@ public abstract class BaseFragment extends Fragment {
     private TextView titleText;
     private ImageButton backBtn;
 
+    ImageView emptyImage;
+    private View rootView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(getFragmentLayoutId(), null);
@@ -35,7 +39,27 @@ public abstract class BaseFragment extends Fragment {
         } catch (Exception e) {
 
         }
+
+        if (emptyImage == null) {
+            emptyImage = (ImageView) view.findViewById(R.id.no_data);
+        }
+        if (emptyImage != null) {
+            emptyImage.setVisibility(View.GONE);
+        }
+        rootView = view;
         return view;
+    }
+
+    public void showNoData() {
+        if (emptyImage != null) {
+            emptyImage.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void hideNoData() {
+        if (emptyImage != null) {
+            emptyImage.setVisibility(View.GONE);
+        }
     }
 
     public void initView(View view) {

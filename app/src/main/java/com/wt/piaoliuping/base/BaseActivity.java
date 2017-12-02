@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,11 +34,26 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getContentViewID());
         ButterKnife.bind(this);
         initView();
-        AppManager.getInstance().addActivity(this);
 
-        emptyImage = new ImageView(this);
-        emptyImage.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        emptyImage.setImageResource(R.drawable.no_data);
+        if (emptyImage == null) {
+            emptyImage = (ImageView) findViewById(R.id.no_data);
+        }
+        if (emptyImage != null) {
+            emptyImage.setVisibility(View.GONE);
+        }
+        AppManager.getInstance().addActivity(this);
+    }
+
+    public void showNoData() {
+        if (emptyImage != null) {
+            emptyImage.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void hideNoData() {
+        if (emptyImage != null) {
+            emptyImage.setVisibility(View.GONE);
+        }
     }
 
     public void showToast(String msg) {

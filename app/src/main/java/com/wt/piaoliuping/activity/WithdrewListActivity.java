@@ -46,6 +46,11 @@ public class WithdrewListActivity extends BaseTitleActivity {
             public void onSuccess(HaoResult result) {
                 ArrayList<Object> lists = result.findAsList("results>");
                 withdrawAdapter.setData(lists);
+                if (withdrawAdapter.dataList.isEmpty()) {
+                    showNoData();
+                } else {
+                    hideNoData();
+                }
             }
 
             @Override

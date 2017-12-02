@@ -71,6 +71,11 @@ public class SearchUserActivity extends BaseTitleActivity implements AdapterView
             public void onSuccess(HaoResult result) {
                 ArrayList<Object> lists = result.findAsList("results>");
                 personAdapter.setData(lists);
+                if (personAdapter.dataList.isEmpty()) {
+                    showNoData();
+                } else {
+                    hideNoData();
+                }
             }
 
             @Override

@@ -56,8 +56,13 @@ public class NearbyActivity extends BaseTitleActivity implements AdapterView.OnI
         HaoConnect.loadContent("user_site/list_user", map, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                ArrayList<Object> lists = result.findAsList("resultsfcc");
+                ArrayList<Object> lists = result.findAsList("results>");
                 nearbyAdapter.setData(lists);
+                if (nearbyAdapter.dataList.isEmpty()) {
+                    showNoData();
+                } else {
+                    hideNoData();
+                }
             }
 
             @Override
@@ -71,8 +76,8 @@ public class NearbyActivity extends BaseTitleActivity implements AdapterView.OnI
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         HaoResult result = (HaoResult) parent.getAdapter().getItem(position);
         Intent intent = new Intent(this, ShowUserActivity.class);
-        intent.putExtra("userId", result.findAsString("toUserLocal>id"));
-        intent.putExtra("userName", result.findAsString("toUserLocal>nickname"));
+        intent.putExtra("userId", result.findAsString("userIDLocal>id"));
+        intent.putExtra("userName", result.findAsString("userIDLocal>nickname"));
         startActivity(intent);
     }
 }

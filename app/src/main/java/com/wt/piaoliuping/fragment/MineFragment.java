@@ -63,7 +63,6 @@ public class MineFragment extends PageFragment {
         return R.layout.fragment_setting;
     }
 
-
     @OnClick({R.id.image_head, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6, R.id.layout_7, R.id.layout_8})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -89,8 +88,8 @@ public class MineFragment extends PageFragment {
                 break;
             case R.id.layout_7: {
                 new ShareAction(getActivity())
-                        .withText("hello")
-                        .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
+                        .withText("星梦漂流")
+                        .setDisplayList(SHARE_MEDIA.WEIXIN)
                         .setCallback(new UMShareListener() {
                             @Override
                             public void onStart(SHARE_MEDIA share_media) {
@@ -135,13 +134,13 @@ public class MineFragment extends PageFragment {
                 ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead);
                 textName.setText("昵称：" + result.findAsString("nickname"));
                 textNo.setText("ID：" + result.findAsString("id"));
-                if (result.findAsInt("vipLevel") == 0) {
+                /*if (result.findAsInt("vipLevel") == 0) {
                     layout5.setVisibility(View.GONE);
                     layout4.setVisibility(View.VISIBLE);
                 } else {
                     layout4.setVisibility(View.GONE);
                     layout5.setVisibility(View.VISIBLE);
-                }
+                }*/
             }
         }, getActivity());
     }

@@ -35,9 +35,9 @@ public class NearbyAdapter extends BaseItemAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         HaoResult result = (HaoResult) dataList.get(position);
-        ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), holder.itemImage);
-        holder.textName.setText(result.findAsString("nickname"));
-        holder.textDesc.setText(result.findAsString("declaration"));
+        ImageLoader.getInstance().displayImage(result.findAsString("userIDLocal>avatarPreView"), holder.itemImage);
+        holder.textName.setText(result.findAsString("userIDLocal>nickname"));
+        holder.textDesc.setText(result.findAsString("userIDLocal>declaration"));
         return convertView;
     }
 

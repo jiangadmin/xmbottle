@@ -55,6 +55,11 @@ public class FollowListActivity extends BaseTitleActivity implements AdapterView
             public void onSuccess(HaoResult result) {
                 ArrayList<Object> lists = result.findAsList("results>");
                 friendAdapter.setData(lists);
+                if (friendAdapter.dataList.isEmpty()) {
+                    showNoData();
+                } else {
+                    hideNoData();
+                }
             }
 
             @Override

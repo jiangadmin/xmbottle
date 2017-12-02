@@ -100,6 +100,11 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
             public void onSuccess(HaoResult result) {
                 ArrayList<Object> lists = result.findAsList("results>");
                 adapter.setData(lists);
+                if (adapter.dataList.isEmpty()) {
+                    showNoData();
+                } else {
+                    hideNoData();
+                }
             }
 
             @Override
