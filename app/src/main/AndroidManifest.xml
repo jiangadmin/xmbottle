@@ -205,6 +205,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity" />
 
         <!-- 设置环信应用的AppKey -->
         <meta-data
@@ -239,7 +240,6 @@
                 <action android:name="com.baidu.location.service_v2.2"></action>
             </intent-filter>
         </service>
-        <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

@@ -7,6 +7,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
 import com.facebook.stetho.Stetho;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
@@ -64,6 +65,7 @@ public class App extends Application {
     }
 
     private void initBDMap() {
+        SDKInitializer.initialize(this);
         mLocationClient = new LocationClient(getApplicationContext());
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
@@ -94,10 +96,10 @@ public class App extends Application {
                 .cacheOnDisk(true)
 //                .cacheInMemory(true)
                 // 如Bitmap.Config.ARGB_8888
-//                .showImageOnLoading(R.drawable.image_default) // 默认图片
-//                .showImageForEmptyUri(R.drawable.image_default) //
+                .showImageOnLoading(R.drawable.image_default) // 默认图片
+                .showImageForEmptyUri(R.drawable.image_default) //
 //                        // url爲空會显示该图片，自己放在drawable里面的
-//                .showImageOnFail(R.drawable.image_default)// 加载失败显示的图片
+                .showImageOnFail(R.drawable.image_default)// 加载失败显示的图片
                 .build();
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
@@ -163,8 +165,6 @@ public class App extends Application {
                 return getUserInfo(username);
             }
         });
-
-
     }
 
     private EaseUser getUserInfo(String username) {
@@ -204,18 +204,10 @@ public class App extends Application {
     public class MyLocationListener implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation location) {
-            //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
-            //以下只列举部分获取经纬度相关（常用）的结果信息
-            //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
             latitude = location.getLatitude();    //获取纬度信息
             longitude = location.getLongitude();    //获取经度信息
-            float radius = location.getRadius();    //获取定位精度，默认值为0.0f
-
-            String coorType = location.getCoorType();
-            //获取经纬度坐标类型，以LocationClientOption中设置过的坐标类型为准
-
-            int errorCode = location.getLocType();
-            //获取定位类型、定位错误返回码，具体信息可参照类参考中BDLocation类中的说明
+            android.util.Log.e("wt", "latitude -> " + location.getLatitude());
+            android.util.Log.e("wt", "longitude -> " + location.getLongitude());
         }
     }
 }
