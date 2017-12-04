@@ -8,6 +8,7 @@ import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wt.piaoliuping.activity.PointActivity;
@@ -45,7 +46,16 @@ public class ChatFragment extends EaseChatFragment {
 
         Map<String, Object> map = new HashMap<>();
         map.put("to_user_id", toChatUsername);
-        HaoConnect.loadContent("user_messages/chat_count", map, "get", new HaoResultHttpResponseHandler() {
+        if (EMMessage.Type.TXT == message.getType()) {
+            map.put("message_type", 1);
+            EMTextMessageBody body = (EMTextMessageBody) message.getBody();
+            map.put("message", body.getMessage());
+        } else if (EMMessage.Type.IMAGE == message.getType()) {
+            map.put("message_type", 2);
+        } else if (EMMessage.Type.VIDEO == message.getType()) {
+            map.put("message_type", 3);
+        }
+        HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
                 if (result.findAsInt("chatCount") <= 0) {

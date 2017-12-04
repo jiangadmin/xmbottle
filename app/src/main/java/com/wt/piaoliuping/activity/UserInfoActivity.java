@@ -128,7 +128,7 @@ public class UserInfoActivity extends BaseTitleActivity {
                     public void onClick(View v) {
                         if (v.getId() == R.id.layout_female) {
                             textSex.setText("女");
-                            updateUserInfo("sex", "0");
+                            updateUserInfo("sex", "2");
                         } else if (v.getId() == R.id.layout_male) {
                             updateUserInfo("sex", "1");
                             textSex.setText("男");
