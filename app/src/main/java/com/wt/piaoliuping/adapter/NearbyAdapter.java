@@ -38,6 +38,7 @@ public class NearbyAdapter extends BaseItemAdapter {
         ImageLoader.getInstance().displayImage(result.findAsString("userIDLocal>avatarPreView"), holder.itemImage);
         holder.textName.setText(result.findAsString("userIDLocal>nickname"));
         holder.textDesc.setText(result.findAsString("userIDLocal>declaration"));
+        holder.textTime.setText(result.findAsString("distanceLabel"));
         return convertView;
     }
 

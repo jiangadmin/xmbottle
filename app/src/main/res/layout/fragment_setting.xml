@@ -229,14 +229,28 @@
 
             </LinearLayout>
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/layout_9"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
-                android:lineSpacingExtra="3dp"
-                android:padding="10dp"
-                android:text="高级会员在积分中心有提现功能，普通会员没有，高级会员和普通会员聊天可以得到积分，高级会员才能看到高级会员认证和我收到礼物。和我的积分里面的提现。高级的积分可以通过礼物跟我们进行兑换积分在进行提现操作。" />
+                android:layout_height="45dp"
+                android:background="@drawable/bolder_white_view_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
+                <TextView
+                    style="@style/text_14_222222"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="在线客服" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow_right" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

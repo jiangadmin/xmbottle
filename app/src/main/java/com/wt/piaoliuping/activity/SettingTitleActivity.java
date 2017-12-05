@@ -36,6 +36,10 @@ public class SettingTitleActivity extends BaseTitleActivity {
     LinearLayout layout3;
     @BindView(R.id.layout_4)
     LinearLayout layout4;
+    @BindView(R.id.layout_5)
+    LinearLayout layout5;
+    @BindView(R.id.layout_6)
+    LinearLayout layout6;
 
     @Override
     public void initView() {
@@ -100,10 +104,14 @@ public class SettingTitleActivity extends BaseTitleActivity {
                 startActivity(new Intent(this, AboutActivity.class));
                 break;
             case R.id.layout_3:
-                startActivity(new Intent(this, MoreSettingActivity.class));
+//                startActivity(new Intent(this, MoreSettingActivity.class));
                 break;
             case R.id.layout_4:
                 startActivity(new Intent(this, ChangePasswordActivity.class));
+                break;
+            case R.id.layout_5:
+                break;
+            case R.id.layout_6:
                 break;
         }
     }

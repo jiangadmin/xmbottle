@@ -1,5 +1,6 @@
 package com.wt.piaoliuping.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
@@ -17,7 +18,9 @@ import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.umeng.socialize.UMShareAPI;
+import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.AppManager;
 import com.wt.piaoliuping.base.BaseTitleActivity;
@@ -36,6 +39,9 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import rx.functions.Action1;
+
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 
 /**
  * Created by wangtao on 2017/10/20.
@@ -56,6 +62,7 @@ public class HomeActivity extends BaseTitleActivity {
     @BindView(R.id.view_pager)
     CustomViewPager viewPager;
 
+    RxPermissions rxPermissions;
     @Override
     public void initView() {
 
@@ -83,10 +90,11 @@ public class HomeActivity extends BaseTitleActivity {
 
         sign();
 
+        update();
+
         EMClient.getInstance().addConnectionListener(new EMConnectionListener() {
             @Override
             public void onConnected() {
-
             }
 
             @Override
@@ -100,6 +108,9 @@ public class HomeActivity extends BaseTitleActivity {
                 }
             }
         });
+
+        rxPermissions = new RxPermissions(this);
+        handleLocation();
     }
 
     @Override
@@ -153,10 +164,28 @@ public class HomeActivity extends BaseTitleActivity {
             Map<String, Object> map = new HashMap<>();
             map.put("user_id", UserManager.getInstance().getUserId());
             map.put("sign_date", DateUtils.getStringDateAndTimeFromDate(new Date()));
-            HaoConnect.loadContent("sign_in/add", map, "get", new HaoResultHttpResponseHandler() {
+            HaoConnect.loadContent("sign_in/add", map, "post", new HaoResultHttpResponseHandler() {
                 @Override
                 public void onSuccess(HaoResult result) {
                     showToast(result.findAsString("results>"));
+                }
+
+                @Override
+                public void onFail(HaoResult result) {
+                }
+            }, this);
+        }
+    }
+
+
+    private void update() {
+        if (!TextUtils.isEmpty(UserManager.getInstance().getUserId())) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("lat", App.app.latitude);
+            map.put("lng", App.app.longitude);
+            HaoConnect.loadContent("user_site/update", map, "post", new HaoResultHttpResponseHandler() {
+                @Override
+                public void onSuccess(HaoResult result) {
                 }
 
                 @Override
@@ -172,5 +201,22 @@ public class HomeActivity extends BaseTitleActivity {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
+
+
+    private void handleLocation() {
+        rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION ,
+                ACCESS_COARSE_LOCATION)
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        if (aBoolean) {
+                        } else {
+                            showToast("已禁止定位权限，您可以在系统设置中打开");
+                        }
+                    }
+                });
+
+    }
+
 
 }

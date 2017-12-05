@@ -123,7 +123,7 @@ public class UserInfoActivity extends BaseTitleActivity {
             }
             break;
             case R.id.layout_3: {
-                final SexDialog dialog = SexDialog.create(this, new View.OnClickListener() {
+               /* final SexDialog dialog = SexDialog.create(this, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (v.getId() == R.id.layout_female) {
@@ -135,7 +135,7 @@ public class UserInfoActivity extends BaseTitleActivity {
                         }
                     }
                 });
-                dialog.show();
+                dialog.show();*/
             }
             break;
             case R.id.layout_4: {

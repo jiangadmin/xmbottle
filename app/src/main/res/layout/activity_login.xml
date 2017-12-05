@@ -26,7 +26,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="3dp"
             android:background="@color/white"
-            android:hint="手机号/邮箱地址"
+            android:hint="手机号"
             android:padding="10dp"
             android:textColorHint="@color/darKGrayColor" />
 

@@ -14,7 +14,7 @@
             android:id="@+id/image_prize"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="70dp" />
+            android:layout_height="90dp" />
 
         <TextView
             android:id="@+id/text_point"

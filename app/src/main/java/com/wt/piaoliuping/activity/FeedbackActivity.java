@@ -32,7 +32,7 @@ public class FeedbackActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
-        setTitle("反馈问题");
+        setTitle("在线客服");
         loadData();
     }
 

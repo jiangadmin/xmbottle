@@ -15,6 +15,7 @@ import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.wt.piaoliuping.R;
+import com.wt.piaoliuping.activity.FeedbackActivity;
 import com.wt.piaoliuping.activity.FollowListActivity;
 import com.wt.piaoliuping.activity.GoodsListActivity;
 import com.wt.piaoliuping.activity.PointActivity;
@@ -51,6 +52,8 @@ public class MineFragment extends PageFragment {
     LinearLayout layout6;
     @BindView(R.id.layout_7)
     LinearLayout layout7;
+    @BindView(R.id.layout_9)
+    LinearLayout layout9;
 
     @Override
     public void initView(View view) {
@@ -63,7 +66,7 @@ public class MineFragment extends PageFragment {
         return R.layout.fragment_setting;
     }
 
-    @OnClick({R.id.image_head, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6, R.id.layout_7, R.id.layout_8})
+    @OnClick({R.id.image_head, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6, R.id.layout_7, R.id.layout_8, R.id.layout_9})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_head:
@@ -118,6 +121,10 @@ public class MineFragment extends PageFragment {
             case R.id.layout_8:
                 startActivity(new Intent(getActivity(), SettingTitleActivity.class));
                 break;
+            case R.id.layout_9:{
+                startActivity(new Intent(getActivity(), FeedbackActivity.class));
+                break;
+            }
         }
     }
 

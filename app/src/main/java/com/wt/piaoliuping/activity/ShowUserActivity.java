@@ -1,8 +1,11 @@
 package com.wt.piaoliuping.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,25 +15,31 @@ import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.hyphenate.chat.EMMessage;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseTitleActivity;
+import com.wt.piaoliuping.db.UserDao;
+import com.wt.piaoliuping.db.UserDaoDao;
 import com.wt.piaoliuping.manager.UserManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by wangtao on 2017/10/28.
  */
 
-public class ShowUserActivity extends BaseTitleActivity {
+public class ShowUserActivity extends BaseTitleActivity implements ViewPager.OnPageChangeListener {
 
-    @BindView(R.id.image_head)
-    ImageView imageHead;
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
+    //    @BindView(R.id.image_head)
+//    ImageView imageHead;
     @BindView(R.id.text_add_friend)
     TextView textAddFriend;
     @BindView(R.id.text_msg)
@@ -53,22 +62,36 @@ public class ShowUserActivity extends BaseTitleActivity {
     TextView textBlack;
     @BindView(R.id.text_right_title)
     TextView textRightTitle;
+    @BindView(R.id.text_num)
+    TextView textNum;
     @BindView(R.id.layout_photo)
     LinearLayout layoutPhoto;
     private String userId;
     private String userName;
 
     boolean isFriend;
+    private List<String> images = new ArrayList<>();
 
     @Override
     public void initView() {
 
         userId = getIntent().getStringExtra("userId");
         userName = getIntent().getStringExtra("userName");
+
+        if (TextUtils.isEmpty(userId)) {
+            showToast("用户数据错误");
+            finish();
+            return;
+        }
+        if (TextUtils.isEmpty(userName)) {
+            userName = "";
+        }
         setTitle(userName);
         loadUserInfo();
         textRightTitle.setVisibility(View.VISIBLE);
         textRightTitle.setText("投诉");
+        loadData();
+        viewPager.addOnPageChangeListener(this);
     }
 
     @Override
@@ -94,7 +117,7 @@ public class ShowUserActivity extends BaseTitleActivity {
                 textAge.setText(result.findAsString("age"));
                 textStar.setText(result.findAsString("constellation"));
                 textSign.setText(result.findAsString("declaration"));
-                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead);
+//                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead);
                 int userFriendType = result.findAsInt("userFriendType");
                 textBlack.setVisibility(View.GONE);
                 if (userFriendType == 0) {
@@ -117,6 +140,17 @@ public class ShowUserActivity extends BaseTitleActivity {
                     isFriend = false;
                     textAddFriend.setText("关注");
                 }
+                images.add(result.findAsString("avatarPreView"));
+                pagerAdapter = new ImagePagerAdapter(images);
+                viewPager.setAdapter(pagerAdapter);
+                textNum.setText(1 + "/" + pagerAdapter.getCount());
+
+                UserDaoDao userDao = App.app.getDaoSession().getUserDaoDao();
+                UserDao userDao1 = new UserDao();
+                userDao1.setAvatar(result.findAsString("avatarPreView"));
+                userDao1.setUserName(result.findAsString("id"));
+                userDao1.setNick(result.findAsString("nickname"));
+                userDao.insertOrReplace(userDao1);
             }
 
             @Override
@@ -155,7 +189,7 @@ public class ShowUserActivity extends BaseTitleActivity {
             case R.id.layout_photo: {
                 Intent intent = new Intent(this, PhotosActivity.class);
                 intent.putExtra("show", true);
-                intent.putExtra("userId", UserManager.getInstance().getUserId());
+                intent.putExtra("userId", userId);
                 startActivity(intent);
             }
             break;
@@ -251,6 +285,95 @@ public class ShowUserActivity extends BaseTitleActivity {
                 }
             }, this);
         }
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        textNum.setText(position + 1 + "/" + pagerAdapter.getCount());
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+
+    private class ImagePagerAdapter extends PagerAdapter {
+
+        private List<String> imageList = new ArrayList<>();
+
+        private List<ImageView> viewList = new ArrayList<>();
+
+        public ImagePagerAdapter(List<String> imageList) {
+            this.imageList = imageList;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public boolean isViewFromObject(View arg0, Object arg1) {
+
+            return arg0 == arg1;
+        }
+
+        @Override
+        public int getCount() {
+
+            return imageList.size();
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position,
+                                Object object) {
+            container.removeView(viewList.get(position));
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return super.getItemPosition(object);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            ImageView imageView = new ImageView(ShowUserActivity.this);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            ImageLoader.getInstance().displayImage(imageList.get(position), imageView);
+            container.addView(imageView);
+            viewList.add(imageView);
+            return imageView;
+        }
+    }
+
+    PagerAdapter pagerAdapter;
+
+    private void loadData() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("page", "1");
+        map.put("size", "999");
+        if (!TextUtils.isEmpty(userId)) {
+            map.put("user_id", userId);
+        }
+        HaoConnect.loadContent("user_photos/list", map, "get", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                ArrayList<Object> lists = result.findAsList("results>");
+                for (Object object : lists) {
+                    images.add(((HaoResult) object).findAsString("photoPreview"));
+                }
+                pagerAdapter = new ImagePagerAdapter(images);
+                viewPager.setAdapter(pagerAdapter);
+                textNum.setText(1 + "/" + pagerAdapter.getCount());
+            }
+
+            @Override
+            public void onFail(HaoResult result) {
+                showToast(result.errorStr);
+            }
+        }, this);
     }
 
 }

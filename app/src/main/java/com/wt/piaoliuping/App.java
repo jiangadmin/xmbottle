@@ -213,8 +213,6 @@ public class App extends Application {
         public void onReceiveLocation(BDLocation location) {
             latitude = location.getLatitude();    //获取纬度信息
             longitude = location.getLongitude();    //获取经度信息
-            android.util.Log.e("wt", "latitude -> " + location.getLatitude());
-            android.util.Log.e("wt", "longitude -> " + location.getLongitude());
         }
     }
 }

@@ -27,7 +27,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="3dp"
             android:background="@color/white"
-            android:hint="手机号/邮箱地址"
+            android:hint="手机号"
             android:padding="10dp"
             android:textColorHint="@color/darKGrayColor" />
 
@@ -93,8 +93,7 @@
 
             <TextView
                 style="@style/text_15_999999"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:layout_marginLeft="20dp"
@@ -103,6 +102,17 @@
                 android:background="@color/white"
                 android:text="性别"
                 android:textColor="@color/black" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="3dp"
+                android:background="@color/white"
+                android:text="（性别选择后不可更改）"
+                android:textSize="13dp"
+                android:textColor="@color/redColor" />
 
             <TextView
                 android:id="@+id/text_sex"
