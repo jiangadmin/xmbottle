@@ -14,6 +14,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.activity.FeedbackActivity;
 import com.wt.piaoliuping.activity.FollowListActivity;
@@ -90,38 +92,13 @@ public class MineFragment extends PageFragment {
                 startActivity(new Intent(getActivity(), GoodsListActivity.class));
                 break;
             case R.id.layout_7: {
-                new ShareAction(getActivity())
-                        .withText("星梦漂流")
-                        .setDisplayList(SHARE_MEDIA.WEIXIN)
-                        .setCallback(new UMShareListener() {
-                            @Override
-                            public void onStart(SHARE_MEDIA share_media) {
-
-                            }
-
-                            @Override
-                            public void onResult(SHARE_MEDIA share_media) {
-
-                            }
-
-                            @Override
-                            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-
-                            }
-
-                            @Override
-                            public void onCancel(SHARE_MEDIA share_media) {
-
-                            }
-                        })
-                        .open();
-
+                loadShare();
             }
             break;
             case R.id.layout_8:
                 startActivity(new Intent(getActivity(), SettingTitleActivity.class));
                 break;
-            case R.id.layout_9:{
+            case R.id.layout_9: {
                 startActivity(new Intent(getActivity(), FeedbackActivity.class));
                 break;
             }
@@ -152,4 +129,47 @@ public class MineFragment extends PageFragment {
         }, getActivity());
     }
 
+
+    private void loadShare() {
+        HaoConnect.loadContent("sys_config/share_info", null, "get", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                UMImage umImage = new UMImage(getActivity(), R.mipmap.ic_launcher);
+                UMWeb web = new UMWeb(result.findAsString("shareUrl"));
+                web.setTitle(result.findAsString("shareTitle"));//标题
+                web.setThumb(umImage);  //缩略图
+                web.setDescription(result.findAsString("shareContent"));//描述
+
+                new ShareAction(getActivity())
+                        .withMedia(web)
+                        .setDisplayList(SHARE_MEDIA.WEIXIN)
+                        .setCallback(new UMShareListener() {
+                            @Override
+                            public void onStart(SHARE_MEDIA share_media) {
+
+                            }
+
+                            @Override
+                            public void onResult(SHARE_MEDIA share_media) {
+                                upload();
+                            }
+
+                            @Override
+                            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+
+                            }
+
+                            @Override
+                            public void onCancel(SHARE_MEDIA share_media) {
+
+                            }
+                        })
+                        .open();
+            }
+        }, getActivity());
+    }
+
+    private void upload() {
+
+    }
 }

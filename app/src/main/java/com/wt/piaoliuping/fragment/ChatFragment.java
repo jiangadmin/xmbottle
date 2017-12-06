@@ -98,6 +98,8 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             map.put("message_type", 2);
         } else if (EMMessage.Type.VIDEO == message.getType()) {
             map.put("message_type", 3);
+        } else if (EMMessage.Type.VOICE == message.getType()) {
+            map.put("message_type", 4);
         }
         HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
             @Override
@@ -111,6 +113,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
             @Override
             public void onFail(HaoResult result) {
+                send = false;
             }
         }, getActivity());
     }

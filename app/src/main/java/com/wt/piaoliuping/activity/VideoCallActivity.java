@@ -480,7 +480,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
             comingBtnContainer.setVisibility(View.INVISIBLE);
             hangupBtn.setVisibility(View.VISIBLE);
             voiceContronlLayout.setVisibility(View.VISIBLE);
-            localSurface.setVisibility(View.VISIBLE);
+            localSurface.setVisibility(View.GONE);
 
         } else if (i == R.id.btn_hangup_call) {
             hangupBtn.setEnabled(false);

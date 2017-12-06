@@ -256,6 +256,7 @@ public class ShowUserActivity extends BaseTitleActivity implements ViewPager.OnP
                         textBlack.setText("移除黑名单");
                     }
                     stopLoading();
+                    loadData();
                 }
 
                 @Override
@@ -276,6 +277,7 @@ public class ShowUserActivity extends BaseTitleActivity implements ViewPager.OnP
                         textBlack.setText("加入黑名单");
                     }
                     stopLoading();
+                    loadData();
                 }
 
                 @Override

@@ -30,29 +30,18 @@
         android:padding="10dp"
         android:textColorHint="@color/darKGrayColor" />
 
-    <FrameLayout
+    <com.handmark.pulltorefresh.library.PullToRefreshGridView
+        android:id="@+id/grid_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="110dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/grayColor"
+        android:columnWidth="80dp"
+        android:horizontalSpacing="10dp"
+        android:numColumns="4"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp" />
 
-        <com.handmark.pulltorefresh.library.PullToRefreshGridView
-            android:id="@+id/grid_view"
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/grayColor"
-            android:columnWidth="80dp"
-            android:horizontalSpacing="10dp"
-            android:numColumns="4"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="10dp" />
-
-        <ImageView
-            android:id="@+id/no_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/no_data" />
-    </FrameLayout>
 
     <Button
         android:id="@+id/btn_submit"
