@@ -51,7 +51,9 @@ import rx.functions.Action1;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.MODIFY_AUDIO_SETTINGS;
 import static android.Manifest.permission.RECORD_AUDIO;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static com.hyphenate.easeui.EaseConstant.ACTION_GROUP_CHANAGED;
 
 /**
@@ -218,17 +220,16 @@ public class HomeActivity extends BaseTitleActivity {
 
     private void handleLocation() {
         rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION,
-                ACCESS_COARSE_LOCATION, RECORD_AUDIO, CAMERA)
+                ACCESS_COARSE_LOCATION, RECORD_AUDIO, CAMERA, WRITE_EXTERNAL_STORAGE, MODIFY_AUDIO_SETTINGS)
                 .subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
                         if (aBoolean) {
                         } else {
-                            showToast("已禁止定位权限，您可以在系统设置中打开");
+                            showToast("已禁止相关权限，您可以在系统设置中打开");
                         }
                     }
                 });
-
     }
 
     EMMessageListener messageListener = new EMMessageListener() {

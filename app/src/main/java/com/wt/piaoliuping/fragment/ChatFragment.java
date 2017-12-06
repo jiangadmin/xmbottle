@@ -147,7 +147,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
     @Override
     public void onAvatarLongClick(String username) {
-
+        inputAtUsername(username);
     }
 
     @Override
