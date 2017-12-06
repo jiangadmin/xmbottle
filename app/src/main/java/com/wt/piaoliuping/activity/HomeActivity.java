@@ -1,11 +1,15 @@
 package com.wt.piaoliuping.activity;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.widget.RadioButton;
@@ -17,7 +21,11 @@ import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;
+import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMCmdMessageBody;
+import com.hyphenate.chat.EMMessage;
+import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.umeng.socialize.UMShareAPI;
 import com.wt.piaoliuping.App;
@@ -30,6 +38,7 @@ import com.wt.piaoliuping.fragment.MineFragment;
 import com.wt.piaoliuping.fragment.NearbyFragment;
 import com.wt.piaoliuping.manager.UserManager;
 import com.wt.piaoliuping.utils.DateUtils;
+import com.wt.piaoliuping.utils.EaseConstant;
 import com.wt.piaoliuping.widgt.CustomViewPager;
 
 import java.util.ArrayList;
@@ -42,6 +51,9 @@ import butterknife.BindView;
 import rx.functions.Action1;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.RECORD_AUDIO;
+import static android.Manifest.permission.CAMERA;
+import static com.wt.piaoliuping.utils.EaseConstant.ACTION_GROUP_CHANAGED;
 
 /**
  * Created by wangtao on 2017/10/20.
@@ -63,10 +75,12 @@ public class HomeActivity extends BaseTitleActivity {
     CustomViewPager viewPager;
 
     RxPermissions rxPermissions;
+    private MessageFragment messageFragment = new MessageFragment();
+
     @Override
     public void initView() {
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this.getSupportFragmentManager());
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this.getSupportFragmentManager(), messageFragment);
         viewPager.setAdapter(viewPagerAdapter);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -89,7 +103,7 @@ public class HomeActivity extends BaseTitleActivity {
         });
 
         sign();
-
+        registerBroadcastReceiver();
         update();
 
         EMClient.getInstance().addConnectionListener(new EMConnectionListener() {
@@ -121,9 +135,9 @@ public class HomeActivity extends BaseTitleActivity {
     private static class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> fragments = new ArrayList<>();
 
-        ViewPagerAdapter(FragmentManager fm) {
+        ViewPagerAdapter(FragmentManager fm, MessageFragment messageFragment) {
             super(fm);
-            fragments.add(new MessageFragment());
+            fragments.add(messageFragment);
             fragments.add(new BottleFragment());
             fragments.add(new NearbyFragment());
             fragments.add(new MineFragment());
@@ -204,8 +218,8 @@ public class HomeActivity extends BaseTitleActivity {
 
 
     private void handleLocation() {
-        rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION ,
-                ACCESS_COARSE_LOCATION)
+        rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION,
+                ACCESS_COARSE_LOCATION, RECORD_AUDIO, CAMERA)
                 .subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
@@ -218,5 +232,124 @@ public class HomeActivity extends BaseTitleActivity {
 
     }
 
+    EMMessageListener messageListener = new EMMessageListener() {
 
+        @Override
+        public void onMessageReceived(List<EMMessage> messages) {
+            // notify new message
+            for (EMMessage message : messages) {
+                App.app.getNotifier().onNewMsg(message);
+            }
+            refreshUIWithMessage();
+        }
+
+        @Override
+        public void onCmdMessageReceived(List<EMMessage> messages) {
+            //red packet code : 处理红包回执透传消息
+            for (EMMessage message : messages) {
+                EMCmdMessageBody cmdMsgBody = (EMCmdMessageBody) message.getBody();
+                final String action = cmdMsgBody.action();//获取自定义action
+//                if (action.equals(RPConstant.REFRESH_GROUP_RED_PACKET_ACTION)) {
+//                    RedPacketUtil.receiveRedPacketAckMessage(message);
+//                }
+            }
+            //end of red packet code
+            refreshUIWithMessage();
+        }
+
+        @Override
+        public void onMessageRead(List<EMMessage> messages) {
+        }
+
+        @Override
+        public void onMessageDelivered(List<EMMessage> message) {
+        }
+
+        public void onMessageRecalled(List<EMMessage> messages) {
+            refreshUIWithMessage();
+        }
+
+        @Override
+        public void onMessageChanged(EMMessage message, Object change) {
+        }
+    };
+
+
+    private void refreshUIWithMessage() {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                // refresh unread count
+//                updateUnreadLabel();
+                if (radioGroup.getCheckedRadioButtonId() == R.id.message_btn) {
+                    // refresh conversation list
+                    if (messageFragment != null) {
+                        messageFragment.refresh();
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EMClient.getInstance().chatManager().addMessageListener(messageListener);
+    }
+
+    @Override
+    protected void onStop() {
+        EMClient.getInstance().chatManager().removeMessageListener(messageListener);
+        super.onStop();
+    }
+
+
+    private LocalBroadcastManager broadcastManager;
+    private BroadcastReceiver broadcastReceiver;
+
+    private void registerBroadcastReceiver() {
+        broadcastManager = LocalBroadcastManager.getInstance(this);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(EaseConstant.ACTION_CONTACT_CHANAGED);
+        intentFilter.addAction(ACTION_GROUP_CHANAGED);
+//        intentFilter.addAction(RPConstant.REFRESH_GROUP_RED_PACKET_ACTION);
+        broadcastReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+//                updateUnreadLabel();
+//                updateUnreadAddressLable();
+                if (radioGroup.getCheckedRadioButtonId() == R.id.message_btn) {
+                    // refresh conversation list
+                    if (messageFragment != null) {
+                        messageFragment.refresh();
+                    }
+                }
+                String action = intent.getAction();
+//                if (action.equals(ACTION_GROUP_CHANAGED)) {
+//                    if (EaseCommonUtils.getTopActivity(HomeActivity.this).equals(GroupsActivity.class.getName())) {
+//                        GroupsActivity.instance.onResume();
+//                    }
+//                }
+                //red packet code : 处理红包回执透传消息
+//                if (action.equals(RPConstant.REFRESH_GROUP_RED_PACKET_ACTION)) {
+//                    if (conversationListFragment != null) {
+//                        conversationListFragment.refresh();
+//                    }
+//                }
+                //end of red packet code
+            }
+        };
+        broadcastManager.registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    private void unregisterBroadcastReceiver() {
+        broadcastManager.unregisterReceiver(broadcastReceiver);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterBroadcastReceiver();
+    }
 }

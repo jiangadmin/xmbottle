@@ -3,6 +3,7 @@ package com.wt.piaoliuping.activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import com.haoxitech.HaoConnect.HaoConnect;
@@ -10,10 +11,12 @@ import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
+import com.wt.piaoliuping.DemoModel;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.AppManager;
 import com.wt.piaoliuping.base.BaseTitleActivity;
 import com.wt.piaoliuping.manager.UserManager;
+import com.wt.piaoliuping.utils.PreferenceManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,10 +43,17 @@ public class SettingTitleActivity extends BaseTitleActivity {
     LinearLayout layout5;
     @BindView(R.id.layout_6)
     LinearLayout layout6;
+    @BindView(R.id.checkbox_msg)
+    CheckBox checkBoxMsg;
+    @BindView(R.id.checkbox_shark)
+    CheckBox checkBoxShark;
 
     @Override
     public void initView() {
         setTitle("设置中心");
+        model = new DemoModel(getApplicationContext());
+        checkBoxMsg.setChecked(getSettingMsgSound());
+        checkBoxShark.setChecked(getSettingMsgVibrate());
     }
 
     @Override
@@ -79,7 +89,7 @@ public class SettingTitleActivity extends BaseTitleActivity {
                                       }, SettingTitleActivity.this);
                                   }
                               }
-                    );
+                );
             }
 
             @Override
@@ -94,7 +104,7 @@ public class SettingTitleActivity extends BaseTitleActivity {
         });
     }
 
-    @OnClick({R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4})
+    @OnClick({R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layout_1:
@@ -110,9 +120,32 @@ public class SettingTitleActivity extends BaseTitleActivity {
                 startActivity(new Intent(this, ChangePasswordActivity.class));
                 break;
             case R.id.layout_5:
+                checkBoxMsg.setChecked(!checkBoxMsg.isChecked());
+                setSettingMsgSound(checkBoxMsg.isChecked());
                 break;
             case R.id.layout_6:
+                checkBoxShark.setChecked(!checkBoxShark.isChecked());
+                setSettingMsgVibrate(checkBoxShark.isChecked());
                 break;
         }
     }
+
+    private DemoModel model;
+
+    public void setSettingMsgSound(boolean paramBoolean) {
+        model.setSettingMsgSound(paramBoolean);
+    }
+
+    public void setSettingMsgVibrate(boolean paramBoolean) {
+        model.setSettingMsgVibrate(paramBoolean);
+    }
+
+    public boolean getSettingMsgSound() {
+        return model.getSettingMsgSound();
+    }
+
+    public boolean getSettingMsgVibrate() {
+        return model.getSettingMsgVibrate();
+    }
+
 }

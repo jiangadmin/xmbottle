@@ -279,7 +279,7 @@ public class EaseNotifier {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+     }
 
     /**
      * vibrate and  play tone

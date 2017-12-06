@@ -1,11 +1,17 @@
 package com.wt.piaoliuping.fragment;
 
+import android.app.Activity;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.Toast;
 
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
@@ -16,13 +22,21 @@ import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
+import com.hyphenate.exceptions.HyphenateException;
+import com.hyphenate.util.PathUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.activity.PointActivity;
+import com.wt.piaoliuping.activity.PrizeListActivity;
 import com.wt.piaoliuping.activity.ShowBottleActivity;
 import com.wt.piaoliuping.activity.ShowUserActivity;
+import com.wt.piaoliuping.activity.VideoCallActivity;
+import com.wt.piaoliuping.activity.VoiceCallActivity;
+import com.wt.piaoliuping.utils.EaseConstant;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +47,32 @@ import java.util.Map;
 public class ChatFragment extends EaseChatFragment implements EaseChatFragment.EaseChatFragmentHelper {
 
     boolean send = true;
+    private static final int ITEM_VIDEO = 11;
+    private static final int ITEM_FILE = 12;
+    private static final int ITEM_VOICE_CALL = 13;
+    private static final int ITEM_VIDEO_CALL = 14;
+    private static final int ITEM_VIDEO_PRIZE = 15;
+
+    private static final int REQUEST_CODE_SELECT_VIDEO = 11;
+    private static final int REQUEST_CODE_SELECT_FILE = 12;
+    private static final int REQUEST_CODE_GROUP_DETAIL = 13;
+    private static final int REQUEST_CODE_CONTEXT_MENU = 14;
+    private static final int REQUEST_CODE_SELECT_AT_USER = 15;
+
+
+    private static final int MESSAGE_TYPE_SENT_VOICE_CALL = 1;
+    private static final int MESSAGE_TYPE_RECV_VOICE_CALL = 2;
+    private static final int MESSAGE_TYPE_SENT_VIDEO_CALL = 3;
+    private static final int MESSAGE_TYPE_RECV_VIDEO_CALL = 4;
+    private static final int MESSAGE_TYPE_RECALL = 9;
+    //red packet code : 红包功能使用的常量
+    private static final int MESSAGE_TYPE_RECV_RED_PACKET = 5;
+    private static final int MESSAGE_TYPE_SEND_RED_PACKET = 6;
+    private static final int MESSAGE_TYPE_SEND_RED_PACKET_ACK = 7;
+    private static final int MESSAGE_TYPE_RECV_RED_PACKET_ACK = 8;
+    private static final int MESSAGE_TYPE_RECV_RANDOM = 11;
+    private static final int MESSAGE_TYPE_SEND_RANDOM = 12;
+    private static final int ITEM_RED_PACKET = 16;
 
     @Override
     protected void sendMessage(EMMessage message) {
@@ -125,11 +165,166 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
     @Override
     public boolean onExtendMenuItemClick(int itemId, View view) {
+        switch (itemId) {
+            case ITEM_VIDEO:
+//                Intent intent = new Intent(getActivity(), ImageGridActivity.class);
+//                startActivityForResult(intent, REQUEST_CODE_SELECT_VIDEO);
+                break;
+            case ITEM_FILE: //file
+//                selectFileFromLocal();
+                break;
+            case ITEM_VOICE_CALL:
+                startVoiceCall();
+                break;
+            case ITEM_VIDEO_CALL:
+                startVideoCall();
+                break;
+            case ITEM_VIDEO_PRIZE: {
+                startPrize();
+                break;
+            }
+            //end of red packet code
+            default:
+                break;
+        }
+        //keep exist extend menu
         return false;
+    }
+
+    /**
+     * make a voice call
+     */
+    protected void startVoiceCall() {
+        if (!EMClient.getInstance().isConnected()) {
+            Toast.makeText(getActivity(), R.string.not_connect_to_server, Toast.LENGTH_SHORT).show();
+        } else {
+            startActivity(new Intent(getActivity(), VoiceCallActivity.class).putExtra("username", toChatUsername)
+                    .putExtra("isComingCall", false));
+            // voiceCallBtn.setEnabled(false);
+            inputMenu.hideExtendMenuContainer();
+        }
+    }
+
+    /**
+     * make a video call
+     */
+    protected void startVideoCall() {
+        if (!EMClient.getInstance().isConnected())
+            Toast.makeText(getActivity(), R.string.not_connect_to_server, Toast.LENGTH_SHORT).show();
+        else {
+            startActivity(new Intent(getActivity(), VideoCallActivity.class).putExtra("username", toChatUsername)
+                    .putExtra("isComingCall", false));
+            // videoCallBtn.setEnabled(false);
+            inputMenu.hideExtendMenuContainer();
+        }
+    }
+
+    private void startPrize() {
+        Intent intent = new Intent(getActivity(), PrizeListActivity.class);
+        intent.putExtra("userId", toChatUsername);
+        startActivity(intent);
     }
 
     @Override
     public EaseCustomChatRowProvider onSetCustomChatRowProvider() {
         return null;
     }
+
+    @Override
+    protected void registerExtendMenuItem() {
+        super.registerExtendMenuItem();
+        inputMenu.registerExtendMenuItem(R.string.attach_voice_call, R.drawable.em_chat_voice_call_selector, ITEM_VOICE_CALL, extendMenuItemClickListener);
+        inputMenu.registerExtendMenuItem(R.string.attach_video_call, R.drawable.em_chat_video_call_selector, ITEM_VIDEO_CALL, extendMenuItemClickListener);
+        inputMenu.registerExtendMenuItem(R.string.prize, R.drawable.em_chat_prize_call_selector, ITEM_VIDEO_PRIZE, extendMenuItemClickListener);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CONTEXT_MENU) {
+            /*switch (resultCode) {
+                case ContextMenuActivity.RESULT_CODE_COPY: // copy
+                    clipboard.setPrimaryClip(ClipData.newPlainText(null,
+                            ((EMTextMessageBody) contextMenuMessage.getBody()).getMessage()));
+                    break;
+                case ContextMenuActivity.RESULT_CODE_DELETE: // delete
+                    conversation.removeMessage(contextMenuMessage.getMsgId());
+                    messageList.refresh();
+                    break;
+
+                case ContextMenuActivity.RESULT_CODE_FORWARD: // forward
+                    Intent intent = new Intent(getActivity(), ForwardMessageActivity.class);
+                    intent.putExtra("forward_msg_id", contextMenuMessage.getMsgId());
+                    startActivity(intent);
+                    break;
+                case ContextMenuActivity.RESULT_CODE_RECALL://recall
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                EMMessage msgNotification = EMMessage.createTxtSendMessage(" ",contextMenuMessage.getTo());
+                                EMTextMessageBody txtBody = new EMTextMessageBody(getResources().getString(R.string.msg_recall_by_self));
+                                msgNotification.addBody(txtBody);
+                                msgNotification.setMsgTime(contextMenuMessage.getMsgTime());
+                                msgNotification.setLocalTime(contextMenuMessage.getMsgTime());
+                                msgNotification.setAttribute(Constant.MESSAGE_TYPE_RECALL, true);
+                                msgNotification.setStatus(EMMessage.Status.SUCCESS);
+                                EMClient.getInstance().chatManager().recallMessage(contextMenuMessage);
+                                EMClient.getInstance().chatManager().saveMessage(msgNotification);
+                                messageList.refresh();
+                            } catch (final HyphenateException e) {
+                                e.printStackTrace();
+                                getActivity().runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+                    }).start();
+                    break;
+
+                default:
+                    break;
+            }*/
+        }
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_SELECT_VIDEO: //send the video
+                    if (data != null) {
+                        int duration = data.getIntExtra("dur", 0);
+                        String videoPath = data.getStringExtra("path");
+                        File file = new File(PathUtil.getInstance().getImagePath(), "thvideo" + System.currentTimeMillis());
+                        try {
+                            FileOutputStream fos = new FileOutputStream(file);
+                            Bitmap ThumbBitmap = ThumbnailUtils.createVideoThumbnail(videoPath, 3);
+                            ThumbBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                            fos.close();
+                            sendVideoMessage(videoPath, file.getAbsolutePath(), duration);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                case REQUEST_CODE_SELECT_FILE: //send the file
+                    if (data != null) {
+                        Uri uri = data.getData();
+                        if (uri != null) {
+                            sendFileByUri(uri);
+                        }
+                    }
+                    break;
+                case REQUEST_CODE_SELECT_AT_USER:
+                    if (data != null) {
+                        String username = data.getStringExtra("username");
+                        inputAtUsername(username, false);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    }
+
 }

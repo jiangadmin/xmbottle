@@ -1,6 +1,9 @@
 package com.wt.piaoliuping.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,12 +33,14 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
     @BindView(R.id.text_point)
     TextView textPoint;
 
+    private String userId;
     @Override
     public void initView() {
         setTitle("礼物列表");
         adapter = new PrizeAdapter(this);
         gridView.setAdapter(adapter);
         adapter.setItemClickListener(this);
+        userId = getIntent().getStringExtra("userId");
         loadUser();
         loadData();
     }
@@ -49,10 +54,40 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
     public void click(View v, int position) {
         if (v.getId() == R.id.btn_submit) {
             final HaoResult result = (HaoResult) adapter.dataList.get(position);
-            Intent intent = new Intent(this, FriendListActivity.class);
-            intent.putExtra("choose", true);
-            intent.putExtra("prizeId", result.findAsString("id"));
-            startActivityForResult(intent, 100);
+            if (TextUtils.isEmpty(userId)) {
+                Intent intent = new Intent(this, FriendListActivity.class);
+                intent.putExtra("choose", true);
+                intent.putExtra("prizeId", result.findAsString("id"));
+                startActivityForResult(intent, 100);
+            } else {
+                new AlertDialog.Builder(this)
+                        .setTitle("提示")
+                        .setMessage("确定将礼物送给该好友吗")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("user_goods_item_id", result.findAsString("id"));
+                                map.put("give_user_id", userId);
+                                HaoConnect.loadContent("user_goods_item/give_user", map, "post", new HaoResultHttpResponseHandler() {
+                                    @Override
+                                    public void onSuccess(HaoResult result) {
+                                        showToast("增送成功");
+                                        setResult(RESULT_OK);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onFail(HaoResult result) {
+                                        showToast(result.errorStr);
+                                    }
+                                }, PrizeListActivity.this);
+                            }
+                        })
+                        .setNegativeButton("取消", null)
+                        .create()
+                        .show();
+            }
         }
     }
 

@@ -1,8 +1,11 @@
 package com.wt.piaoliuping;
 
 import android.app.Application;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -13,30 +16,30 @@ import com.facebook.stetho.Stetho;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
-import com.hyphenate.EMConnectionListener;
-import com.hyphenate.EMError;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
+import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.model.EaseAtMessageHelper;
+import com.hyphenate.easeui.model.EaseNotifier;
+import com.hyphenate.util.EMLog;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.utils.Log;
-import com.wt.piaoliuping.activity.LoginActivity;
-import com.wt.piaoliuping.activity.SettingTitleActivity;
-import com.wt.piaoliuping.base.AppManager;
 import com.wt.piaoliuping.database.DataBaseHelper;
 import com.wt.piaoliuping.db.DaoMaster;
 import com.wt.piaoliuping.db.DaoSession;
 import com.wt.piaoliuping.db.UserDao;
 import com.wt.piaoliuping.db.UserDaoDao;
-import com.wt.piaoliuping.manager.UserManager;
+import com.wt.piaoliuping.utils.CallReceiver;
+import com.wt.piaoliuping.utils.PreferenceManager;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -44,6 +47,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * Created by wangtao on 2017/10/20.
@@ -57,6 +61,8 @@ public class App extends Application {
     private MyLocationListener myListener = new MyLocationListener();
     public double latitude;
     public double longitude;
+    private CallReceiver callReceiver;
+    private DemoModel demoModel = null;
 
     @Override
     public void onCreate() {
@@ -172,6 +178,117 @@ public class App extends Application {
                 return getUserInfo(username);
             }
         });
+
+        PreferenceManager.init(this);
+
+        // min video kbps
+        int minBitRate = PreferenceManager.getInstance().getCallMinVideoKbps();
+        if (minBitRate != -1) {
+            EMClient.getInstance().callManager().getCallOptions().setMinVideoKbps(minBitRate);
+        }
+
+        // max video kbps
+        int maxBitRate = PreferenceManager.getInstance().getCallMaxVideoKbps();
+        if (maxBitRate != -1) {
+            EMClient.getInstance().callManager().getCallOptions().setMaxVideoKbps(maxBitRate);
+        }
+
+        // max frame rate
+        int maxFrameRate = PreferenceManager.getInstance().getCallMaxFrameRate();
+        if (maxFrameRate != -1) {
+            EMClient.getInstance().callManager().getCallOptions().setMaxVideoFrameRate(maxFrameRate);
+        }
+
+        // audio sample rate
+        int audioSampleRate = PreferenceManager.getInstance().getCallAudioSampleRate();
+        if (audioSampleRate != -1) {
+            EMClient.getInstance().callManager().getCallOptions().setAudioSampleRate(audioSampleRate);
+        }
+
+        /**
+         * This function is only meaningful when your app need recording
+         * If not, remove it.
+         * This function need be called before the video stream started, so we set it in onCreate function.
+         * This method will set the preferred video record encoding codec.
+         * Using default encoding format, recorded file may not be played by mobile player.
+         */
+        //EMClient.getInstance().callManager().getVideoCallHelper().setPreferMovFormatEnable(true);
+
+        // resolution
+        String resolution = PreferenceManager.getInstance().getCallBackCameraResolution();
+        if (resolution.equals("")) {
+            resolution = PreferenceManager.getInstance().getCallFrontCameraResolution();
+        }
+        String[] wh = resolution.split("x");
+        if (wh.length == 2) {
+            try {
+                EMClient.getInstance().callManager().getCallOptions().setVideoResolution(new Integer(wh[0]).intValue(), new Integer(wh[1]).intValue());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        // enabled fixed sample rate
+        boolean enableFixSampleRate = PreferenceManager.getInstance().isCallFixedVideoResolution();
+        EMClient.getInstance().callManager().getCallOptions().enableFixedVideoResolution(enableFixSampleRate);
+
+        // Offline call push
+        EMClient.getInstance().callManager().getCallOptions().setIsSendPushIfOffline(true);
+
+        IntentFilter callFilter = new IntentFilter(EMClient.getInstance().callManager().getIncomingCallBroadcastAction());
+        if (callReceiver == null) {
+            callReceiver = new CallReceiver();
+        }
+
+        //register incoming call receiver
+        registerReceiver(callReceiver, callFilter);
+        registerMessageListener();
+        demoModel = new DemoModel(this);
+        EaseUI.getInstance().setSettingsProvider(new EaseUI.EaseSettingsProvider() {
+
+            @Override
+            public boolean isSpeakerOpened() {
+                return demoModel.getSettingMsgSpeaker();
+            }
+
+            @Override
+            public boolean isMsgVibrateAllowed(EMMessage message) {
+                return demoModel.getSettingMsgVibrate();
+            }
+
+            @Override
+            public boolean isMsgSoundAllowed(EMMessage message) {
+                return demoModel.getSettingMsgSound();
+            }
+
+            @Override
+            public boolean isMsgNotifyAllowed(EMMessage message) {
+                if (message == null) {
+                    return demoModel.getSettingMsgNotification();
+                }
+                if (!demoModel.getSettingMsgNotification()) {
+                    return false;
+                } else {
+                    String chatUsename = null;
+                    List<String> notNotifyIds = null;
+                    // get user or group id which was blocked to show message notifications
+//                    if (message.getChatType() == EMMessage.ChatType.Chat) {
+//                        chatUsename = message.getFrom();
+//                        notNotifyIds = demoModel.getDisabledIds();
+//                    } else {
+//                        chatUsename = message.getTo();
+//                        notNotifyIds = demoModel.getDisabledGroups();
+//                    }
+//
+//                    if (notNotifyIds == null || !notNotifyIds.contains(chatUsename)) {
+                    return true;
+//                    } else {
+//                        return false;
+//                    }
+                }
+            }
+        });
+
     }
 
     private EaseUser getUserInfo(String username) {
@@ -214,5 +331,90 @@ public class App extends Application {
             latitude = location.getLatitude();    //获取纬度信息
             longitude = location.getLongitude();    //获取经度信息
         }
+    }
+
+    public EaseNotifier getNotifier() {
+        return EaseUI.getInstance().getNotifier();
+    }
+
+
+    protected EMMessageListener messageListener = null;
+
+    protected void registerMessageListener() {
+        messageListener = new EMMessageListener() {
+            private BroadcastReceiver broadCastReceiver = null;
+
+            @Override
+            public void onMessageReceived(List<EMMessage> messages) {
+                for (EMMessage message : messages) {
+                    // in background, do not refresh UI, notify it in notification bar
+                    if (!EaseUI.getInstance().hasForegroundActivies()) {
+                        getNotifier().onNewMsg(message);
+                    }
+                }
+            }
+
+            @Override
+            public void onCmdMessageReceived(List<EMMessage> messages) {
+                for (EMMessage message : messages) {
+                    //get message body
+                    EMCmdMessageBody cmdMsgBody = (EMCmdMessageBody) message.getBody();
+                    final String action = cmdMsgBody.action();//获取自定义action
+                    //red packet code : 处理红包回执透传消息
+                    if (!EaseUI.getInstance().hasForegroundActivies()) {
+//                        if (action.equals(RPConstant.REFRESH_GROUP_RED_PACKET_ACTION)){
+//                            RedPacketUtil.receiveRedPacketAckMessage(message);
+//                            broadcastManager.sendBroadcast(new Intent(RPConstant.REFRESH_GROUP_RED_PACKET_ACTION));
+//                        }
+                    }
+
+                    if (action.equals("__Call_ReqP2P_ConferencePattern")) {
+                        String title = message.getStringAttribute("em_apns_ext", "conference call");
+                        Toast.makeText(getApplicationContext(), title, Toast.LENGTH_LONG).show();
+                    }
+                    //end of red packet code
+                    //获取扩展属性 此处省略
+                    //maybe you need get extension of your message
+                    //message.getStringAttribute("");
+                }
+            }
+
+            @Override
+            public void onMessageRead(List<EMMessage> messages) {
+            }
+
+            @Override
+            public void onMessageDelivered(List<EMMessage> message) {
+            }
+
+            //            @Override
+            public void onMessageRecalled(List<EMMessage> messages) {
+//                for (EMMessage msg : messages) {
+//                    if(msg.getChatType() == EMMessage.ChatType.GroupChat && EaseAtMessageHelper.get().isAtMeMsg(msg)){
+//                        EaseAtMessageHelper.get().removeAtMeGroup(msg.getTo());
+//                    }
+//                    EMMessage msgNotification = EMMessage.createReceiveMessage(EMMessage.Type.TXT);
+//                    EMTextMessageBody txtBody = new EMTextMessageBody(String.format(getApplicationContext().getString(R.string.msg_recall_by_user), msg.getFrom()));
+//                    msgNotification.addBody(txtBody);
+//                    msgNotification.setFrom(msg.getFrom());
+//                    msgNotification.setTo(msg.getTo());
+//                    msgNotification.setUnread(false);
+//                    msgNotification.setMsgTime(msg.getMsgTime());
+//                    msgNotification.setLocalTime(msg.getMsgTime());
+//                    msgNotification.setChatType(msg.getChatType());
+//                    msgNotification.setAttribute(MESSAGE_TYPE_RECALL, true);
+//                    msgNotification.setStatus(EMMessage.Status.SUCCESS);
+//                    EMClient.getInstance().chatManager().saveMessage(msgNotification);
+//                }
+            }
+
+            @Override
+            public void onMessageChanged(EMMessage message, Object change) {
+//                EMLog.d(TAG, "change:");
+//                EMLog.d(TAG, "change:" + change);
+            }
+        };
+
+        EMClient.getInstance().chatManager().addMessageListener(messageListener);
     }
 }

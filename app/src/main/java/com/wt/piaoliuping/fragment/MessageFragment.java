@@ -16,13 +16,14 @@ import butterknife.BindView;
 public class MessageFragment extends PageFragment {
     @BindView(R.id.fragment)
     FrameLayout fragment;
+    MessageListFragment messageListFragment;
 
     @Override
     public void initView(View view) {
 
         super.initView(view);
         setTitle("消息");
-        MessageListFragment messageListFragment = new MessageListFragment();
+        messageListFragment = new MessageListFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.add(R.id.fragment, messageListFragment).commit();
     }
@@ -30,5 +31,9 @@ public class MessageFragment extends PageFragment {
     @Override
     public int getFragmentLayoutId() {
         return R.layout.fragment_message;
+    }
+
+    public void refresh() {
+        messageListFragment.refresh();
     }
 }

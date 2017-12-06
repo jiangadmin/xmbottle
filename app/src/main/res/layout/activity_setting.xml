@@ -61,8 +61,8 @@
         android:background="@drawable/bolder_white_view_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="gone"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:visibility="gone">
 
         <TextView
             style="@style/text_14_222222"
@@ -122,7 +122,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/check_bg"
-            android:button="@null" />
+            android:button="@null"
+            android:clickable="false" />
     </LinearLayout>
 
     <LinearLayout
@@ -146,7 +147,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/check_bg"
-            android:button="@null" />
+            android:button="@null"
+            android:clickable="false" />
 
     </LinearLayout>
 
