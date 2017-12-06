@@ -25,7 +25,7 @@ import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
+import com.hyphenate.easeui.EaseConstant;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.umeng.socialize.UMShareAPI;
 import com.wt.piaoliuping.App;
@@ -38,7 +38,6 @@ import com.wt.piaoliuping.fragment.MineFragment;
 import com.wt.piaoliuping.fragment.NearbyFragment;
 import com.wt.piaoliuping.manager.UserManager;
 import com.wt.piaoliuping.utils.DateUtils;
-import com.wt.piaoliuping.utils.EaseConstant;
 import com.wt.piaoliuping.widgt.CustomViewPager;
 
 import java.util.ArrayList;
@@ -51,9 +50,9 @@ import butterknife.BindView;
 import rx.functions.Action1;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
-import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.CAMERA;
-import static com.wt.piaoliuping.utils.EaseConstant.ACTION_GROUP_CHANAGED;
+import static android.Manifest.permission.RECORD_AUDIO;
+import static com.hyphenate.easeui.EaseConstant.ACTION_GROUP_CHANAGED;
 
 /**
  * Created by wangtao on 2017/10/20.

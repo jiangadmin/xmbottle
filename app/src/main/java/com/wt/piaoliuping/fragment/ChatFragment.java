@@ -1,7 +1,6 @@
 package com.wt.piaoliuping.fragment;
 
 import android.app.Activity;
-import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,18 +21,13 @@ import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
-import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.PathUtil;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.activity.PointActivity;
 import com.wt.piaoliuping.activity.PrizeListActivity;
-import com.wt.piaoliuping.activity.ShowBottleActivity;
 import com.wt.piaoliuping.activity.ShowUserActivity;
 import com.wt.piaoliuping.activity.VideoCallActivity;
 import com.wt.piaoliuping.activity.VoiceCallActivity;
-import com.wt.piaoliuping.utils.EaseConstant;
 
 import java.io.File;
 import java.io.FileOutputStream;
