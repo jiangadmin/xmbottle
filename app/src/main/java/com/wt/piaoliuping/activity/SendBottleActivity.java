@@ -158,16 +158,33 @@ public class SendBottleActivity extends BaseTitleActivity {
 
     private void sendVoiceMessage(String voiceFilePath, int voiceTimeLength) {
         File fileTemp = new File(voiceFilePath);
-        updateImage(fileTemp, 1);
+        updateImage(fileTemp, 3);
     }
 
-    private void updateImage(File file, int type) {
+    private void updateImage(File file, final int type) {
         HaoConnect.loadImageContent("axapi/up_file", file, "post", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
                 Log.e("wt", "onSuccess" + " result" + result);
                 String url = result.findAsString("filePath");
 //                updateUserInfo("avatar", url);
+                Map<String, Object> map = new HashMap<>();
+                map.put("message", url);
+                map.put("message_type", type);
+                startLoading();
+                HaoConnect.loadContent("bottle_message/add", map, "post", new HaoResultHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(HaoResult result) {
+                        finish();
+                        stopLoading();
+                    }
+
+                    @Override
+                    public void onFail(HaoResult result) {
+                        showToast(result.errorStr);
+                        stopLoading();
+                    }
+                }, SendBottleActivity.this);
             }
 
             @Override

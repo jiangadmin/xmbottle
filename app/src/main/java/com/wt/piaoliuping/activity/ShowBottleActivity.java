@@ -1,6 +1,9 @@
 package com.wt.piaoliuping.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,10 +14,14 @@ import android.widget.TextView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
+import com.hyphenate.easeui.controller.EaseUI;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseActivity;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -139,5 +146,54 @@ public class ShowBottleActivity extends BaseActivity {
 
     @OnClick(R.id.voice_content)
     public void onViewClicked() {
+    }
+
+    MediaPlayer mediaPlayer = null;
+
+    public void playVoice(String filePath) {
+        if (!(new File(filePath).exists())) {
+            return;
+        }
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        mediaPlayer = new MediaPlayer();
+        if (EaseUI.getInstance().getSettingsProvider().isSpeakerOpened()) {
+            audioManager.setMode(AudioManager.MODE_NORMAL);
+            audioManager.setSpeakerphoneOn(true);
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_RING);
+        } else {
+            audioManager.setSpeakerphoneOn(false);// 关闭扬声器
+            // 把声音设定成Earpiece（听筒）出来，设定为正在通话中
+            audioManager.setMode(AudioManager.MODE_IN_CALL);
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
+        }
+        try {
+            mediaPlayer.setDataSource(filePath);
+            mediaPlayer.prepare();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    // TODO Auto-generated method stub
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                    stopPlayVoice(); // stop animation
+                }
+
+            });
+            mediaPlayer.start();
+
+        } catch (Exception e) {
+            System.out.println();
+        }
+    }
+
+
+    public void stopPlayVoice() {
+        // stop play voice
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
     }
 }
