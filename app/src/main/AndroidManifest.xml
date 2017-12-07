@@ -183,6 +183,10 @@
             android:name=".activity.WarningActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.RecommendActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".activity.GoodsListActivity"
             android:screenOrientation="portrait" />
         <activity

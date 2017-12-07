@@ -27,9 +27,9 @@ import com.hyphenate.easeui.widget.chatrow.EaseChatRowVoicePlayClickListener;
 public class EaseVoiceRecorderView extends RelativeLayout {
     protected Context context;
     protected LayoutInflater inflater;
-    protected Drawable[] micImages;
     protected EaseVoiceRecorder voiceRecorder;
 
+    protected Drawable[] micImages;
     protected PowerManager.WakeLock wakeLock;
     protected ImageView micImage;
     protected TextView recordingHint;

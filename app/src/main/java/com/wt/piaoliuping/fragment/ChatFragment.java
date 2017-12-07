@@ -69,6 +69,32 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
     private static final int ITEM_RED_PACKET = 16;
 
     @Override
+    protected void sendVoiceMessage(String filePath, int length) {
+
+        if (send) {
+            super.sendVoiceMessage(filePath, length);
+        } else {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("提示")
+                    .setMessage("您当前星星不足，请前往积分中心充值")
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(getActivity(), PointActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("取消", null)
+                    .create()
+                    .show();
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("to_user_id", toChatUsername);
+        map.put("message_type", 2);
+        requestNum(map);
+    }
+
+    @Override
     protected void sendMessage(EMMessage message) {
         if (send) {
             super.sendMessage(message);
@@ -95,12 +121,18 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             EMTextMessageBody body = (EMTextMessageBody) message.getBody();
             map.put("message", body.getMessage());
         } else if (EMMessage.Type.IMAGE == message.getType()) {
-            map.put("message_type", 2);
-        } else if (EMMessage.Type.VIDEO == message.getType()) {
-            map.put("message_type", 3);
-        } else if (EMMessage.Type.VOICE == message.getType()) {
             map.put("message_type", 4);
+        } else if (EMMessage.Type.VIDEO == message.getType()) {
+            map.put("message_type", 6);
+        } else if (EMMessage.Type.VOICE == message.getType()) {
+            map.put("message_type", 7);
+        } else if (EMMessage.Type.LOCATION == message.getType()) {
+            map.put("message_type", 5);
         }
+
+    }
+
+    private void requestNum(Map<String, Object> map) {
         HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {

@@ -1,8 +1,10 @@
 package com.wt.piaoliuping.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,12 +14,12 @@ import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseActivity;
-import com.wt.piaoliuping.base.BaseTitleActivity;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -39,6 +41,10 @@ public class ShowBottleActivity extends BaseActivity {
     Button btnLeft;
     @BindView(R.id.btn_msg)
     Button btnMsg;
+    @BindView(R.id.voice_content)
+    ImageButton voiceContent;
+    @BindView(R.id.image_content)
+    ImageView imageContent;
 
     private String msgId;
 
@@ -129,5 +135,9 @@ public class ShowBottleActivity extends BaseActivity {
                 showToast(result.errorStr);
             }
         }, this);
+    }
+
+    @OnClick(R.id.voice_content)
+    public void onViewClicked() {
     }
 }

@@ -22,9 +22,13 @@ import com.wt.piaoliuping.activity.FollowListActivity;
 import com.wt.piaoliuping.activity.GoodsListActivity;
 import com.wt.piaoliuping.activity.PointActivity;
 import com.wt.piaoliuping.activity.PrizeListActivity;
+import com.wt.piaoliuping.activity.RecommendActivity;
 import com.wt.piaoliuping.activity.RevokeListActivity;
 import com.wt.piaoliuping.activity.SettingTitleActivity;
 import com.wt.piaoliuping.base.PageFragment;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -56,6 +60,8 @@ public class MineFragment extends PageFragment {
     LinearLayout layout7;
     @BindView(R.id.layout_9)
     LinearLayout layout9;
+    @BindView(R.id.layout_10)
+    LinearLayout layout10;
 
     @Override
     public void initView(View view) {
@@ -68,7 +74,7 @@ public class MineFragment extends PageFragment {
         return R.layout.fragment_setting;
     }
 
-    @OnClick({R.id.image_head, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6, R.id.layout_7, R.id.layout_8, R.id.layout_9})
+    @OnClick({R.id.image_head, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6, R.id.layout_7, R.id.layout_8, R.id.layout_9, R.id.layout_10})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_head:
@@ -101,6 +107,11 @@ public class MineFragment extends PageFragment {
             case R.id.layout_9: {
                 startActivity(new Intent(getActivity(), FeedbackActivity.class));
                 break;
+
+            }
+            case R.id.layout_10: {
+                startActivity(new Intent(getActivity(), RecommendActivity.class));
+                break;
             }
         }
     }
@@ -131,7 +142,7 @@ public class MineFragment extends PageFragment {
 
 
     private void loadShare() {
-        HaoConnect.loadContent("sys_config/share_info", null, "get", new HaoResultHttpResponseHandler() {
+        HaoConnect.loadContent("sys_config/share_ok", null, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
                 UMImage umImage = new UMImage(getActivity(), R.mipmap.ic_launcher);
@@ -142,7 +153,7 @@ public class MineFragment extends PageFragment {
 
                 new ShareAction(getActivity())
                         .withMedia(web)
-                        .setDisplayList(SHARE_MEDIA.WEIXIN)
+                        .setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
                         .setCallback(new UMShareListener() {
                             @Override
                             public void onStart(SHARE_MEDIA share_media) {
@@ -151,7 +162,12 @@ public class MineFragment extends PageFragment {
 
                             @Override
                             public void onResult(SHARE_MEDIA share_media) {
-                                upload();
+                                if (share_media == SHARE_MEDIA.WEIXIN) {
+                                    upload("weixin");
+                                } else {
+                                    upload("weixincircle");
+                                }
+
                             }
 
                             @Override
@@ -169,7 +185,14 @@ public class MineFragment extends PageFragment {
         }, getActivity());
     }
 
-    private void upload() {
+    private void upload(String type) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("channel", type);
+        HaoConnect.loadContent("sys_config/share_ok", map, "post", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
 
+            }
+        }, getActivity());
     }
 }
