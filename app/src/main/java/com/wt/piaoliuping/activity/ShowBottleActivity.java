@@ -59,6 +59,9 @@ public class ShowBottleActivity extends BaseActivity {
     public void initView() {
 //        setTitle("来自***的瓶子");
         msgId = getIntent().getStringExtra("msgId");
+        voiceContent.setVisibility(View.INVISIBLE);
+        imageContent.setVisibility(View.INVISIBLE);
+        textContent.setVisibility(View.INVISIBLE);
         loadDetail();
     }
 
@@ -97,7 +100,20 @@ public class ShowBottleActivity extends BaseActivity {
                 textTime.setText(result.findAsString("throwUserLocal>createTime"));
                 setTitle("来自" + city + "的瓶子");
 
-                textContent.setText(result.findAsString("message"));
+                int type = result.findAsInt("messageType");
+                switch (type) {
+                    case 1:
+                        textContent.setText(result.findAsString("message"));
+                        textContent.setVisibility(View.VISIBLE);
+                        break;
+                    case 2:
+                        voiceContent.setVisibility(View.VISIBLE);
+                        break;
+                    case 3:
+                        imageContent.setVisibility(View.VISIBLE);
+                        ImageLoader.getInstance().displayImage(result.findAsString("message"), imageContent);
+                        break;
+                }
                 stopLoading();
             }
 
