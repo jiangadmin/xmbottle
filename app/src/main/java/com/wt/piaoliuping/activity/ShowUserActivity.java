@@ -373,7 +373,7 @@ public class ShowUserActivity extends BaseTitleActivity implements ViewPager.OnP
 
             @Override
             public void onFail(HaoResult result) {
-                showToast(result.errorStr);
+//                showToast(result.errorStr);
             }
         }, this);
     }

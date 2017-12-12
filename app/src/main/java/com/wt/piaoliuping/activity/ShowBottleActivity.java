@@ -93,6 +93,12 @@ public class ShowBottleActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopPlayVoice();
+    }
+
     private void loadDetail() {
         Map<String, Object> map = new HashMap<>();
         map.put("id", msgId);
