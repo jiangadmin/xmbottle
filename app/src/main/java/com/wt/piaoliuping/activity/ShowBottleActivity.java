@@ -2,22 +2,28 @@ package com.wt.piaoliuping.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.haoxitech.HaoConnect.HaoConfig;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMChatManager;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.cloud.CloudFileManager;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseActivity;
 
@@ -49,19 +55,24 @@ public class ShowBottleActivity extends BaseActivity {
     @BindView(R.id.btn_msg)
     Button btnMsg;
     @BindView(R.id.voice_content)
-    ImageButton voiceContent;
+    RelativeLayout voiceContent;
     @BindView(R.id.image_content)
     ImageView imageContent;
+    @BindView(R.id.iv_voice)
+    ImageView ivVoice;
 
     private String msgId;
+    private String voiceStr;
+    private String voiceStrShort;
 
     @Override
     public void initView() {
 //        setTitle("来自***的瓶子");
         msgId = getIntent().getStringExtra("msgId");
-        voiceContent.setVisibility(View.INVISIBLE);
-        imageContent.setVisibility(View.INVISIBLE);
-        textContent.setVisibility(View.INVISIBLE);
+        voiceContent.setVisibility(View.GONE);
+        imageContent.setVisibility(View.GONE);
+        textContent.setVisibility(View.GONE);
+        ivVoice.setImageResource(com.hyphenate.easeui.R.drawable.ease_chatfrom_voice_playing);
         loadDetail();
     }
 
@@ -107,11 +118,13 @@ public class ShowBottleActivity extends BaseActivity {
                         textContent.setVisibility(View.VISIBLE);
                         break;
                     case 2:
-                        voiceContent.setVisibility(View.VISIBLE);
+                        imageContent.setVisibility(View.VISIBLE);
+                        ImageLoader.getInstance().displayImage(result.findAsString("messagePreView"), imageContent);
                         break;
                     case 3:
-                        imageContent.setVisibility(View.VISIBLE);
-                        ImageLoader.getInstance().displayImage(result.findAsString("message"), imageContent);
+                        voiceStr = result.findAsString("messagePreView");
+                        voiceStrShort = result.findAsString("message");
+                        voiceContent.setVisibility(View.VISIBLE);
                         break;
                 }
                 stopLoading();
@@ -160,11 +173,39 @@ public class ShowBottleActivity extends BaseActivity {
         }, this);
     }
 
+    String localStr;
+
     @OnClick(R.id.voice_content)
     public void onViewClicked() {
+//        EMChatManager
+        localStr = StorageUtils.getIndividualCacheDirectory(this, "voice").getPath() + "/" + voiceStrShort;
+        EMClient.getInstance().chatManager().downloadFile(voiceStr, localStr, new HashMap<String, String>(), new EMCallBack() {
+            @Override
+            public void onSuccess() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        playVoice(localStr);
+                    }
+                });
+            }
+
+            @Override
+            public void onError(int code, String error) {
+
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+        });
     }
 
     MediaPlayer mediaPlayer = null;
+
+    private AnimationDrawable voiceAnimation = null;
 
     public void playVoice(String filePath) {
         if (!(new File(filePath).exists())) {
@@ -198,6 +239,7 @@ public class ShowBottleActivity extends BaseActivity {
 
             });
             mediaPlayer.start();
+            showAnimation();
 
         } catch (Exception e) {
             System.out.println();
@@ -207,9 +249,21 @@ public class ShowBottleActivity extends BaseActivity {
 
     public void stopPlayVoice() {
         // stop play voice
+        if (voiceAnimation != null) {
+            voiceAnimation.stop();
+        }
+        ivVoice.setImageResource(com.hyphenate.easeui.R.drawable.ease_chatfrom_voice_playing);
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
         }
     }
+
+    private void showAnimation() {
+        // play voice, and start animation
+        ivVoice.setImageResource(com.hyphenate.easeui.R.drawable.voice_from_icon);
+        voiceAnimation = (AnimationDrawable) ivVoice.getDrawable();
+        voiceAnimation.start();
+    }
+
 }

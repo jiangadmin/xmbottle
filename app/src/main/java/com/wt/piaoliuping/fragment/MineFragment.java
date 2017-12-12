@@ -20,12 +20,14 @@ import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.activity.FeedbackActivity;
 import com.wt.piaoliuping.activity.FollowListActivity;
 import com.wt.piaoliuping.activity.GoodsListActivity;
+import com.wt.piaoliuping.activity.MinePrizeListActivity;
 import com.wt.piaoliuping.activity.PointActivity;
 import com.wt.piaoliuping.activity.PrizeListActivity;
 import com.wt.piaoliuping.activity.RecommendActivity;
 import com.wt.piaoliuping.activity.RevokeListActivity;
 import com.wt.piaoliuping.activity.SettingTitleActivity;
 import com.wt.piaoliuping.base.PageFragment;
+import com.wt.piaoliuping.utils.DateUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +46,8 @@ public class MineFragment extends PageFragment {
     TextView textName;
     @BindView(R.id.text_no)
     TextView textNo;
+    @BindView(R.id.text_expire_time)
+    TextView textExpireTime;
     @BindView(R.id.layout_1)
     LinearLayout layout1;
     @BindView(R.id.layout_2)
@@ -89,7 +93,7 @@ public class MineFragment extends PageFragment {
                 startActivity(new Intent(getActivity(), PointActivity.class));
                 break;
             case R.id.layout_4:
-                startActivity(new Intent(getActivity(), PrizeListActivity.class));
+                startActivity(new Intent(getActivity(), MinePrizeListActivity.class));
                 break;
             case R.id.layout_5:
                 startActivity(new Intent(getActivity(), PrizeListActivity.class));
@@ -129,20 +133,25 @@ public class MineFragment extends PageFragment {
                 ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead);
                 textName.setText("昵称：" + result.findAsString("nickname"));
                 textNo.setText("ID：" + result.findAsString("id"));
-                /*if (result.findAsInt("vipLevel") == 0) {
-                    layout5.setVisibility(View.GONE);
-                    layout4.setVisibility(View.VISIBLE);
+                if (result.findAsInt("vipLevel") == 0) {
+                    textExpireTime.setVisibility(View.GONE);
+//                    layout5.setVisibility(View.GONE);
+//                    layout4.setVisibility(View.VISIBLE);
                 } else {
-                    layout4.setVisibility(View.GONE);
-                    layout5.setVisibility(View.VISIBLE);
-                }*/
+                    textExpireTime.setVisibility(View.VISIBLE);
+//                    layout4.setVisibility(View.GONE);
+//                    layout5.setVisibility(View.VISIBLE);
+                }
+                long time = DateUtils.getTime(result.findAsString("vipEndTime"));
+                long day = time / 24 / 3600;
+                textExpireTime.setText("VIP会员剩余：" + day + "天");
             }
         }, getActivity());
     }
 
 
     private void loadShare() {
-        HaoConnect.loadContent("sys_config/share_ok", null, "get", new HaoResultHttpResponseHandler() {
+        HaoConnect.loadContent("sys_config/share_info", null, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
                 UMImage umImage = new UMImage(getActivity(), R.mipmap.ic_launcher);

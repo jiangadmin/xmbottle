@@ -1,6 +1,7 @@
 package com.wt.piaoliuping.activity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -9,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -41,7 +43,7 @@ import rx.functions.Action1;
  * Created by wangtao on 2017/11/23.
  */
 
-public class PhotosActivity extends BaseTitleActivity {
+public class PhotosActivity extends BaseTitleActivity implements PhotoAdapter.ItemLongClickListener {
     @BindView(R.id.grid_view)
     PullToRefreshGridView gridView;
 
@@ -66,6 +68,7 @@ public class PhotosActivity extends BaseTitleActivity {
         if (showPhoto) {
             textRightTitle.setVisibility(View.GONE);
         }
+        photoAdapter.setOnLongClickListener(this);
 
         loadData();
     }
@@ -316,4 +319,32 @@ public class PhotosActivity extends BaseTitleActivity {
 //        return basePath + name + "_tmp.jpg";
     }
 
+    @Override
+    public void onLongClick(View view, final int position) {
+        new AlertDialog.Builder(this)
+                .setTitle("提示")
+                .setMessage("确定删除该照片吗")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        HaoResult haoResult = (HaoResult) photoAdapter.dataList.get(position);
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("id", haoResult.findAsString("id"));
+                        HaoConnect.loadContent("user_photos/delete", map, "post", new HaoResultHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(HaoResult result) {
+                                loadData();
+                            }
+
+                            @Override
+                            public void onFail(HaoResult result) {
+                                showToast(result.errorStr);
+                            }
+                        }, PhotosActivity.this);
+                    }
+                })
+                .setNegativeButton("取消", null)
+                .create()
+                .show();
+    }
 }

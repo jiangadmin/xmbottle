@@ -86,6 +86,16 @@
             android:text="元" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/text_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:text="" />
+
     <LinearLayout
         android:id="@+id/layout_4"
         android:layout_width="match_parent"
@@ -95,8 +105,8 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/bolder_white_view_bg"
         android:gravity="center_vertical"
-        android:visibility="gone"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/text_point"

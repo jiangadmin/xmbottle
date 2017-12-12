@@ -6,9 +6,19 @@
 
     <include layout="@layout/layout_title" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="礼物兑换 不可找回"
+        style="@style/text_15_999999"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content" />
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <com.handmark.pulltorefresh.library.PullToRefreshGridView
             android:id="@+id/grid_view"
@@ -25,5 +35,30 @@
             android:layout_gravity="center"
             android:src="@drawable/no_data" />
     </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_point"
+            style="@style/text_15_222222"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:id="@+id/text_recharge"
+            style="@style/text_15_999999"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="充值" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

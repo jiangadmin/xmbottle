@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;
 import com.hyphenate.EMMessageListener;
@@ -36,6 +37,7 @@ import com.wt.piaoliuping.fragment.BottleFragment;
 import com.wt.piaoliuping.fragment.MessageFragment;
 import com.wt.piaoliuping.fragment.MineFragment;
 import com.wt.piaoliuping.fragment.NearbyFragment;
+import com.wt.piaoliuping.manager.HXManager;
 import com.wt.piaoliuping.manager.UserManager;
 import com.wt.piaoliuping.utils.DateUtils;
 import com.wt.piaoliuping.widgt.CustomViewPager;
@@ -123,6 +125,26 @@ public class HomeActivity extends BaseTitleActivity {
                 }
             }
         });
+
+
+        new Thread(new Runnable() {
+            public void run() {
+                EMClient.getInstance().login(UserManager.getInstance().getUserId(), HXManager.getInstance().formatPassword(UserManager.getInstance().getUserId()), new EMCallBack() {
+                    @Override
+                    public void onSuccess() {
+                    }
+
+                    @Override
+                    public void onError(int code, final String error) {
+                    }
+
+                    @Override
+                    public void onProgress(int progress, String status) {
+
+                    }
+                });
+            }
+        }).start();
 
         rxPermissions = new RxPermissions(this);
         handleLocation();

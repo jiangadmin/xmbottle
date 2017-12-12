@@ -19,12 +19,22 @@ import butterknife.ButterKnife;
 
 public class PhotoAdapter extends BaseItemAdapter {
 
+    ItemLongClickListener onLongClickListener;
+
+    public ItemLongClickListener getOnLongClickListener() {
+        return onLongClickListener;
+    }
+
+    public void setOnLongClickListener(ItemLongClickListener onLongClickListener) {
+        this.onLongClickListener = onLongClickListener;
+    }
+
     public PhotoAdapter(Context context) {
         super(context);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.adapter_photo, null);
@@ -35,6 +45,15 @@ public class PhotoAdapter extends BaseItemAdapter {
         }
         HaoResult haoResult = (HaoResult) dataList.get(position);
         ImageLoader.getInstance().displayImage(haoResult.findAsString("photoPreview"), holder.itemImage);
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if (onLongClickListener != null) {
+                    onLongClickListener.onLongClick(view, position);
+                }
+                return true;
+            }
+        });
         return convertView;
     }
 
@@ -46,5 +65,9 @@ public class PhotoAdapter extends BaseItemAdapter {
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
+    }
+
+    public interface ItemLongClickListener {
+        public void onLongClick(View view, int position);
     }
 }

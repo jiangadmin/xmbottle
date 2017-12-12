@@ -39,41 +39,16 @@ public class LaunchActivity extends BaseTitleActivity implements Runnable {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             } else {
-                new Thread(new Runnable() {
+                runOnUiThread(new Runnable() {
+                    @Override
                     public void run() {
-                        EMClient.getInstance().login(UserManager.getInstance().getUserId(), HXManager.getInstance().formatPassword(UserManager.getInstance().getUserId()), new EMCallBack() {
-                            @Override
-                            public void onSuccess() {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Intent intent = new Intent(LaunchActivity.this, HomeActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                        stopLoading();
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void onError(int code, final String error) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Intent intent = new Intent(LaunchActivity.this, LoginActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void onProgress(int progress, String status) {
-
-                            }
-                        });
+                        Intent intent = new Intent(LaunchActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                        stopLoading();
                     }
-                }).start();
+                });
+
             }
         } else {
             Intent intent = new Intent(this, LoginActivity.class);

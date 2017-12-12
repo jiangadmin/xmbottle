@@ -82,7 +82,7 @@ public class PickerDialog extends Dialog {
                 dialog.dismiss();
                 if (callBack != null) {
                     if (!dataList3.isEmpty()) {
-                        callBack.choose(dataList3.get(picker.getCurrentItemPosition()).get("areaName").toString(), dataList3.get(picker.getCurrentItemPosition()).get("id").toString());
+                        callBack.choose(dataList3.get(picker3.getCurrentItemPosition()).get("areaName").toString(), dataList3.get(picker3.getCurrentItemPosition()).get("id").toString());
                     }
                 }
             }

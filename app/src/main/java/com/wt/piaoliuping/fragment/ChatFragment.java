@@ -23,8 +23,8 @@ import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.hyphenate.util.PathUtil;
 import com.wt.piaoliuping.R;
+import com.wt.piaoliuping.activity.GoodsListActivity;
 import com.wt.piaoliuping.activity.PointActivity;
-import com.wt.piaoliuping.activity.PrizeListActivity;
 import com.wt.piaoliuping.activity.ShowUserActivity;
 import com.wt.piaoliuping.activity.VideoCallActivity;
 import com.wt.piaoliuping.activity.VoiceCallActivity;
@@ -129,7 +129,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
         } else if (EMMessage.Type.LOCATION == message.getType()) {
             map.put("message_type", 5);
         }
-
+        requestNum(map);
     }
 
     private void requestNum(Map<String, Object> map) {
@@ -249,8 +249,9 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
     }
 
     private void startPrize() {
-        Intent intent = new Intent(getActivity(), PrizeListActivity.class);
+        Intent intent = new Intent(getActivity(), GoodsListActivity.class);
         intent.putExtra("userId", toChatUsername);
+        intent.putExtra("send", true);
         startActivity(intent);
     }
 

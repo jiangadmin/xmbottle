@@ -420,7 +420,7 @@ public class UserInfoActivity extends BaseTitleActivity {
                 textStar.setText(result.findAsString("constellation"));
                 textSign.setText(result.findAsString("declaration"));
                 try {
-                    textCity.setText(result.findAsString("areaLabel").split("-")[1]);
+                    textCity.setText(result.findAsString("areaLabel").split("-")[2]);
                 } catch (Exception e) {
 
                 }

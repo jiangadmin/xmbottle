@@ -1,6 +1,7 @@
 package com.wt.piaoliuping.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -52,12 +54,15 @@ public class PointActivity extends BaseTitleActivity {
     Button btnCharge;
     @BindView(R.id.btn_withdrew)
     Button btnWithdrew;
+    @BindView(R.id.text_tips)
+    TextView textTips;
 
     @Override
     public void initView() {
         setTitle("我的积分");
 
         loadUser();
+        loadTips();
     }
 
     @Override
@@ -152,4 +157,21 @@ public class PointActivity extends BaseTitleActivity {
 
         ;
     };
+
+
+    private void loadTips() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("key", "payAmountRatio");
+        HaoConnect.loadContent("sys_config/detail", map, "get", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                textTips.setText(result.findAsString("results>content"));
+            }
+
+            @Override
+            public void onFail(HaoResult result) {
+                showToast(result.errorStr);
+            }
+        }, this);
+    }
 }

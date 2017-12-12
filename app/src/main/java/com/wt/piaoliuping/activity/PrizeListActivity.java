@@ -2,6 +2,7 @@ package com.wt.piaoliuping.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,6 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by wangtao on 2017/11/14.
@@ -32,8 +35,11 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
     PrizeAdapter adapter;
     @BindView(R.id.text_point)
     TextView textPoint;
+    @BindView(R.id.text_right_title)
+    TextView textRightTitle;
 
     private String userId;
+
     @Override
     public void initView() {
         setTitle("礼物列表");
@@ -41,6 +47,8 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
         gridView.setAdapter(adapter);
         adapter.setItemClickListener(this);
         userId = getIntent().getStringExtra("userId");
+        textRightTitle.setText("购买");
+        textRightTitle.setVisibility(View.VISIBLE);
         loadUser();
         loadData();
     }
@@ -72,7 +80,7 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
                                 HaoConnect.loadContent("user_goods_item/give_user", map, "post", new HaoResultHttpResponseHandler() {
                                     @Override
                                     public void onSuccess(HaoResult result) {
-                                        showToast("增送成功");
+                                        showToast("赠送成功");
                                         setResult(RESULT_OK);
                                         finish();
                                     }
@@ -119,7 +127,7 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
         HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                textPoint.setText("我的积分：" + result.findAsString("score") + "星星");
+                textPoint.setText("我的星星：" + result.findAsString("score") + "星星");
             }
         }, this);
     }
@@ -130,5 +138,10 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
         if (requestCode == 100 && resultCode == RESULT_OK) {
             loadData();
         }
+    }
+
+    @OnClick(R.id.text_right_title)
+    public void onViewClicked() {
+        startActivity(new Intent(this, GoodsListActivity.class));
     }
 }

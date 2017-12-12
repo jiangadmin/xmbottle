@@ -1,12 +1,13 @@
 package com.wt.piaoliuping.activity;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alipay.sdk.app.PayTask;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by wangtao on 2017/11/14.
@@ -33,6 +35,13 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
 
     private static final int SDK_PAY_FLAG = 1;
     private static final int SDK_AUTH_FLAG = 2;
+    @BindView(R.id.text_point)
+    TextView textPoint;
+    @BindView(R.id.text_recharge)
+    TextView textRecharge;
+
+    private boolean send;
+    private String userId;
 
     @Override
     public void initView() {
@@ -40,7 +49,10 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
         adapter = new GoodsAdapter(this);
         gridView.setAdapter(adapter);
         adapter.setItemClickListener(this);
+        send = getIntent().getBooleanExtra("send", false);
+        userId = getIntent().getStringExtra("userId");
         loadData();
+        loadUser();
     }
 
     @Override
@@ -52,7 +64,7 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
     public void click(View v, int position) {
         if (v.getId() == R.id.btn_submit) {
 
-            HaoResult result = (HaoResult) adapter.dataList.get(position);
+            /*HaoResult result = (HaoResult) adapter.dataList.get(position);
 
             Map<String, Object> map = new HashMap<>();
             map.put("pay_type", "alipay");
@@ -80,6 +92,44 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
                     // 必须异步调用
                     Thread payThread = new Thread(payRunnable);
                     payThread.start();
+                }
+
+                @Override
+                public void onFail(HaoResult result) {
+                    showToast(result.errorStr);
+                    stopLoading();
+                }
+            }, this);*/
+
+            HaoResult result = (HaoResult) adapter.dataList.get(position);
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", result.findAsString("id"));
+            startLoading();
+            HaoConnect.loadContent("goods_item/exchange", map, "post", new HaoResultHttpResponseHandler() {
+                @Override
+                public void onSuccess(HaoResult result) {
+                    stopLoading();
+                    if (send) {
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("user_goods_item_id", result.findAsString("id"));
+                        map.put("give_user_id", userId);
+                        HaoConnect.loadContent("user_goods_item/give_user", map, "post", new HaoResultHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(HaoResult result) {
+                                showToast("赠送成功");
+                                setResult(RESULT_OK);
+                                finish();
+                            }
+
+                            @Override
+                            public void onFail(HaoResult result) {
+                                showToast(result.errorStr);
+                            }
+                        }, GoodsListActivity.this);
+                    } else {
+                        showToast("购买成功");
+                    }
                 }
 
                 @Override
@@ -144,4 +194,18 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
         ;
     };
 
+    @OnClick(R.id.text_recharge)
+    public void onViewClicked() {
+        startActivity(new Intent(this, PointActivity.class));
+    }
+
+
+    private void loadUser() {
+        HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                textPoint.setText("我的星星：" + result.findAsString("score") + "星星");
+            }
+        }, this);
+    }
 }

@@ -89,7 +89,7 @@ public class FriendListActivity extends BaseTitleActivity implements AdapterView
                             HaoConnect.loadContent("user_goods_item/give_user", map, "post", new HaoResultHttpResponseHandler() {
                                 @Override
                                 public void onSuccess(HaoResult result) {
-                                    showToast("增送成功");
+                                    showToast("赠送成功");
                                     setResult(RESULT_OK);
                                     finish();
                                 }

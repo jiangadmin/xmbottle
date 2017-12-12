@@ -198,6 +198,10 @@
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MinePrizeListActivity"
+            android:screenOrientation="portrait" />
+
 
         <activity android:name=".activity.VoiceCallActivity"/>
 
