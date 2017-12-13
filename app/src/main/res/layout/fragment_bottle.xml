@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@drawable/ic_bg"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -24,14 +24,14 @@
 
         <TextView
             android:id="@+id/text_name"
-            style="@style/text_14_999999"
+            style="@style/text_14_222222"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp" />
 
         <TextView
             android:id="@+id/text_no"
-            style="@style/text_14_999999"
+            style="@style/text_14_222222"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp" />

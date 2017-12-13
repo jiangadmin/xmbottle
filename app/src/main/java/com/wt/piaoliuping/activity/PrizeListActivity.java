@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
@@ -45,13 +46,19 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
         setTitle("礼物列表");
         adapter = new PrizeAdapter(this);
         gridView.setAdapter(adapter);
+        gridView.setMode(PullToRefreshBase.Mode.DISABLED);
         adapter.setItemClickListener(this);
         userId = getIntent().getStringExtra("userId");
         textRightTitle.setText("购买");
         textRightTitle.setVisibility(View.VISIBLE);
-        loadUser();
         loadData();
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadUser();
+    }
+
 
     @Override
     public int getContentViewID() {
@@ -127,7 +134,7 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
         HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                textPoint.setText("我的星星：" + result.findAsString("score") + "星星");
+                textPoint.setText("我的星星：" + result.findAsString("amount") + "星星");
             }
         }, this);
     }

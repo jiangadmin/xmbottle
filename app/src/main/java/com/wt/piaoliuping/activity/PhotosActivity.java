@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
@@ -60,6 +61,7 @@ public class PhotosActivity extends BaseTitleActivity implements PhotoAdapter.It
         setTitle("相册");
         photoAdapter = new PhotoAdapter(this);
         gridView.setAdapter(photoAdapter);
+        gridView.setMode(PullToRefreshBase.Mode.DISABLED);
 
         rxPermissions = new RxPermissions(this);
         textRightTitle.setText("添加");

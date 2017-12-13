@@ -45,8 +45,14 @@ public class BottleFragment extends PageFragment {
     public void initView(View view) {
         super.initView(view);
         setTitle("瓶子");
+    }
+
+    @Override
+    public void fetchData() {
+        super.onStart();
         loadUser();
     }
+
 
     @Override
     public int getFragmentLayoutId() {
@@ -89,7 +95,7 @@ public class BottleFragment extends PageFragment {
             public void onSuccess(HaoResult result) {
                 ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead);
                 textName.setText("昵称：" + result.findAsString("nickname"));
-                textNo.setText("星星：" + result.findAsString("score"));
+                textNo.setText("星星：" + result.findAsString("amount"));
 
             }
         }, getActivity());

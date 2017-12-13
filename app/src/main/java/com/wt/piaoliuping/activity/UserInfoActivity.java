@@ -88,8 +88,13 @@ public class UserInfoActivity extends BaseTitleActivity {
     public void initView() {
         setTitle("个人资料");
         rxPermissions = new RxPermissions(this);
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
         loadUser();
     }
+
 
     @Override
     public int getContentViewID() {

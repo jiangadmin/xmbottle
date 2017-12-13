@@ -61,8 +61,14 @@ public class PointActivity extends BaseTitleActivity {
     public void initView() {
         setTitle("我的积分");
 
-        loadUser();
         loadTips();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        loadUser();
     }
 
     @Override
@@ -121,8 +127,8 @@ public class PointActivity extends BaseTitleActivity {
         HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                textMinePoint.setText("我的星星：" + result.findAsString("amount"));
-                textMineStar.setText("系统积分：" + result.findAsString("score"));
+                textMinePoint.setText("系统积分：" + result.findAsString("score"));
+                textMineStar.setText("我的星星：" + result.findAsString("amount"));
                 stopLoading();
             }
         }, this);
@@ -144,6 +150,7 @@ public class PointActivity extends BaseTitleActivity {
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         Toast.makeText(PointActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        loadUser();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         Toast.makeText(PointActivity.this, "支付失败", Toast.LENGTH_SHORT).show();

@@ -1,10 +1,14 @@
 package com.wt.piaoliuping.fragment;
 
 import android.content.Intent;
-import android.text.TextUtils;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.haoxitech.HaoConnect.HaoConnect;
@@ -28,12 +32,15 @@ import com.wt.piaoliuping.activity.RevokeListActivity;
 import com.wt.piaoliuping.activity.SettingTitleActivity;
 import com.wt.piaoliuping.base.PageFragment;
 import com.wt.piaoliuping.utils.DateUtils;
+import com.wt.piaoliuping.utils.DisplayUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Created by wangtao on 2017/10/25.
@@ -66,11 +73,15 @@ public class MineFragment extends PageFragment {
     LinearLayout layout9;
     @BindView(R.id.layout_10)
     LinearLayout layout10;
+    @BindView(R.id.btn_right_title)
+    ImageButton btnRightTitle;
 
     @Override
     public void initView(View view) {
         super.initView(view);
         setTitle("设置");
+        btnRightTitle.setBackgroundResource(R.drawable.ic_setting);
+        btnRightTitle.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -78,7 +89,7 @@ public class MineFragment extends PageFragment {
         return R.layout.fragment_setting;
     }
 
-    @OnClick({R.id.image_head, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6, R.id.layout_7, R.id.layout_8, R.id.layout_9, R.id.layout_10})
+    @OnClick({R.id.image_head, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6, R.id.layout_7, R.id.layout_8, R.id.layout_9, R.id.layout_10, R.id.btn_right_title})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_head:
@@ -105,6 +116,7 @@ public class MineFragment extends PageFragment {
                 loadShare();
             }
             break;
+            case R.id.btn_right_title:
             case R.id.layout_8:
                 startActivity(new Intent(getActivity(), SettingTitleActivity.class));
                 break;
@@ -142,9 +154,11 @@ public class MineFragment extends PageFragment {
 //                    layout4.setVisibility(View.GONE);
 //                    layout5.setVisibility(View.VISIBLE);
                 }
-                long time = DateUtils.getTime(result.findAsString("vipEndTime"));
+                long time = DateUtils.getTime(result.findAsString("vipEndTime")) - System.currentTimeMillis() / 1000;
                 long day = time / 24 / 3600;
-                textExpireTime.setText("VIP会员剩余：" + day + "天");
+                if (day > 0) {
+                    textExpireTime.setText("会员剩余：" + day + "天");
+                }
             }
         }, getActivity());
     }
@@ -204,4 +218,5 @@ public class MineFragment extends PageFragment {
             }
         }, getActivity());
     }
+
 }

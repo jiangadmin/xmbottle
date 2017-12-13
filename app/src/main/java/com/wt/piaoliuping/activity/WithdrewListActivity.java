@@ -1,5 +1,6 @@
 package com.wt.piaoliuping.activity;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
@@ -29,6 +30,7 @@ public class WithdrewListActivity extends BaseTitleActivity {
         setTitle("提现记录");
         withdrawAdapter = new WithdrawAdapter(this);
         listView.setAdapter(withdrawAdapter);
+        listView.setMode(PullToRefreshBase.Mode.DISABLED);
         loadData();
     }
 

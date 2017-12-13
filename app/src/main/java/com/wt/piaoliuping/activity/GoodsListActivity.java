@@ -5,13 +5,17 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.adapter.GoodsAdapter;
 import com.wt.piaoliuping.base.BaseTitleActivity;
@@ -39,9 +43,12 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
     TextView textPoint;
     @BindView(R.id.text_recharge)
     TextView textRecharge;
+    @BindView(R.id.layout_5)
+    LinearLayout layout5;
 
     private boolean send;
     private String userId;
+    private String userName;
 
     @Override
     public void initView() {
@@ -52,6 +59,12 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
         send = getIntent().getBooleanExtra("send", false);
         userId = getIntent().getStringExtra("userId");
         loadData();
+        gridView.setMode(PullToRefreshBase.Mode.DISABLED);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         loadUser();
     }
 
@@ -118,6 +131,9 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
                             @Override
                             public void onSuccess(HaoResult result) {
                                 showToast("赠送成功");
+                                String desc = "【" + userName + "】"+"送您礼物 {" + result.findAsString("goodsName") + "}";
+                                EMMessage message = EMMessage.createTxtSendMessage(desc, userId);
+                                EMClient.getInstance().chatManager().sendMessage(message);
                                 setResult(RESULT_OK);
                                 finish();
                             }
@@ -204,8 +220,14 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
         HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                textPoint.setText("我的星星：" + result.findAsString("score") + "星星");
+                textPoint.setText("我的星星：" + result.findAsString("amount") + "星星");
+                userName = result.findAsString("nickname");
             }
         }, this);
+    }
+
+    @OnClick(R.id.layout_5)
+    public void onLayout5licked() {
+        startActivity(new Intent(this, PrizeListActivity.class));
     }
 }

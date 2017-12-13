@@ -34,7 +34,6 @@ public class RevokeListActivity extends BaseTitleActivity implements AdapterView
         setTitle("黑名单");
         nameAdapter = new NameAdapter(this);
         listView.setAdapter(nameAdapter);
-
         listView.setMode(PullToRefreshBase.Mode.DISABLED);
         listView.setOnItemClickListener(this);
         loadData();

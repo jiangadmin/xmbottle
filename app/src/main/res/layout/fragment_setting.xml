@@ -15,18 +15,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <include layout="@layout/layout_ten_line_horizontal" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="140dp"
+                android:minHeight="100dp"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:paddingRight="10dp">
 
                 <ImageView
                     android:id="@+id/image_head"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:layout_marginTop="10dp"
                     android:scaleType="centerCrop" />
 
                 <LinearLayout
@@ -66,12 +67,14 @@
                         android:id="@+id/text_expire_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="right"
                         android:layout_marginRight="20dp"
+                        android:gravity="right"
                         android:textColor="@color/redColor"
                         android:textSize="15sp" />
                 </LinearLayout>
             </LinearLayout>
+
+            <include layout="@layout/layout_ten_line_horizontal" />
 
             <LinearLayout
                 android:id="@+id/layout_1"
@@ -80,7 +83,14 @@
                 android:background="@drawable/bolder_white_view_bg"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_follow" />
 
                 <TextView
                     style="@style/text_14_222222"
@@ -96,28 +106,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/layout_2"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bolder_white_view_bg"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <TextView
-                    style="@style/text_14_222222"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="黑名单" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/arrow_right" />
-
-            </LinearLayout>
+            <include layout="@layout/layout_ten_line_horizontal" />
 
             <LinearLayout
                 android:id="@+id/layout_3"
@@ -126,7 +115,13 @@
                 android:background="@drawable/bolder_white_view_bg"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_star" />
 
                 <TextView
                     style="@style/text_14_222222"
@@ -149,7 +144,13 @@
                 android:background="@drawable/bolder_white_view_bg"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_prize" />
 
                 <TextView
                     style="@style/text_14_222222"
@@ -166,37 +167,19 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layout_5"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bolder_white_view_bg"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="10dp"
-                android:visibility="gone">
-
-                <TextView
-                    style="@style/text_14_222222"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="我收到的礼物" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/arrow_right" />
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/layout_6"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/bolder_white_view_bg"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_shop" />
 
                 <TextView
                     style="@style/text_14_222222"
@@ -212,6 +195,69 @@
 
             </LinearLayout>
 
+            <include layout="@layout/layout_ten_line_horizontal" />
+
+            <LinearLayout
+                android:id="@+id/layout_9"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/bolder_white_view_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_server" />
+
+                <TextView
+                    style="@style/text_14_222222"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="在线客服" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow_right" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layout_5"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/bolder_white_view_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:visibility="gone">
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_prize" />
+
+                <TextView
+                    style="@style/text_14_222222"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="我收到的礼物" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow_right" />
+
+            </LinearLayout>
+
+
             <LinearLayout
                 android:id="@+id/layout_7"
                 android:layout_width="match_parent"
@@ -219,7 +265,13 @@
                 android:background="@drawable/bolder_white_view_bg"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_share" />
 
                 <TextView
                     style="@style/text_14_222222"
@@ -242,7 +294,14 @@
                 android:background="@drawable/bolder_white_view_bg"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:visibility="gone">
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_setting" />
 
                 <TextView
                     style="@style/text_14_222222"
@@ -258,28 +317,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/layout_9"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bolder_white_view_bg"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <TextView
-                    style="@style/text_14_222222"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="在线客服" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/arrow_right" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layout_10"
@@ -288,7 +325,13 @@
                 android:background="@drawable/bolder_white_view_bg"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_friend" />
 
                 <TextView
                     style="@style/text_14_222222"
@@ -301,9 +344,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/arrow_right" />
-
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/layout_2"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/bolder_white_view_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_black" />
+
+                <TextView
+                    style="@style/text_14_222222"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="黑名单" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow_right" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
