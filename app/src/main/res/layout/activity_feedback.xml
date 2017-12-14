@@ -14,7 +14,7 @@
         android:layout_height="180dp"
         android:background="@drawable/bolder_white_view_bg"
         android:gravity="top"
-        android:hint="请输入咨询内容"
+        android:hint="请输入咨询内容后，通过以下方式添加我们"
         android:padding="10dp"
         android:textColorHint="@color/darKGrayColor" />
 

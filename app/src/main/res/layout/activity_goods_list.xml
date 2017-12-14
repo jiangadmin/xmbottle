@@ -50,7 +50,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="我收到的礼物" />
+            android:text="我购买的礼物" />
 
         <ImageView
             android:layout_width="wrap_content"

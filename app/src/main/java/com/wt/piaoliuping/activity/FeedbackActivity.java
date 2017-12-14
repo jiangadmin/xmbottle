@@ -32,7 +32,7 @@ public class FeedbackActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
-        setTitle("在线客服");
+        setTitle("联系客服");
         loadData();
     }
 
@@ -71,7 +71,7 @@ public class FeedbackActivity extends BaseTitleActivity {
         HaoConnect.loadContent("sys_config/detail", map, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                textTips.setText(result.findAsString("results>description"));
+                textTips.setText(result.findAsString("results>value"));
             }
 
             @Override

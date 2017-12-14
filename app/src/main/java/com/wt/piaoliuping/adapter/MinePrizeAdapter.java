@@ -45,14 +45,16 @@ public class MinePrizeAdapter extends BaseItemAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         HaoResult result = (HaoResult) dataList.get(position);
-        holder.textTime.setText("在" + result.findAsString("buyTime"));
+        String temp;
+        temp = "在" + result.findAsString("buyTime") + " ";
         if (result.findAsInt("sourceType ") == 1) {
-            holder.textName.setText("由" + result.findAsString("userLocal>nickname"));
+            temp += "由" + result.findAsString("userLocal>nickname") + " ";
         } else {
-            holder.textName.setText("由" + result.findAsString("sourceUserLocal>nickname"));
+            temp += "由" + result.findAsString("sourceUserLocal>nickname") + " ";
         }
-        holder.textType.setText(result.findAsString("sourceTypeLabel"));
-        holder.textDesc.setText(result.findAsString("goodsName") + "一个");
+        temp += result.findAsString("sourceTypeLabel") + " ";
+        temp += result.findAsString("goodsName") + "一个";
+        holder.textName.setText(temp);
         return convertView;
     }
 
@@ -61,14 +63,8 @@ public class MinePrizeAdapter extends BaseItemAdapter {
     }
 
     static class ViewHolder {
-        @BindView(R.id.text_time)
-        TextView textTime;
         @BindView(R.id.text_name)
         TextView textName;
-        @BindView(R.id.text_type)
-        TextView textType;
-        @BindView(R.id.text_desc)
-        TextView textDesc;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

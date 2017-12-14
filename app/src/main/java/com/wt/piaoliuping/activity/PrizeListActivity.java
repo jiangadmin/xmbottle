@@ -49,8 +49,8 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
         gridView.setMode(PullToRefreshBase.Mode.DISABLED);
         adapter.setItemClickListener(this);
         userId = getIntent().getStringExtra("userId");
-        textRightTitle.setText("购买");
-        textRightTitle.setVisibility(View.VISIBLE);
+//        textRightTitle.setText("购买");
+//        textRightTitle.setVisibility(View.VISIBLE);
         loadData();
     }
     @Override
@@ -134,7 +134,7 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
         HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                textPoint.setText("我的星星：" + result.findAsString("amount") + "星星");
+                textPoint.setText("我的星星：" + result.findAsString("amountAdnScore") + "星星");
             }
         }, this);
     }

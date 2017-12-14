@@ -79,8 +79,8 @@ public class WithdrewActivity extends BaseTitleActivity {
         HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                textStar.setText("我的星星：" + result.findAsString("amount"));
-                amount = result.findAsString("amount");
+                textStar.setText("我的星星：" + result.findAsString("amountAdnScore"));
+                amount = result.findAsString("amountAdnScore");
             }
         }, this);
     }

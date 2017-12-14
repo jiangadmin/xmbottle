@@ -59,7 +59,7 @@ public class PointActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
-        setTitle("我的积分");
+        setTitle("我的星星");
 
         loadTips();
     }
@@ -128,7 +128,7 @@ public class PointActivity extends BaseTitleActivity {
             @Override
             public void onSuccess(HaoResult result) {
                 textMinePoint.setText("系统积分：" + result.findAsString("score"));
-                textMineStar.setText("我的星星：" + result.findAsString("amount"));
+                textMineStar.setText("我的星星：" + result.findAsString("amountAdnScore"));
                 stopLoading();
             }
         }, this);

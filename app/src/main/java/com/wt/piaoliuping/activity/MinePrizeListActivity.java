@@ -1,8 +1,5 @@
 package com.wt.piaoliuping.activity;
 
-import android.view.View;
-import android.widget.LinearLayout;
-
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.haoxitech.HaoConnect.HaoConnect;
@@ -10,7 +7,6 @@ import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.adapter.MinePrizeAdapter;
-import com.wt.piaoliuping.adapter.PrizeAdapter;
 import com.wt.piaoliuping.base.BaseTitleActivity;
 
 import java.util.ArrayList;
@@ -32,7 +28,7 @@ public class MinePrizeListActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
-        setTitle("礼物列表");
+        setTitle("礼物记录");
         adapter = new MinePrizeAdapter(this);
         listView.setAdapter(adapter);
         listView.setMode(PullToRefreshBase.Mode.DISABLED);
