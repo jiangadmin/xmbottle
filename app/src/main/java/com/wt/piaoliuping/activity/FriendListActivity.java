@@ -11,6 +11,9 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.adapter.FriendAdapter;
 import com.wt.piaoliuping.base.BaseTitleActivity;
@@ -82,7 +85,7 @@ public class FriendListActivity extends BaseTitleActivity implements AdapterView
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            String friendId = result.findAsString("toUserLocal>id");
+                            final String friendId = result.findAsString("toUserLocal>id");
                             Map<String, Object> map = new HashMap<>();
                             map.put("user_goods_item_id", prizeId);
                             map.put("give_user_id", friendId);
@@ -90,6 +93,18 @@ public class FriendListActivity extends BaseTitleActivity implements AdapterView
                                 @Override
                                 public void onSuccess(HaoResult result) {
                                     showToast("赠送成功");
+                                    String file = ImageLoader.getInstance().getDiskCache().get(result.findAsString("goodsImgView")).getAbsolutePath();
+                                    EMMessage imageMessage = EMMessage.createImageSendMessage(file, false, friendId);
+                                    EMClient.getInstance().chatManager().sendMessage(imageMessage);
+
+                                    try {
+                                        Thread.sleep(100);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    String desc = "【" + friendId + "】" + "送您礼物 {" + result.findAsString("goodsName") + "}";
+                                    EMMessage message = EMMessage.createTxtSendMessage(desc, friendId);
+                                    EMClient.getInstance().chatManager().sendMessage(message);
                                     setResult(RESULT_OK);
                                     finish();
                                 }

@@ -4,7 +4,7 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true" >
+    android:animateLayoutChanges="true">
 
     <com.hyphenate.media.EMOppositeSurfaceView
         android:id="@+id/opposite_surface"
@@ -15,9 +15,20 @@
         android:id="@+id/ll_btns"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:orientation="vertical"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp" >
+        android:paddingRight="20dp">
+
+        <Button
+            android:id="@+id/btn_switch_camera"
+            android:layout_width="40dp"
+            android:layout_height="36dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/change_video" />
 
         <LinearLayout
             android:id="@+id/ll_top_container"
@@ -26,7 +37,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="5dp"
             android:gravity="center_horizontal"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_call_state"
@@ -64,30 +75,24 @@
                 tools:ignore="HardcodedText" />
         </LinearLayout>
 
-           <!-- 演示视频录制功能 -->
-        <Button 
+        <!-- 演示视频录制功能 -->
+        <Button
             android:id="@+id/btn_record_video"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/recording_video"
             android:layout_below="@id/ll_top_container"
-            android:visibility="gone"
-            />
-        
-        <Button 
-            android:id="@+id/btn_switch_camera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/switch_camera"
-            android:layout_below="@id/btn_record_video"
-            />
+            android:text="@string/recording_video"
+            android:visibility="gone" />
+
+
         <Button
             android:id="@+id/btn_capture_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/capture_image"
             android:layout_below="@id/btn_switch_camera"
-            />
+            android:text="@string/capture_image"
+            android:visibility="gone" />
+
         <SeekBar
             android:id="@+id/seekbar_y_detal"
             android:layout_width="200dp"
@@ -95,7 +100,7 @@
             android:layout_below="@id/btn_capture_image"
             android:max="200"
             android:progress="100"
-            />
+            android:visibility="gone" />
         <!--     <Button 
             android:layout_marginTop="3dp"
             android:id="@+id/btn_toggle_video_stream"
@@ -104,24 +109,24 @@
             android:text="暂停视频"
             android:layout_below="@id/btn_record_video"
             /> -->
-        
-        <TextView 
+
+        <TextView
             android:id="@+id/tv_call_monitor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/local_surface"
             android:layout_alignParentRight="true"
-            android:textColor="#afff"
-            android:textSize="12sp"
             android:layout_marginBottom="6dp"
-            />
+            android:textColor="#afff"
+            android:textSize="12sp" />
+
         <com.hyphenate.media.EMLocalSurfaceView
             android:id="@+id/local_surface"
             android:layout_width="100dp"
-            android:visibility="gone"
             android:layout_height="120dp"
             android:layout_above="@+id/ll_surface_baseline"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/ll_surface_baseline"
@@ -129,7 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:orientation="vertical"
-            android:paddingTop="8dp" >
+            android:paddingTop="8dp">
 
             <View
                 android:layout_width="match_parent"
@@ -140,7 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="18dp" >
+                android:paddingBottom="18dp">
 
                 <LinearLayout
                     android:id="@+id/ll_voice_control"
@@ -153,7 +158,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/iv_mute"
@@ -176,7 +181,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/iv_handsfree"
@@ -198,7 +203,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp" >
+                    android:layout_marginTop="20dp">
 
                     <Button
                         android:id="@+id/btn_hangup_call"
@@ -214,7 +219,7 @@
                     <LinearLayout
                         android:id="@+id/ll_coming_call"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
+                        android:layout_height="wrap_content">
 
                         <Button
                             android:id="@+id/btn_refuse_call"
@@ -243,14 +248,13 @@
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
-    
+
     <TextView
         android:id="@+id/tv_network_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="@android:color/white"
         android:layout_centerInParent="true"
-     />
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/white" />
 
 </RelativeLayout>

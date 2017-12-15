@@ -33,19 +33,25 @@ public class WithdrawAdapter extends BaseItemAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         HaoResult haoResult = (HaoResult) dataList.get(position);
-        holder.textPoint.setText(haoResult.findAsString("scoreLabel"));
-        holder.textTime.setText(haoResult.findAsString("createTime"));
+        holder.textTime.setText("提现时间：" + haoResult.findAsString("createTime"));
+        holder.textPoint.setText("星星：" + haoResult.findAsString("scoreLabel"));
+        holder.textPoint.setText("提现账号：" + haoResult.findAsString("extrUsername "));
+        holder.textDesc.setText(haoResult.findAsString("extrNotes"));
         holder.textStatus.setText(haoResult.findAsString("extrStatusLabel"));
         return convertView;
     }
 
     static class ViewHolder {
-        @BindView(R.id.text_point)
-        TextView textPoint;
         @BindView(R.id.text_time)
         TextView textTime;
+        @BindView(R.id.text_point)
+        TextView textPoint;
+        @BindView(R.id.text_account)
+        TextView textAccount;
         @BindView(R.id.text_status)
         TextView textStatus;
+        @BindView(R.id.text_desc)
+        TextView textDesc;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

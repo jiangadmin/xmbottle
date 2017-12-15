@@ -217,6 +217,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"/>
+
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"

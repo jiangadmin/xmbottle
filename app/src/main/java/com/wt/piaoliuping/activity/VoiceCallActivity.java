@@ -37,8 +37,12 @@ import com.hyphenate.chat.EMCallStateChangeListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
+import com.wt.piaoliuping.db.UserDao;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -51,6 +55,7 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
     private Button answerBtn;
     private ImageView muteImage;
     private ImageView handsFreeImage;
+    private ImageView headImage;
 
     private boolean isMuteState;
     private boolean isHandsfreeState;
@@ -80,6 +85,7 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
         answerBtn = (Button) findViewById(R.id.btn_answer_call);
         hangupBtn = (Button) findViewById(R.id.btn_hangup_call);
         muteImage = (ImageView) findViewById(R.id.iv_mute);
+        headImage = (ImageView) findViewById(R.id.swing_card);
         handsFreeImage = (ImageView) findViewById(R.id.iv_handsfree);
         callStateTextView = (TextView) findViewById(R.id.tv_call_state);
         TextView nickTextView = (TextView) findViewById(R.id.tv_nick);
@@ -103,6 +109,10 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 
         username = getIntent().getStringExtra("username");
         isInComingCall = getIntent().getBooleanExtra("isComingCall", false);
+        UserDao userDao = App.app.getDaoSession().getUserDaoDao().load(username);
+        if (userDao != null) {
+            ImageLoader.getInstance().displayImage(userDao.getAvatar(), headImage);
+        }
         nickTextView.setText(username);
         if (!isInComingCall) {// outgoing call
             soundPool = new SoundPool(1, AudioManager.STREAM_RING, 0);
@@ -177,8 +187,8 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
                                 if (!isHandsfreeState)
                                     closeSpeakerOn();
                                 //show relay or direct call, for testing purpose
-                                ((TextView) findViewById(R.id.tv_is_p2p)).setText(EMClient.getInstance().callManager().isDirectCall()
-                                        ? R.string.direct_call : R.string.relay_call);
+//                                ((TextView) findViewById(R.id.tv_is_p2p)).setText(EMClient.getInstance().callManager().isDirectCall()
+//                                        ? R.string.direct_call : R.string.relay_call);
                                 chronometer.setVisibility(View.VISIBLE);
                                 chronometer.setBase(SystemClock.elapsedRealtime());
                                 // duration start
@@ -407,8 +417,8 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
             public void run() {
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        ((TextView) findViewById(R.id.tv_is_p2p)).setText(EMClient.getInstance().callManager().isDirectCall()
-                                ? R.string.direct_call : R.string.relay_call);
+//                        ((TextView) findViewById(R.id.tv_is_p2p)).setText(EMClient.getInstance().callManager().isDirectCall()
+//                                ? R.string.direct_call : R.string.relay_call);
                     }
                 });
                 while (monitor) {

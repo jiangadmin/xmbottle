@@ -27,8 +27,8 @@ public class NearbyAdapter extends BaseItemAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        if (convertView == null)  {
-            convertView = LayoutInflater.from(context).inflate(R.layout.adapter_name, null);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.adapter_nearby, null);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
@@ -37,8 +37,19 @@ public class NearbyAdapter extends BaseItemAdapter {
         HaoResult result = (HaoResult) dataList.get(position);
         ImageLoader.getInstance().displayImage(result.findAsString("userIDLocal>avatarPreView"), holder.itemImage);
         holder.textName.setText(result.findAsString("userIDLocal>nickname"));
-        holder.textDesc.setText(result.findAsString("userIDLocal>declaration"));
+        if (result.findAsString("userIDLocal>declaration").isEmpty()) {
+            holder.textDesc.setVisibility(View.GONE);
+        } else {
+            holder.textDesc.setVisibility(View.VISIBLE);
+            holder.textDesc.setText(result.findAsString("userIDLocal>declaration"));
+        }
         holder.textTime.setText(result.findAsString("distanceLabel"));
+        holder.textSex.setText(result.findAsString("userIDLocal>sexLabel"));
+        try {
+            holder.textArea.setText(result.findAsString("userIDLocal>areaLabel").split("-")[2]);
+        } catch (Exception e) {
+
+        }
         return convertView;
     }
 
@@ -47,10 +58,14 @@ public class NearbyAdapter extends BaseItemAdapter {
         ImageView itemImage;
         @BindView(R.id.text_name)
         TextView textName;
-        @BindView(R.id.text_desc)
-        TextView textDesc;
+        @BindView(R.id.text_sex)
+        TextView textSex;
         @BindView(R.id.text_time)
         TextView textTime;
+        @BindView(R.id.text_area)
+        TextView textArea;
+        @BindView(R.id.text_desc)
+        TextView textDesc;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

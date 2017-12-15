@@ -18,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="40dp"
-            android:hint="输入用户手机号码/昵称"
+            android:hint="输入用户手机号码/昵称/ID"
             android:paddingLeft="10dp"
             android:background="@color/white"
             style="@style/text_14_222222"

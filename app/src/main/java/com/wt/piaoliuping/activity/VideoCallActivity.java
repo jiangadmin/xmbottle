@@ -284,8 +284,8 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                             } catch (Exception e) {
                             }
                             openSpeakerOn();
-                            ((TextView)findViewById(R.id.tv_is_p2p)).setText(EMClient.getInstance().callManager().isDirectCall()
-                                    ? R.string.direct_call : R.string.relay_call);
+//                            ((TextView)findViewById(R.id.tv_is_p2p)).setText(EMClient.getInstance().callManager().isDirectCall()
+//                                    ? R.string.direct_call : R.string.relay_call);
                             handsFreeImage.setImageResource(R.drawable.em_icon_speaker_on);
                             isHandsfreeState = true;
                             isInCalling = true;
@@ -480,7 +480,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
             comingBtnContainer.setVisibility(View.INVISIBLE);
             hangupBtn.setVisibility(View.VISIBLE);
             voiceContronlLayout.setVisibility(View.VISIBLE);
-            localSurface.setVisibility(View.GONE);
+            localSurface.setVisibility(View.VISIBLE);
 
         } else if (i == R.id.btn_hangup_call) {
             hangupBtn.setEnabled(false);
@@ -601,29 +601,28 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
      */
     void startMonitor(){
         monitor = true;
-        new Thread(new Runnable() {
-            public void run() {
-                while(monitor){
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            monitorTextView.setText("WidthxHeight："+callHelper.getVideoWidth()+"x"+callHelper.getVideoHeight()
-                                    + "\nDelay：" + callHelper.getVideoLatency()
-                                    + "\nFramerate：" + callHelper.getVideoFrameRate()
-                                    + "\nLost：" + callHelper.getVideoLostRate()
-                                    + "\nLocalBitrate：" + callHelper.getLocalBitrate()
-                                    + "\nRemoteBitrate：" + callHelper.getRemoteBitrate());
-                            
-                            ((TextView)findViewById(R.id.tv_is_p2p)).setText(EMClient.getInstance().callManager().isDirectCall()
-                                    ? R.string.direct_call : R.string.relay_call);                            
-                        }
-                    });
-                    try {
-                        Thread.sleep(1500);
-                    } catch (InterruptedException e) {
-                    }
-                }
-            }
-        }, "CallMonitor").start();
+//        new Thread(new Runnable() {
+//            public void run() {
+//                while(monitor){
+//                    runOnUiThread(new Runnable() {
+//                        public void run() {
+////                            monitorTextView.setText("WidthxHeight："+callHelper.getVideoWidth()+"x"+callHelper.getVideoHeight()
+////                                    + "\nDelay：" + callHelper.getVideoLatency()
+////                                    + "\nFramerate：" + callHelper.getVideoFrameRate()
+////                                    + "\nLost：" + callHelper.getVideoLostRate()
+////                                    + "\nLocalBitrate：" + callHelper.getLocalBitrate()
+////                                    + "\nRemoteBitrate：" + callHelper.getRemoteBitrate());
+////
+////                            ((TextView)findViewById(R.id.tv_string.relay_call
+//                        }
+//                    });
+//                    try {
+//                        Thread.sleep(1500);
+//                    } catch (InterruptedException e) {
+//                    }
+//                }
+//            }
+//        }, "CallMonitor").start();
     }
     
     void stopMonitor(){

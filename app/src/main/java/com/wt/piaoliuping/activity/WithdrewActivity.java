@@ -48,7 +48,7 @@ public class WithdrewActivity extends BaseTitleActivity {
     @Override
     public void initView() {
         setTitle("提现");
-        textRightTitle.setText("提现记录");
+        textRightTitle.setText("提现详情");
     }
 
     @Override
@@ -111,7 +111,7 @@ public class WithdrewActivity extends BaseTitleActivity {
             @Override
             public void onSuccess(HaoResult result) {
                 if (result.isResultsOK()) {
-                    showToast("提现成功");
+                    showToast("提现中，请点击右上角查看提现状态");
                 }
                 stopLoading();
             }

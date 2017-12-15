@@ -120,6 +120,7 @@ public class SendBottleActivity extends BaseTitleActivity {
         HaoConnect.loadContent("bottle_message/add", map, "post", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
+                showToast("已发送");
                 finish();
                 stopLoading();
             }

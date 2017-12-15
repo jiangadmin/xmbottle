@@ -13,6 +13,9 @@ import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.adapter.PrizeAdapter;
 import com.wt.piaoliuping.base.BaseTitleActivity;
@@ -53,6 +56,7 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
 //        textRightTitle.setVisibility(View.VISIBLE);
         loadData();
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -88,6 +92,18 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
                                     @Override
                                     public void onSuccess(HaoResult result) {
                                         showToast("赠送成功");
+                                        String file = ImageLoader.getInstance().getDiskCache().get(result.findAsString("goodsImgView")).getAbsolutePath();
+                                        EMMessage imageMessage = EMMessage.createImageSendMessage(file, false, userId);
+                                        EMClient.getInstance().chatManager().sendMessage(imageMessage);
+
+                                        try {
+                                            Thread.sleep(100);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                        String desc = "【" + userId + "】" + "送您礼物 {" + result.findAsString("goodsName") + "}";
+                                        EMMessage message = EMMessage.createTxtSendMessage(desc, userId);
+                                        EMClient.getInstance().chatManager().sendMessage(message);
                                         setResult(RESULT_OK);
                                         finish();
                                     }
