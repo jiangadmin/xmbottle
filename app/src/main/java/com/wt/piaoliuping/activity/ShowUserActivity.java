@@ -64,6 +64,8 @@ public class ShowUserActivity extends BaseTitleActivity implements ViewPager.OnP
     TextView textRightTitle;
     @BindView(R.id.text_num)
     TextView textNum;
+    @BindView(R.id.text_phone)
+    TextView textPhone;
     @BindView(R.id.layout_photo)
     LinearLayout layoutPhoto;
     private String userId;
@@ -117,6 +119,7 @@ public class ShowUserActivity extends BaseTitleActivity implements ViewPager.OnP
                 textAge.setText(result.findAsString("age"));
                 textStar.setText(result.findAsString("constellation"));
                 textSign.setText(result.findAsString("declaration"));
+                textPhone.setText(result.findAsString("username"));
 //                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead);
                 int userFriendType = result.findAsInt("userFriendType");
                 textBlack.setVisibility(View.GONE);

@@ -27,7 +27,7 @@ public class WithdrewListActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
-        setTitle("提现记录");
+        setTitle("提现详情");
         withdrawAdapter = new WithdrawAdapter(this);
         listView.setAdapter(withdrawAdapter);
         listView.setMode(PullToRefreshBase.Mode.DISABLED);

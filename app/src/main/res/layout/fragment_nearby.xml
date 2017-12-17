@@ -29,6 +29,8 @@
 
     </LinearLayout>
 
+
+
     <LinearLayout
         android:id="@+id/layout_2"
         android:layout_width="match_parent"
@@ -52,6 +54,12 @@
 
     </LinearLayout>
 
+    <TextView
+        style="@style/text_14_999999"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="30dp"
+        android:text="好友列表" />
     <!--
         <LinearLayout
             android:id="@+id/layout_3"

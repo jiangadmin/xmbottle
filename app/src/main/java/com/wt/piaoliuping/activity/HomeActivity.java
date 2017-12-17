@@ -3,6 +3,7 @@ package com.wt.piaoliuping.activity;
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.annotation.IdRes;
@@ -10,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.widget.RadioButton;
@@ -117,11 +119,29 @@ public class HomeActivity extends BaseTitleActivity {
             @Override
             public void onDisconnected(int errorCode) {
                 if (errorCode == EMError.USER_LOGIN_ANOTHER_DEVICE) {
-                    UserManager.getInstance().logout();
-                    AppManager.getInstance().finishAllActivity();
-                    Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(intent);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new AlertDialog.Builder(HomeActivity.this)
+                                    .setTitle("提示")
+                                    .setMessage("您的账号已在其他设备登陆，如非本人操作请修改密码")
+                                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            UserManager.getInstance().logout();
+                                            AppManager.getInstance().finishAllActivity();
+                                            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .setCancelable(false)
+                                    .create()
+                                    .show();
+                        }
+                    });
                 }
             }
         });

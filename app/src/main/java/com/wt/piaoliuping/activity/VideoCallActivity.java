@@ -187,6 +187,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
             hangupBtn.setVisibility(View.VISIBLE);
             String st = getResources().getString(R.string.Are_connected_to_each_other);
             callStateTextView.setText(st);
+            localSurface.setVisibility(View.VISIBLE);
             EMClient.getInstance().callManager().setSurfaceView(localSurface, oppositeSurface);
             handler.sendEmptyMessage(MSG_CALL_MAKE_VIDEO);
             handler.postDelayed(new Runnable() {
@@ -204,7 +205,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                 return;
             }
             voiceContronlLayout.setVisibility(View.INVISIBLE);
-            localSurface.setVisibility(View.INVISIBLE);
+            localSurface.setVisibility(View.VISIBLE);
             Uri ringUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
             audioManager.setMode(AudioManager.MODE_RINGTONE);
             audioManager.setSpeakerphoneOn(true);
