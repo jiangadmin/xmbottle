@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -50,6 +51,18 @@ public class RegisterActivity extends BaseTitleActivity {
     TextView btnLogin;
     @BindView(R.id.text_sex)
     TextView textSex;
+    @BindView(R.id.btn_back)
+    ImageButton btnBack;
+    @BindView(R.id.text_title)
+    TextView textTitle;
+    @BindView(R.id.text_right_title)
+    TextView textRightTitle;
+    @BindView(R.id.btn_right_title)
+    ImageButton btnRightTitle;
+    @BindView(R.id.layout_sex)
+    LinearLayout layoutSex;
+    @BindView(R.id.layout_content)
+    LinearLayout layoutContent;
 
     private int type;
 
@@ -197,6 +210,12 @@ public class RegisterActivity extends BaseTitleActivity {
         intent.putExtra("title", "注册协议");
         startActivity(intent);
     }
+
+    @OnClick(R.id.btn_login)
+    public void onBtnSubmitViewClicked() {
+        finish();
+    }
+
 
     class MyCount extends CountDownTimer {
         public MyCount(long millisInFuture, long countDownInterval) {
