@@ -81,6 +81,8 @@ public class UserInfoActivity extends BaseTitleActivity {
     LinearLayout layout8;
     @BindView(R.id.btn_submit)
     Button btnSubmit;
+    @BindView(R.id.text_phone)
+    TextView textPhone;
 
     RxPermissions rxPermissions;
 
@@ -424,6 +426,7 @@ public class UserInfoActivity extends BaseTitleActivity {
                 textBirthday.setText(result.findAsString("birthday"));
                 textStar.setText(result.findAsString("constellation"));
                 textSign.setText(result.findAsString("declaration"));
+                textPhone.setText(result.findAsString("username"));
                 try {
                     textCity.setText(result.findAsString("areaLabel").split("-")[2]);
                 } catch (Exception e) {

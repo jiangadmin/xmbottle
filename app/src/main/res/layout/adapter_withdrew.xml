@@ -7,20 +7,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="90dp"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
         android:background="@drawable/bolder_white_view_bg"
-        android:paddingRight="10dp">
+        android:gravity="center_vertical"
+        android:minHeight="90dp"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/text_time"
                 style="@style/text_14_222222"
@@ -30,7 +29,7 @@
 
             <TextView
                 android:id="@+id/text_point"
-                style="@style/text_14_999999"
+                style="@style/text_14_4D9DFF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -48,8 +47,7 @@
                 style="@style/text_14_999999"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="提现记录" />
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/text_status"
@@ -57,6 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -76,7 +75,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
 
 
 </LinearLayout>

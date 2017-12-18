@@ -110,11 +110,11 @@
 
         <TextView
             android:id="@+id/btn_register"
-            style="@style/text_14_222222"
+            style="@style/text_14_ffffff"
+            android:background="@drawable/corner_big_red_bg"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/corner_big_white_bg"
             android:gravity="center"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"

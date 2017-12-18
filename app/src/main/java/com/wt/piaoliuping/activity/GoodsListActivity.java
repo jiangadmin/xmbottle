@@ -1,6 +1,7 @@
 package com.wt.piaoliuping.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -17,6 +18,8 @@ import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.adapter.GoodsAdapter;
 import com.wt.piaoliuping.base.BaseTitleActivity;
@@ -130,22 +133,43 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
                         map.put("give_user_id", userId);
                         HaoConnect.loadContent("user_goods_item/give_user", map, "post", new HaoResultHttpResponseHandler() {
                             @Override
-                            public void onSuccess(HaoResult result) {
+                            public void onSuccess(final HaoResult result) {
                                 showToast("赠送成功");
-                                String file = ImageLoader.getInstance().getDiskCache().get(result.findAsString("goodsImgView")).getAbsolutePath();
-                                EMMessage imageMessage = EMMessage.createImageSendMessage(file, false, userId);
-                                EMClient.getInstance().chatManager().sendMessage(imageMessage);
+                                ImageLoader.getInstance().loadImage(result.findAsString("goodsImgView"), new ImageLoadingListener() {
+                                    @Override
+                                    public void onLoadingStarted(String imageUri, View view) {
 
-                                try {
-                                    Thread.sleep(100);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                String desc = "【" + userName + "】"+"送您礼物 {" + result.findAsString("goodsName") + "}";
-                                EMMessage message = EMMessage.createTxtSendMessage(desc, userId);
-                                EMClient.getInstance().chatManager().sendMessage(message);
-                                setResult(RESULT_OK);
-                                finish();
+                                    }
+
+                                    @Override
+                                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                                    }
+
+                                    @Override
+                                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                        String file = ImageLoader.getInstance().getDiskCache().get(imageUri).getAbsolutePath();
+                                        EMMessage imageMessage = EMMessage.createImageSendMessage(file, false, userId);
+                                        EMClient.getInstance().chatManager().sendMessage(imageMessage);
+
+                                        try {
+                                            Thread.sleep(100);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                        String desc = "【" + userName + "】"+"送您礼物 {" + result.findAsString("goodsName") + "}";
+                                        EMMessage message = EMMessage.createTxtSendMessage(desc, userId);
+                                        EMClient.getInstance().chatManager().sendMessage(message);
+                                        setResult(RESULT_OK);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onLoadingCancelled(String imageUri, View view) {
+
+                                    }
+                                });
+
                             }
 
                             @Override

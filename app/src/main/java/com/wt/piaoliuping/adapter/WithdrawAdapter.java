@@ -35,7 +35,7 @@ public class WithdrawAdapter extends BaseItemAdapter {
         HaoResult haoResult = (HaoResult) dataList.get(position);
         holder.textTime.setText("提现时间：" + haoResult.findAsString("createTime"));
         holder.textPoint.setText("星星：" + haoResult.findAsString("scoreLabel"));
-        holder.textPoint.setText("提现账号：" + haoResult.findAsString("extrUsername "));
+        holder.textAccount.setText("提现账号：" + haoResult.findAsString("extrUsername "));
         holder.textDesc.setText(haoResult.findAsString("extrNotes"));
         holder.textStatus.setText(haoResult.findAsString("extrStatusLabel"));
         return convertView;
