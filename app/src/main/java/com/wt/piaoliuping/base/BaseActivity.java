@@ -80,4 +80,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         AppManager.getInstance().finishActivity(this);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 }

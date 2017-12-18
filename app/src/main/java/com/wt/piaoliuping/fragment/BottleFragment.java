@@ -12,6 +12,7 @@ import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.activity.SendBottleActivity;
 import com.wt.piaoliuping.activity.ShowBottleActivity;
@@ -93,7 +94,7 @@ public class BottleFragment extends PageFragment {
         HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead);
+                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead, App.app.getImageCircleOptions());
                 textName.setText("昵称：" + result.findAsString("nickname"));
                 textNo.setText("星星：" + result.findAsString("amountAdnScore"));
 

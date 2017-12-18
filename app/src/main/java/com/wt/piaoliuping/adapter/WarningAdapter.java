@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.haoxitech.HaoConnect.HaoResult;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 
 import butterknife.BindView;
@@ -52,7 +53,7 @@ public class WarningAdapter extends BaseItemAdapter {
             holder.itemImage.setVisibility(View.VISIBLE);
 
             String haoResult = dataList.get(position).toString();
-            ImageLoader.getInstance().displayImage("http://floating.img.yemaoka.com/" + haoResult, holder.itemImage);
+            ImageLoader.getInstance().displayImage("http://floating.img.yemaoka.com/" + haoResult, holder.itemImage, App.app.getImageCircleOptions());
         }
         return convertView;
     }

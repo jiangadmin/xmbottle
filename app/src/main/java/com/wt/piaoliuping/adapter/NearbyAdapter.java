@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.haoxitech.HaoConnect.HaoResult;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 
 import butterknife.BindView;
@@ -35,7 +36,7 @@ public class NearbyAdapter extends BaseItemAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         HaoResult result = (HaoResult) dataList.get(position);
-        ImageLoader.getInstance().displayImage(result.findAsString("userIDLocal>avatarPreView"), holder.itemImage);
+        ImageLoader.getInstance().displayImage(result.findAsString("userIDLocal>avatarPreView"), holder.itemImage, App.app.getImageCircleOptions());
         holder.textName.setText(result.findAsString("userIDLocal>nickname"));
         if (result.findAsString("userIDLocal>declaration").isEmpty()) {
             holder.textDesc.setVisibility(View.GONE);

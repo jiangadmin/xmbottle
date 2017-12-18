@@ -24,6 +24,7 @@ import com.hyphenate.cloud.CloudFileManager;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseActivity;
 
@@ -106,7 +107,7 @@ public class ShowBottleActivity extends BaseActivity {
         HaoConnect.loadContent("user_get_bottle/detail", map, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                ImageLoader.getInstance().displayImage(result.findAsString("throwUserLocal>avatarPreView"), imageHead);
+                ImageLoader.getInstance().displayImage(result.findAsString("throwUserLocal>avatarPreView"), imageHead, App.app.getImageCircleOptions());
                 String[] area = result.findAsString("throwUserLocal>areaLabel").split("-");
                 String city = "";
                 if (area.length > 0) {

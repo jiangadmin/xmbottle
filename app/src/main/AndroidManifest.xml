@@ -203,9 +203,9 @@
             android:screenOrientation="portrait" />
 
 
-        <activity android:name=".activity.VoiceCallActivity"/>
+        <activity android:name=".activity.VoiceCallActivity" />
 
-        <activity android:name=".activity.VideoCallActivity"/>
+        <activity android:name=".activity.VideoCallActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -217,7 +217,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"/>
+        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity" />
 
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -278,31 +278,31 @@
         </service>
 
         <!--<receiver android:name="com.easemob.chat.EMHuaweiPushReceiver" >-->
-            <!--<intent-filter>-->
-                <!--&lt;!&ndash; 必须,用于接收token &ndash;&gt;-->
-                <!--<action android:name="com.huawei.android.push.intent.REGISTRATION" />-->
-                <!--&lt;!&ndash; 必须，用于接收消息 &ndash;&gt;-->
-                <!--<action android:name="com.huawei.android.push.intent.RECEIVE" />-->
-            <!--</intent-filter>-->
-            <!--/>-->
-            <!--<meta-data android:name="CS_cloud_ablitity" android:value="successRateAnalytics"/>-->
+        <!--<intent-filter>-->
+        <!--&lt;!&ndash; 必须,用于接收token &ndash;&gt;-->
+        <!--<action android:name="com.huawei.android.push.intent.REGISTRATION" />-->
+        <!--&lt;!&ndash; 必须，用于接收消息 &ndash;&gt;-->
+        <!--<action android:name="com.huawei.android.push.intent.RECEIVE" />-->
+        <!--</intent-filter>-->
+        <!--/>-->
+        <!--<meta-data android:name="CS_cloud_ablitity" android:value="successRateAnalytics"/>-->
         <!--</receiver>-->
 
         <!--&lt;!&ndash; PushSDK:PushSDK接收外部请求事件入口 &ndash;&gt;-->
         <!--<receiver-->
-            <!--android:name="com.huawei.android.pushagent.PushEventReceiver"-->
-            <!--android:process=":pushservice" >-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.huawei.android.push.intent.REFRESH_PUSH_CHANNEL" />-->
-                <!--<action android:name="com.huawei.intent.action.PUSH" />-->
-                <!--<action android:name="com.huawei.intent.action.PUSH_ON" />-->
-                <!--<action android:name="com.huawei.android.push.PLUGIN" />-->
-            <!--</intent-filter>-->
+        <!--android:name="com.huawei.android.pushagent.PushEventReceiver"-->
+        <!--android:process=":pushservice" >-->
+        <!--<intent-filter>-->
+        <!--<action android:name="com.huawei.android.push.intent.REFRESH_PUSH_CHANNEL" />-->
+        <!--<action android:name="com.huawei.intent.action.PUSH" />-->
+        <!--<action android:name="com.huawei.intent.action.PUSH_ON" />-->
+        <!--<action android:name="com.huawei.android.push.PLUGIN" />-->
+        <!--</intent-filter>-->
         <!--</receiver>-->
         <!--&lt;!&ndash; PushSDK:Push服务 &ndash;&gt;-->
         <!--<service-->
-            <!--android:name="com.huawei.android.pushagent.PushService"-->
-            <!--android:process=":pushservice" >-->
+        <!--android:name="com.huawei.android.pushagent.PushService"-->
+        <!--android:process=":pushservice" >-->
         <!--</service>-->
         <!---->
         <meta-data
@@ -311,6 +311,9 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="561cae6ae0f55abd990035bf"></meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="xmbottle" />
     </application>
 
 </manifest>

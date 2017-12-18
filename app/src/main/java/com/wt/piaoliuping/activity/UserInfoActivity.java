@@ -22,6 +22,7 @@ import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.AppManager;
 import com.wt.piaoliuping.base.BaseTitleActivity;
@@ -297,7 +298,7 @@ public class UserInfoActivity extends BaseTitleActivity {
             return;
         }
         if (requestCode == 1) {
-            ImageLoader.getInstance().displayImage("file://" + data.getStringExtra("imagePath"), imageHead);
+            ImageLoader.getInstance().displayImage("file://" + data.getStringExtra("imagePath"), imageHead, App.app.getImageCircleOptions());
         }
         if (requestCode == 2) {
             onPhotoBack(data.getData());
@@ -420,7 +421,7 @@ public class UserInfoActivity extends BaseTitleActivity {
         HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead);
+                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead, App.app.getImageCircleOptions());
                 textName.setText(result.findAsString("nickname"));
                 textSex.setText(result.findAsString("sexLabel"));
                 textBirthday.setText(result.findAsString("birthday"));

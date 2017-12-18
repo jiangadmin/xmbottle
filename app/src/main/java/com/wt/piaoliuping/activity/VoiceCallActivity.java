@@ -111,7 +111,7 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
         isInComingCall = getIntent().getBooleanExtra("isComingCall", false);
         UserDao userDao = App.app.getDaoSession().getUserDaoDao().load(username);
         if (userDao != null) {
-            ImageLoader.getInstance().displayImage(userDao.getAvatar(), headImage);
+            ImageLoader.getInstance().displayImage(userDao.getAvatar(), headImage, App.app.getImageCircleOptions());
         }
         nickTextView.setText(username);
         if (!isInComingCall) {// outgoing call

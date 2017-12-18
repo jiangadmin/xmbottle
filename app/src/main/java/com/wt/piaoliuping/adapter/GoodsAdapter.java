@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.haoxitech.HaoConnect.HaoResult;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 
 import butterknife.BindView;

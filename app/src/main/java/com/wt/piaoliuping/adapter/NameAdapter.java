@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.haoxitech.HaoConnect.HaoResult;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 
 import butterknife.BindView;
@@ -35,7 +36,7 @@ public class NameAdapter extends BaseItemAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         HaoResult result = (HaoResult) dataList.get(position);
-        ImageLoader.getInstance().displayImage(result.findAsString("toUserLocal>avatarPreView"), holder.itemImage);
+        ImageLoader.getInstance().displayImage(result.findAsString("toUserLocal>avatarPreView"), holder.itemImage, App.app.getImageCircleOptions());
         holder.textName.setText(result.findAsString("toUserLocal>nickname"));
         holder.textDesc.setText(result.findAsString("toUserLocal>declaration"));
         return convertView;

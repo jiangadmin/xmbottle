@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.haoxitech.HaoConnect.HaoResult;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 
 import butterknife.BindView;
@@ -35,7 +36,7 @@ public class PersonAdapter extends BaseItemAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         HaoResult result = (HaoResult) dataList.get(position);
-        ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), holder.itemImage);
+        ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), holder.itemImage, App.app.getImageCircleOptions());
         holder.textName.setText(result.findAsString("nickname"));
         holder.textDesc.setText(result.findAsString("declaration"));
         return convertView;
