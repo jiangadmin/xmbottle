@@ -2,7 +2,6 @@ package com.wt.piaoliuping;
 
 import android.app.Application;
 import android.content.BroadcastReceiver;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -15,6 +14,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -31,12 +31,9 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
-import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.domain.EaseUser;
-import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.model.EaseNotifier;
-import com.hyphenate.util.EMLog;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -45,6 +42,7 @@ import com.nostra13.universalimageloader.core.assist.LoadedFrom;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.wt.piaoliuping.database.DataBaseHelper;
@@ -108,9 +106,29 @@ public class App extends Application {
     }
 
     private void initUMeng() {
+//        Config.DEBUG = true;
+        UMConfigure.init(this, "5a37da7df29d981083000031", "xmbottle", UMConfigure.DEVICE_TYPE_PHONE, "aeitmoora8rqgevfsaik32cdjjxfxsdg");
+        //        UMConfigure.setLogEnabled(true);
         UMShareAPI.get(this);
         PlatformConfig.setWeixin("wx4b57ed12eb6b3040", "5bb696d9ccd75a38c8a0bfe0675559b3");
         PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
+//        PushAgent mPushAgent = PushAgent.getInstance(this);
+//        //注册推送服务，每次调用register方法都会回调该接口
+//        mPushAgent.register(new IUmengRegisterCallback() {
+//
+//            @Override
+//            public void onSuccess(String deviceToken) {
+//                //注册成功会返回device token
+//                Log.e("wt", deviceToken);
+//            }
+//
+//            @Override
+//            public void onFailure(String s, String s1) {
+//
+//                Log.e("wt", s + " " + s1);
+//            }
+//        });
     }
 
     /**
@@ -239,7 +257,7 @@ public class App extends Application {
             e1.printStackTrace();
         }
 
-        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(getApplicationContext(), "user_db");
+        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(this, "user_db");
         Database db = devOpenHelper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
     }

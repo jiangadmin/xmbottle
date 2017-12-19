@@ -1,6 +1,7 @@
 package com.hyphenate.easeui.utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,6 +49,7 @@ public class EaseUserUtils {
         }else{
             Glide.with(context).load(R.drawable.ease_default_avatar).into(imageView);
         }
+        imageView.setBackgroundColor(Color.TRANSPARENT);
     }
     
     /**

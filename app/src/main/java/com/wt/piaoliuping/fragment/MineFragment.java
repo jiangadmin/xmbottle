@@ -143,7 +143,7 @@ public class MineFragment extends PageFragment {
         HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead);
+                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead, App.app.getImageCircleOptions());
                 textName.setText("昵称：" + result.findAsString("nickname"));
                 textNo.setText("ID：" + result.findAsString("id"));
                 if (result.findAsInt("vipLevel") == 0) {
