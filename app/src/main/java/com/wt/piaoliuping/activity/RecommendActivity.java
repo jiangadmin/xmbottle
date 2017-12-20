@@ -1,6 +1,7 @@
 package com.wt.piaoliuping.activity;
 
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -28,7 +29,8 @@ public class RecommendActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
-        setTitle("推荐人手机号");
+        setTitle("推荐人");
+        loadDetail();
     }
 
     @Override
@@ -64,4 +66,21 @@ public class RecommendActivity extends BaseTitleActivity {
         }, this);
     }
 
+    private void loadDetail() {
+        Map<String, Object> map = new HashMap<>();
+        HaoConnect.loadContent("user_invite/detail", map, "get", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                if (!TextUtils.isEmpty(result.findAsString("userLocal>id"))) {
+                    textEdit.setText("推荐人ID：" + result.findAsString("userLocal>id"));
+                    textEdit.setEnabled(false);
+                    btnSubmit.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onFail(HaoResult result) {
+            }
+        }, this);
+    }
 }

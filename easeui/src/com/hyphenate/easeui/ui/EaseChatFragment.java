@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.view.Gravity;
@@ -863,6 +864,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         sendFileMessage(filePath);
     }
 
+    private Uri photoUri;
+
     /**
      * capture new image
      */
@@ -876,8 +879,18 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                 + System.currentTimeMillis() + ".jpg");
         //noinspection ResultOfMethodCallIgnored
         cameraFile.getParentFile().mkdirs();
+        photoUri = Uri.fromFile(cameraFile);
+        Uri photoUri;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            photoUri = this.photoUri;
+        } else {
+            photoUri = FileProvider.getUriForFile(this.getActivity().getApplicationContext(), this.getActivity().getPackageName() + ".provider", cameraFile);
+        }
+        Intent intent = new Intent();
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(
-                new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile)),
+                intent,
                 REQUEST_CODE_CAMERA);
     }
 

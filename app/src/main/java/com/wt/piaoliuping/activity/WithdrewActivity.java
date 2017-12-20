@@ -1,9 +1,11 @@
 package com.wt.piaoliuping.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -44,6 +47,8 @@ public class WithdrewActivity extends BaseTitleActivity {
     Button btnCharge;
 
     String amount;
+    @BindView(R.id.btn_withdrew_right)
+    ImageButton btnWithdrewRight;
 
     @Override
     public void initView() {
@@ -79,8 +84,8 @@ public class WithdrewActivity extends BaseTitleActivity {
         HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                textStar.setText("我的星星：" + result.findAsString("amountAdnScore"));
-                amount = result.findAsString("amountAdnScore");
+                textStar.setText("我的星星：" + result.findAsString("amount"));
+                amount = result.findAsString("amount");
             }
         }, this);
     }
@@ -123,5 +128,20 @@ public class WithdrewActivity extends BaseTitleActivity {
             }
         }, this);
 
+    }
+
+    @OnClick(R.id.btn_withdrew_right)
+    public void onViewClicked() {
+        Intent intent = new Intent(this, WithdrewAccountListActivity.class);
+        startActivityForResult(intent, 100);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (100 == requestCode && resultCode == RESULT_OK) {
+            editMoney.setText(data.getStringExtra("name"));
+            editAccount.setText(data.getStringExtra("account"));
+        }
     }
 }

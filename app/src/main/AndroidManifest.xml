@@ -202,7 +202,9 @@
         <activity
             android:name=".activity.MinePrizeListActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".activity.WithdrewAccountListActivity"
+            android:screenOrientation="portrait" />
 
         <activity android:name=".activity.VoiceCallActivity" />
 

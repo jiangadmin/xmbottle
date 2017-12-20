@@ -254,7 +254,7 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
         HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                textPoint.setText("我的星星：" + result.findAsString("amountAdnScore") + "星星");
+                textPoint.setText("我的星星：" + result.findAsString("amount") + "星星");
                 userName = result.findAsString("nickname");
             }
         }, this);
