@@ -163,7 +163,7 @@ public class SendBottleActivity extends BaseTitleActivity {
     }
 
     private void updateImage(File file, final int type) {
-        HaoConnect.loadImageContent("axapi/up_file", file, "post", new HaoResultHttpResponseHandler() {
+        HaoConnect.loadImageContent("axapi/up_file", compressedImage(file), "post", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
                 Log.e("wt", "onSuccess" + " result" + result);
@@ -176,6 +176,7 @@ public class SendBottleActivity extends BaseTitleActivity {
                 HaoConnect.loadContent("bottle_message/add", map, "post", new HaoResultHttpResponseHandler() {
                     @Override
                     public void onSuccess(HaoResult result) {
+                        showToast("已发送");
                         finish();
                         stopLoading();
                     }
@@ -238,19 +239,19 @@ public class SendBottleActivity extends BaseTitleActivity {
         try {
             Intent intent = new Intent();
             intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-            File imgFile = new File(directory, System.currentTimeMillis() + ".png");
+            File imgFile = new File(directory, System.currentTimeMillis() + "");
             imgFile.createNewFile();
             photoUri = Uri.fromFile(imgFile);
             Uri photoUri;
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                 photoUri = this.photoUri;
             } else {
-                photoUri = FileProvider.getUriForFile(this.getApplicationContext(), this.getPackageName() + ".provider", imgFile);
+                photoUri = FileProvider.getUriForFile(this.getApplicationContext(), "com.xm.bottle.provider", imgFile);
             }
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             startActivityForResult(intent, 3);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -271,7 +272,6 @@ public class SendBottleActivity extends BaseTitleActivity {
 
     String currentImagePath;
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -282,10 +282,29 @@ public class SendBottleActivity extends BaseTitleActivity {
 //            ImageLoader.getInstance().displayImage("file://" + data.getStringExtra("imagePath"), imageHead);
         }
         if (requestCode == 2) {
+
+//            startPhotoZoom(data.getData());
             onPhotoBack(data.getData());
         } else if (requestCode == 3) {
             onPhotoBack(photoUri);
+//            startPhotoZoom(photoUri);
+//        } else if (requestCode == 4) {
+//            onPhotoBack(photoUri);
         }
+    }
+
+    public void startPhotoZoom(Uri uri) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        // aspectX aspectY 是宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        // outputX outputY 是裁剪图片宽高
+        intent.putExtra("outputX", 300);
+        intent.putExtra("outputY", 300);
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, 4);
     }
 
 
@@ -322,8 +341,8 @@ public class SendBottleActivity extends BaseTitleActivity {
         int w = newOpts.outWidth;
         int h = newOpts.outHeight;
         //现在主流手机比较多是800*480分辨率，所以高和宽我们设置为
-        float hh = 800f;//这里设置高度为800f
-        float ww = 480f;//这里设置宽度为480f
+        float hh = 400f;//这里设置高度为800f
+        float ww = 400f;//这里设置宽度为480f
         //缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
         int be = 1;//be=1表示不缩放
         if (w > h && w > ww) {//如果宽度大的话根据宽度固定大小缩放
@@ -333,7 +352,7 @@ public class SendBottleActivity extends BaseTitleActivity {
         }
         if (be <= 0)
             be = 1;
-        newOpts.inSampleSize = be;//设置缩放比例
+        newOpts.inSampleSize = 3;//设置缩放比例
         //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
         Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), newOpts);
         File compressedFile = new File(getTempPath(file.getName()));

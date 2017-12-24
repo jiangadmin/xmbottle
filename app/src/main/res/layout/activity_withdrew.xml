@@ -9,9 +9,9 @@
 
     <TextView
         android:id="@+id/text_star"
-        android:layout_marginTop="40dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp" />
 
     <LinearLayout
         android:id="@+id/layout_3"
@@ -32,8 +32,8 @@
             android:layout_weight="1"
             android:background="@color/white"
             android:hint="请输入提现星星"
-            android:paddingLeft="10dp"
             android:inputType="numberDecimal"
+            android:paddingLeft="10dp"
             android:textColorHint="@color/darKGrayColor" />
     </LinearLayout>
 
@@ -60,6 +60,7 @@
             android:paddingLeft="10dp"
             android:textColorHint="@color/darKGrayColor" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/layout_2"
         android:layout_width="match_parent"
@@ -85,11 +86,20 @@
         <ImageButton
             android:id="@+id/btn_withdrew_right"
             android:layout_width="50dp"
-            android:background="@color/transparent"
+            android:layout_height="45dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/arrow_right"
-            android:layout_height="45dp" />
+            android:background="@color/transparent"
+            android:src="@drawable/arrow_right" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textSize="13sp"
+        android:textColor="@color/redColor"
+        android:lineSpacingExtra="3dp" />
 
     <Button
         android:id="@+id/btn_charge"
@@ -103,11 +113,11 @@
         android:textColor="@color/white" />
 
     <TextView
-        android:layout_marginTop="20dp"
         style="@style/text_14_999999"
-        android:text="提现功能只有高级会员可以看到，用户自己在后台进行人工发放现金的方式"
         android:layout_width="wrap_content"
-        android:visibility="gone"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="提现功能只有高级会员可以看到，用户自己在后台进行人工发放现金的方式"
+        android:visibility="gone" />
 
 </LinearLayout>

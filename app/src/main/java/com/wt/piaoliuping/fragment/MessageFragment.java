@@ -34,6 +34,8 @@ public class MessageFragment extends PageFragment {
     }
 
     public void refresh() {
-        messageListFragment.refresh();
+        if (messageListFragment != null) {
+            messageListFragment.refresh();
+        }
     }
 }

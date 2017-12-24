@@ -331,32 +331,32 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                     });
                     break;
                 case VIDEO_PAUSE:
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "VIDEO_PAUSE", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+//                    runOnUiThread(new Runnable() {
+//                        public void run() {
+//                            Toast.makeText(getApplicationContext(), "VIDEO_PAUSE", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
                     break;
                 case VIDEO_RESUME:
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "VIDEO_RESUME", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+//                    runOnUiThread(new Runnable() {
+//                        public void run() {
+//                            Toast.makeText(getApplicationContext(), "VIDEO_RESUME", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
                     break;
                 case VOICE_PAUSE:
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "VOICE_PAUSE", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+//                    runOnUiThread(new Runnable() {
+//                        public void run() {
+//                            Toast.makeText(getApplicationContext(), "VOICE_PAUSE", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
                     break;
                 case VOICE_RESUME:
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "VOICE_RESUME", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+//                    runOnUiThread(new Runnable() {
+//                        public void run() {
+//                            Toast.makeText(getApplicationContext(), "VOICE_RESUME", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
                     break;
                 case DISCONNECTED: // call is disconnected
                     handler.removeCallbacks(timeoutHangup);

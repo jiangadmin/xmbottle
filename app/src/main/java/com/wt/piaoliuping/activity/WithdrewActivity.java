@@ -2,6 +2,7 @@ package com.wt.piaoliuping.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,6 +55,7 @@ public class WithdrewActivity extends BaseTitleActivity {
     public void initView() {
         setTitle("提现");
         textRightTitle.setText("提现详情");
+        loadUserInfo();
     }
 
     @Override
@@ -90,6 +92,17 @@ public class WithdrewActivity extends BaseTitleActivity {
         }, this);
     }
 
+    private void loadUserInfo() {
+        HaoConnect.loadContent("extraction/detail_user", null, "get", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                if (!TextUtils.isEmpty(result.findAsString("extrUsername"))) {
+                    editAccount.setText(result.findAsString("extrUsername"));
+                    editMoney.setText(result.findAsString("extrName"));
+                }
+            }
+        }, this);
+    }
     private void withdrew() {
         if (editMoney.getText().toString().isEmpty()) {
             showToast("用户名不能为空");

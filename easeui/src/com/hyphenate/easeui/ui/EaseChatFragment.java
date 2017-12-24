@@ -880,18 +880,23 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         //noinspection ResultOfMethodCallIgnored
         cameraFile.getParentFile().mkdirs();
         photoUri = Uri.fromFile(cameraFile);
-        Uri photoUri;
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            photoUri = this.photoUri;
-        } else {
-            photoUri = FileProvider.getUriForFile(this.getActivity().getApplicationContext(), this.getActivity().getPackageName() + ".provider", cameraFile);
+        try {
+
+            Uri photoUri;
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                photoUri = this.photoUri;
+            } else {
+                photoUri = FileProvider.getUriForFile(this.getActivity().getApplicationContext(), "com.xm.bottle.provider", cameraFile);
+            }
+            Intent intent = new Intent();
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(
+                    intent,
+                    REQUEST_CODE_CAMERA);
+        } catch (Exception e) {
+
         }
-        Intent intent = new Intent();
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(
-                intent,
-                REQUEST_CODE_CAMERA);
     }
 
     /**

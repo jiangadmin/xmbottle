@@ -129,7 +129,7 @@ public class HomeActivity extends BaseTitleActivity {
                                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-
+                                            messageFragment.refresh();
                                             UserManager.getInstance().logout();
                                             AppManager.getInstance().finishAllActivity();
                                             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
