@@ -88,6 +88,7 @@
             android:layout_width="50dp"
             android:layout_height="45dp"
             android:layout_gravity="center_vertical"
+            android:visibility="gone"
             android:background="@color/transparent"
             android:src="@drawable/arrow_right" />
     </LinearLayout>

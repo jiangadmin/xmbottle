@@ -163,7 +163,7 @@ public class SendBottleActivity extends BaseTitleActivity {
     }
 
     private void updateImage(File file, final int type) {
-        HaoConnect.loadImageContent("axapi/up_file", compressedImage(file), "post", new HaoResultHttpResponseHandler() {
+        HaoConnect.loadImageContent("axapi/up_file", file, "post", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
                 Log.e("wt", "onSuccess" + " result" + result);
@@ -328,7 +328,7 @@ public class SendBottleActivity extends BaseTitleActivity {
         File fileTemp = new File(currentImagePath);
 
         Log.e("size", fileTemp.length() + "");
-        updateImage(fileTemp, 2);
+        updateImage(compressedImage(fileTemp), 2);
 //        ImageLoader.getInstance().displayImage("file://" + currentImagePath, imageHead);
     }
 

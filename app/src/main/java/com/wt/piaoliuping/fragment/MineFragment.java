@@ -1,14 +1,10 @@
 package com.wt.piaoliuping.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.haoxitech.HaoConnect.HaoConnect;
@@ -33,15 +29,12 @@ import com.wt.piaoliuping.activity.RevokeListActivity;
 import com.wt.piaoliuping.activity.SettingTitleActivity;
 import com.wt.piaoliuping.base.PageFragment;
 import com.wt.piaoliuping.utils.DateUtils;
-import com.wt.piaoliuping.utils.DisplayUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * Created by wangtao on 2017/10/25.
@@ -79,6 +72,7 @@ public class MineFragment extends PageFragment {
 
     @BindView(R.id.layout_top)
     LinearLayout layoutTop;
+
     @Override
     public void initView(View view) {
         super.initView(view);
