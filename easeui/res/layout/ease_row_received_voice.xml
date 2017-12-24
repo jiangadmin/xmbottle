@@ -57,9 +57,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/bubble"
-            android:layout_alignTop="@id/bubble"
             android:gravity="center"
             android:text="3&apos;&apos;"
+            android:layout_centerVertical="true"
             tools:ignore="HardcodedText" />
 
         <ImageView
@@ -67,8 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_alignTop="@id/bubble"
             android:layout_toRightOf="@id/tv_length"
+            android:layout_centerVertical="true"
             android:src="@drawable/ease_voice_unread" />
 
         <ProgressBar

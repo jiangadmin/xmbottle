@@ -77,6 +77,8 @@ public class MineFragment extends PageFragment {
     @BindView(R.id.btn_right_title)
     ImageButton btnRightTitle;
 
+    @BindView(R.id.layout_top)
+    LinearLayout layoutTop;
     @Override
     public void initView(View view) {
         super.initView(view);

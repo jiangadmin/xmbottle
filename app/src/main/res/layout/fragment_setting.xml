@@ -18,6 +18,7 @@
             <include layout="@layout/layout_ten_line_horizontal" />
 
             <LinearLayout
+                android:id="@+id/layout_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="100dp"
@@ -31,7 +32,8 @@
                     android:scaleType="centerCrop" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
@@ -72,6 +74,14 @@
                         android:textColor="@color/redColor"
                         android:textSize="15sp" />
                 </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/arrow_right" />
+
             </LinearLayout>
 
             <include layout="@layout/layout_ten_line_horizontal" />
