@@ -497,7 +497,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
         } else if (i == R.id.iv_mute) {
             if (isMuteState) {
                 // resume voice transfer
-                muteImage.setImageResource(R.drawable.em_icon_mute_normal);
+                muteImage.setImageResource(R.drawable.btn_mute_disabled);
                 try {
                     EMClient.getInstance().callManager().resumeVoiceTransfer();
                 } catch (HyphenateException e) {
@@ -506,7 +506,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                 isMuteState = false;
             } else {
                 // pause voice transfer
-                muteImage.setImageResource(R.drawable.em_icon_mute_on);
+                muteImage.setImageResource(R.drawable.btn_mute_active);
                 try {
                     EMClient.getInstance().callManager().pauseVoiceTransfer();
                 } catch (HyphenateException e) {
@@ -518,11 +518,11 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
         } else if (i == R.id.iv_handsfree) {
             if (isHandsfreeState) {
                 // turn off speaker
-                handsFreeImage.setImageResource(R.drawable.em_icon_speaker_normal);
+                handsFreeImage.setImageResource(R.drawable.btn_speaker_disabled);
                 closeSpeakerOn();
                 isHandsfreeState = false;
             } else {
-                handsFreeImage.setImageResource(R.drawable.em_icon_speaker_on);
+                handsFreeImage.setImageResource(R.drawable.btn_speaker_active);
                 openSpeakerOn();
                 isHandsfreeState = true;
             }

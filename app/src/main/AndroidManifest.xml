@@ -245,6 +245,12 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity" />
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowVideoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
 
         <!-- 设置环信应用的AppKey -->
         <meta-data

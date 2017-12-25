@@ -1,8 +1,11 @@
 package com.wt.piaoliuping.activity;
 
+import android.support.annotation.NonNull;
+
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseActivity;
 import com.wt.piaoliuping.fragment.ChatFragment;
+import com.wt.piaoliuping.runtimepermissions.PermissionsManager;
 
 /**
  * Created by wangtao on 2017/11/5.
@@ -24,4 +27,9 @@ public class ChatActivity extends BaseActivity {
         return R.layout.activity_chat;
     }
 
+
+//    @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+//                                                     @NonNull int[] grantResults) {
+//        PermissionsManager.getInstance().notifyPermissionsChange(permissions, grantResults);
+//    }
 }

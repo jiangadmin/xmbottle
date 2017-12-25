@@ -152,6 +152,7 @@ public class ShowBottleActivity extends BaseActivity {
             @Override
             public void onSuccess(HaoResult result) {
                 finish();
+                showToast("已扔回");
             }
 
             @Override

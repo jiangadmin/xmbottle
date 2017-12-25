@@ -45,7 +45,13 @@ public class NearbyAdapter extends BaseItemAdapter {
             holder.textDesc.setText(result.findAsString("userIDLocal>declaration"));
         }
         holder.textTime.setText(result.findAsString("distanceLabel"));
-        holder.textSex.setText(result.findAsString("userIDLocal>sexLabel"));
+        int sex = result.findAsInt("userIDLocal>sex");
+        if (sex == 1) {
+            holder.textSex.setBackgroundResource(R.drawable.icon_boy);
+        } else {
+            holder.textSex.setBackgroundResource(R.drawable.icon_girl);
+        }
+//        holder.textSex.setText(result.findAsString("userIDLocal>sexLabel"));
         try {
             holder.textArea.setText(result.findAsString("userIDLocal>areaLabel").split("-")[2]);
         } catch (Exception e) {

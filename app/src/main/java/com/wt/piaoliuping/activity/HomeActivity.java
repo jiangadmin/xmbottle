@@ -41,6 +41,8 @@ import com.wt.piaoliuping.fragment.MineFragment;
 import com.wt.piaoliuping.fragment.NearbyFragment;
 import com.wt.piaoliuping.manager.HXManager;
 import com.wt.piaoliuping.manager.UserManager;
+import com.wt.piaoliuping.runtimepermissions.PermissionsManager;
+import com.wt.piaoliuping.runtimepermissions.PermissionsResultAction;
 import com.wt.piaoliuping.utils.DateUtils;
 import com.wt.piaoliuping.widgt.CustomViewPager;
 
@@ -261,6 +263,19 @@ public class HomeActivity extends BaseTitleActivity {
 
 
     private void handleLocation() {
+
+//        PermissionsManager.getInstance().requestAllManifestPermissionsIfNecessary(this, new PermissionsResultAction() {
+//            @Override
+//            public void onGranted() {
+////				Toast.makeText(MainActivity.this, "All permissions have been granted", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onDenied(String permission) {
+//                //Toast.makeText(MainActivity.this, "Permission " + permission + " has been denied", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
         rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION,
                 ACCESS_COARSE_LOCATION, RECORD_AUDIO, CAMERA, WRITE_EXTERNAL_STORAGE, MODIFY_AUDIO_SETTINGS)
                 .subscribe(new Action1<Boolean>() {
