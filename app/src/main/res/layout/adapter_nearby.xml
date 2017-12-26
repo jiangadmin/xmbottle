@@ -43,9 +43,9 @@
                 <TextView
                     android:id="@+id/text_sex"
                     style="@style/text_14_4D9DFF"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp" />
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="5dp" />
 
             </LinearLayout>
 
@@ -65,8 +65,7 @@
                     android:id="@+id/text_area"
                     style="@style/text_14_999999"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
