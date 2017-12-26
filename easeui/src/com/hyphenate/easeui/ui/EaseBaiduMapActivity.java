@@ -20,6 +20,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +29,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.baidu.location.Address;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -50,7 +52,11 @@ import com.baidu.mapapi.model.LatLng;
 import com.baidu.platform.comapi.util.CoordTrans;
 import com.hyphenate.easeui.R;
 
-public class EaseBaiduMapActivity extends EaseBaseActivity {
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.OnMapStatusChangeListener {
 
     private final static String TAG = "map";
     static MapView mMapView = null;
@@ -67,6 +73,10 @@ public class EaseBaiduMapActivity extends EaseBaseActivity {
     public static EaseBaiduMapActivity instance = null;
     ProgressDialog progressDialog;
     private BaiduMap mBaiduMap;
+    private double lastLat;
+    private double lastLong;
+    private String lastAddress;
+
 
     public class BaiduSDKReceiver extends BroadcastReceiver {
         public void onReceive(Context context, Intent intent) {
@@ -119,6 +129,7 @@ public class EaseBaiduMapActivity extends EaseBaseActivity {
         iFilter.addAction(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR);
         iFilter.addAction(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR);
         mBaiduReceiver = new BaiduSDKReceiver();
+        mBaiduMap.setOnMapStatusChangeListener(this);
         registerReceiver(mBaiduReceiver, iFilter);
     }
 
@@ -130,10 +141,10 @@ public class EaseBaiduMapActivity extends EaseBaseActivity {
 //		converter.from(CoordinateConverter.CoordType.COMMON);
 //		LatLng convertLatLng = converter.convert();
         LatLng convertLatLng = CoordTrans.gcjToBaidu(llA);
-        OverlayOptions ooA = new MarkerOptions().position(convertLatLng).icon(BitmapDescriptorFactory
-                .fromResource(R.drawable.ease_icon_marka))
-                .zIndex(4).draggable(true);
-        mBaiduMap.addOverlay(ooA);
+//        OverlayOptions ooA = new MarkerOptions().position(convertLatLng).icon(BitmapDescriptorFactory
+//                .fromResource(R.drawable.ease_icon_marka))
+//                .zIndex(4).draggable(true);
+//        mBaiduMap.addOverlay(ooA);
         MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(convertLatLng, 17.0f);
         mBaiduMap.animateMapStatus(u);
     }
@@ -235,12 +246,16 @@ public class EaseBaiduMapActivity extends EaseBaseActivity {
 //			converter.from(CoordinateConverter.CoordType.COMMON);
 //			LatLng convertLatLng = converter.convert();
             LatLng convertLatLng = CoordTrans.gcjToBaidu(llA);
-            OverlayOptions ooA = new MarkerOptions().position(convertLatLng).icon(BitmapDescriptorFactory
-                    .fromResource(R.drawable.ease_icon_marka))
-                    .zIndex(4).draggable(true);
-            mBaiduMap.addOverlay(ooA);
+//            OverlayOptions ooA = new MarkerOptions().position(convertLatLng).icon(BitmapDescriptorFactory
+//                    .fromResource(R.drawable.ease_icon_marka))
+//                    .zIndex(4).draggable(true);
+//            mBaiduMap.addOverlay(ooA);
             MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(convertLatLng, 17.0f);
             mBaiduMap.animateMapStatus(u);
+            mLocClient.unRegisterLocationListener(this);
+            lastLat = lastLocation.getLatitude();
+            lastLong = lastLocation.getLongitude();
+            lastAddress = lastLocation.getAddrStr();
         }
 
         public void onReceivePoi(BDLocation poiLocation) {
@@ -256,12 +271,56 @@ public class EaseBaiduMapActivity extends EaseBaseActivity {
 
     public void sendLocation(View view) {
         Intent intent = this.getIntent();
-        intent.putExtra("latitude", lastLocation.getLatitude());
-        intent.putExtra("longitude", lastLocation.getLongitude());
-        intent.putExtra("address", lastLocation.getAddrStr());
+        intent.putExtra("latitude", lastLat);
+        intent.putExtra("longitude", lastLong);
+        intent.putExtra("address", lastAddress);
         this.setResult(RESULT_OK, intent);
         finish();
         overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
     }
 
+    @Override
+    public void onMapStatusChangeStart(MapStatus mapStatus) {
+
+    }
+
+    @Override
+    public void onMapStatusChangeStart(MapStatus mapStatus, int i) {
+
+    }
+
+    @Override
+    public void onMapStatusChange(MapStatus mapStatus) {
+//        mBaiduMap.clear();
+    }
+
+    @Override
+    public void onMapStatusChangeFinish(MapStatus mapStatus) {
+        Log.e("wt", "lng" + mapStatus.target.longitude);
+        latlngToAddress(mapStatus.target.latitude,mapStatus.target.longitude);
+    }
+
+    private Geocoder geoCoder;
+
+    private void latlngToAddress(double latitude, double longitude) {
+        if (geoCoder == null) {
+            geoCoder = new Geocoder(this, Locale.CHINA);
+        }
+        // 设置反地理经纬度坐标,请求位置时,需要一个经纬度
+        try {
+            List<android.location.Address> list = geoCoder.getFromLocation(latitude, longitude, 1);
+            if (!list.isEmpty()) {
+
+                lastLocation.setLatitude(latitude);
+                lastLocation.setLongitude(longitude);
+                lastLocation.setAddrStr(list.get(0).getAddressLine(0));
+
+                lastLat = latitude;
+                lastLong = longitude;
+                lastAddress = list.get(0).getAddressLine(0);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

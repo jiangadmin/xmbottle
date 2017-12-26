@@ -39,11 +39,22 @@
             android:textSize="17sp" />
 
     </RelativeLayout>
-    
-    <com.baidu.mapapi.map.MapView android:id="@+id/bmapView"
-	    android:layout_width="fill_parent" android:layout_height="fill_parent" 
-	    android:clickable="true"
-	    android:background="#fff"
-	/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.baidu.mapapi.map.MapView android:id="@+id/bmapView"
+            android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:clickable="true"
+            android:background="#fff"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/ease_icon_marka"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
     
 </LinearLayout>

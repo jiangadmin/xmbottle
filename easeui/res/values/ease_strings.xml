@@ -232,7 +232,7 @@
     <string name="Download_the_pictures_new">下载图片:</string>
     <string name="Failed_to_download_file">下载文件失败:</string>
     <string name="Version_number_is_wrong">版本号错误</string>
-    <string name="Are_connected_to_each_other">正在连接对方……</string>
+    <string name="Are_connected_to_each_other">正在等待对方接受邀请……</string>
     <string name="Is_not_yet_connected_to_the_server">尚未连接至服务器</string>
     <string name="In_the_call">通话中……</string>
     <string name="The_other_party_refused_to_accept">对方拒绝接受！……</string>

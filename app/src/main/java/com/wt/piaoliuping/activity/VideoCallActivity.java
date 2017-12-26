@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,8 +46,11 @@ import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.media.EMLocalSurfaceView;
 import com.hyphenate.media.EMOppositeSurfaceView;
 import com.hyphenate.util.EMLog;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.superrtc.sdk.VideoView;
+import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
+import com.wt.piaoliuping.db.UserDao;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -76,7 +80,8 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
     private LinearLayout bottomContainer;
     private TextView monitorTextView;
     private TextView netwrokStatusVeiw;
-    
+
+    private ImageView headImage;
     private Handler uiHandler;
 
     private boolean isInCalling;
@@ -150,6 +155,16 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
         Button switchCameraBtn = (Button) findViewById(R.id.btn_switch_camera);
         Button captureImageBtn = (Button) findViewById(R.id.btn_capture_image);
         SeekBar YDeltaSeekBar = (SeekBar) findViewById(R.id.seekbar_y_detal);
+        headImage = (ImageView) findViewById(R.id.swing_card);
+
+        username = getIntent().getStringExtra("username");
+        UserDao userDao = App.app.getDaoSession().getUserDaoDao().load(username);
+        if (userDao != null) {
+            ImageLoader.getInstance().displayImage(userDao.getAvatar(), headImage, App.app.getImageCircleOptions());
+            if (!TextUtils.isEmpty(userDao.getNick())) {
+                nickTextView.setText(userDao.getNick());
+            }
+        }
 
         refuseBtn.setOnClickListener(this);
         answerBtn.setOnClickListener(this);
@@ -165,9 +180,8 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
 
         msgid = UUID.randomUUID().toString();
         isInComingCall = getIntent().getBooleanExtra("isComingCall", false);
-        username = getIntent().getStringExtra("username");
 
-        nickTextView.setText(username);
+//        nickTextView.setText(username);
 
         // local surfaceview
         localSurface = (EMLocalSurfaceView) findViewById(R.id.local_surface);
@@ -185,6 +199,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
 
             comingBtnContainer.setVisibility(View.INVISIBLE);
             hangupBtn.setVisibility(View.VISIBLE);
+            findViewById(R.id.text_hangup_call).setVisibility(View.VISIBLE);
             String st = getResources().getString(R.string.Are_connected_to_each_other);
             callStateTextView.setText(st);
             localSurface.setVisibility(View.VISIBLE);
@@ -480,6 +495,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
             isHandsfreeState = true;
             comingBtnContainer.setVisibility(View.INVISIBLE);
             hangupBtn.setVisibility(View.VISIBLE);
+            findViewById(R.id.text_hangup_call).setVisibility(View.VISIBLE);
             voiceContronlLayout.setVisibility(View.VISIBLE);
             localSurface.setVisibility(View.VISIBLE);
 

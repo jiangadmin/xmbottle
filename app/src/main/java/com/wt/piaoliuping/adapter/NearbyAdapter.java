@@ -44,7 +44,7 @@ public class NearbyAdapter extends BaseItemAdapter {
             holder.textDesc.setVisibility(View.VISIBLE);
             holder.textDesc.setText(result.findAsString("userIDLocal>declaration"));
         }
-        holder.textTime.setText(result.findAsString("distanceLabel"));
+//        holder.textTime.setText(result.findAsString("distanceLabel"));
         int sex = result.findAsInt("userIDLocal>sex");
         if (sex == 1) {
             holder.textSex.setBackgroundResource(R.drawable.icon_boy);

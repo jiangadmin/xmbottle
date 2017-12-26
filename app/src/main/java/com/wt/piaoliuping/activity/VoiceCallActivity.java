@@ -20,6 +20,7 @@ import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -112,14 +113,17 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
         UserDao userDao = App.app.getDaoSession().getUserDaoDao().load(username);
         if (userDao != null) {
             ImageLoader.getInstance().displayImage(userDao.getAvatar(), headImage, App.app.getImageCircleOptions());
+            if (!TextUtils.isEmpty(userDao.getNick())) {
+                nickTextView.setText(userDao.getNick());
+            }
         }
-        nickTextView.setText(username);
         if (!isInComingCall) {// outgoing call
             soundPool = new SoundPool(1, AudioManager.STREAM_RING, 0);
             outgoing = soundPool.load(this, R.raw.em_outgoing, 1);
 
             comingBtnContainer.setVisibility(View.INVISIBLE);
             hangupBtn.setVisibility(View.VISIBLE);
+            findViewById(R.id.text_hangup_call).setVisibility(View.VISIBLE);
             st1 = getResources().getString(R.string.Are_connected_to_each_other);
             callStateTextView.setText(st1);
             handler.sendEmptyMessage(MSG_CALL_MAKE_VOICE);
@@ -352,6 +356,7 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
             callStateTextView.setText("正在接听...");
             comingBtnContainer.setVisibility(View.INVISIBLE);
             hangupBtn.setVisibility(View.VISIBLE);
+            findViewById(R.id.text_hangup_call).setVisibility(View.VISIBLE);
             voiceContronlLayout.setVisibility(View.VISIBLE);
             handler.sendEmptyMessage(MSG_CALL_ANSWER);
 
