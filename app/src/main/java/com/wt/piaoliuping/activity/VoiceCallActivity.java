@@ -199,6 +199,8 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
                                 chronometer.start();
                                 String str4 = getResources().getString(R.string.In_the_call);
                                 callStateTextView.setText(str4);
+                                findViewById(R.id.layout_jingyin).setVisibility(View.VISIBLE);
+                                findViewById(R.id.layout_mianti).setVisibility(View.VISIBLE);
                                 callingState = CallingState.NORMAL;
                                 startMonitor();
                             }
@@ -280,6 +282,8 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
                                 String st10 = getResources().getString(R.string.Has_been_cancelled);
                                 String st11 = getResources().getString(R.string.hang_up);
 
+                                findViewById(R.id.layout_jingyin).setVisibility(View.INVISIBLE);
+                                findViewById(R.id.layout_mianti).setVisibility(View.INVISIBLE);
                                 if (fError == CallError.REJECTED) {
                                     callingState = CallingState.BEREFUSED;
                                     callStateTextView.setText(st2);
@@ -369,7 +373,7 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 
         } else if (i == R.id.iv_mute) {
             if (isMuteState) {
-                muteImage.setImageResource(R.drawable.btn_mute_disabled);
+                muteImage.setImageResource(R.drawable.em_icon_mute_normal);
                 try {
                     EMClient.getInstance().callManager().resumeVoiceTransfer();
                 } catch (HyphenateException e) {
@@ -377,7 +381,7 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
                 }
                 isMuteState = false;
             } else {
-                muteImage.setImageResource(R.drawable.btn_mute_active);
+                muteImage.setImageResource(R.drawable.em_icon_mute_on);
                 try {
                     EMClient.getInstance().callManager().pauseVoiceTransfer();
                 } catch (HyphenateException e) {
@@ -388,11 +392,11 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 
         } else if (i == R.id.iv_handsfree) {
             if (isHandsfreeState) {
-                handsFreeImage.setImageResource(R.drawable.btn_speaker_disabled);
+                handsFreeImage.setImageResource(R.drawable.em_icon_speaker_normal);
                 closeSpeakerOn();
                 isHandsfreeState = false;
             } else {
-                handsFreeImage.setImageResource(R.drawable.btn_speaker_active);
+                handsFreeImage.setImageResource(R.drawable.em_icon_speaker_on);
                 openSpeakerOn();
                 isHandsfreeState = true;
             }

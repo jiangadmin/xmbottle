@@ -22,6 +22,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.hyphenate.util.PathUtil;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.wt.piaoliuping.R;
@@ -327,8 +328,9 @@ public class WarningActivity extends BaseTitleActivity implements AdapterView.On
     }
 
     public String getTempPath(String name) {
-        String path = StorageUtils.getIndividualCacheDirectory(this, "photos").getPath();
-        return path + name + "_tmp.jpg";
+        return PathUtil.getInstance().getImagePath() + name + "_tmp.jpg";
+//        String path = StorageUtils.getIndividualCacheDirectory(this, "photos").getPath();
+//        return path + name + "_tmp.jpg";
 //        return basePath + name + "_tmp.jpg";
     }
 }

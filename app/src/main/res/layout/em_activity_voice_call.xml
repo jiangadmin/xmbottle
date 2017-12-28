@@ -107,26 +107,28 @@
             android:layout_marginTop="20dp">
 
             <LinearLayout
+                android:id="@+id/layout_mianti"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginLeft="0dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="invisible">
 
                 <ImageView
                     android:id="@+id/iv_handsfree"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/em_icon_mute_normal" />
+                    android:src="@drawable/em_icon_speaker_normal" />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:gravity="center"
-                    android:text="@string/mute"
+                    android:text="@string/Hands_free"
                     android:textColor="#ffffff" />
             </LinearLayout>
 
@@ -157,26 +159,28 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_jingyin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginRight="0dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="invisible">
 
                 <ImageView
                     android:id="@+id/iv_mute"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/em_icon_speaker_normal" />
+                    android:src="@drawable/em_icon_mute_normal" />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:gravity="center"
-                    android:text="@string/Hands_free"
+                    android:text="@string/mute"
                     android:textColor="#ffffff" />
             </LinearLayout>
 

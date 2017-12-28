@@ -141,11 +141,11 @@
             android:id="@+id/ll_surface_baseline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="8dp"
+            android:layout_alignEnd="@+id/tv_call_monitor"
             android:layout_alignParentBottom="true"
             android:layout_alignRight="@+id/tv_call_monitor"
-            android:layout_alignEnd="@+id/tv_call_monitor">
+            android:orientation="vertical"
+            android:paddingTop="8dp">
 
             <View
                 android:layout_width="match_parent"
@@ -163,38 +163,43 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     tools:ignore="DisableBaselineAlignment">
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp">
+
                     <LinearLayout
+                        android:id="@+id/layout_mianti"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:layout_marginLeft="0dp"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="invisible">
 
                         <ImageView
                             android:id="@+id/iv_handsfree"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/em_icon_mute_normal" />
+                            android:src="@drawable/em_icon_speaker_normal" />
 
                         <TextView
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
                             android:gravity="center"
-                            android:text="@string/mute"
+                            android:text="@string/Hands_free"
                             android:textColor="#ffffff" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -222,11 +227,13 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout_jingyin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:layout_marginRight="0dp"
                         android:gravity="center"
+                        android:visibility="invisible"
                         android:orientation="vertical">
 
                         <ImageView
@@ -234,16 +241,17 @@
                             android:layout_width="70dp"
                             android:layout_height="70dp"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/em_icon_speaker_normal" />
+                            android:src="@drawable/em_icon_mute_normal" />
 
                         <TextView
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
+                            android:text="@string/mute"
                             android:gravity="center"
-                            android:text="@string/Hands_free"
                             android:textColor="#ffffff" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/ll_coming_call"
                         android:layout_width="match_parent"

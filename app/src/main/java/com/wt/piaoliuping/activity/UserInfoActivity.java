@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.util.PathUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.tbruyelle.rxpermissions.RxPermissions;
@@ -434,8 +436,10 @@ public class UserInfoActivity extends BaseTitleActivity {
     }
 
     public String getTempPath(String name) {
-        String path = StorageUtils.getIndividualCacheDirectory(this, "photos").getPath();
-        return path + name + "_tmp.jpg";
+//        new File(PathUtil.getInstance().getImagePath(), EMClient.getInstance().getCurrentUser()
+//                + System.currentTimeMillis() + ".jpg");
+//        String path = StorageUtils.getIndividualCacheDirectory(this, "photos").getPath();
+        return PathUtil.getInstance().getImagePath() + name + "_tmp.jpg";
 //        return basePath + name + "_tmp.jpg";
     }
 

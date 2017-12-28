@@ -212,7 +212,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
             }, 300);
         } else { // incoming call
 
-            callStateTextView.setText("Ringing");
+//            callStateTextView.setText("Ringing");
             if(EMClient.getInstance().callManager().getCallState() == EMCallStateChangeListener.CallState.IDLE
                     || EMClient.getInstance().callManager().getCallState() == EMCallStateChangeListener.CallState.DISCONNECTED) {
                 // the call has ended
@@ -302,6 +302,8 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                             openSpeakerOn();
 //                            ((TextView)findViewById(R.id.tv_is_p2p)).setText(EMClient.getInstance().callManager().isDirectCall()
 //                                    ? R.string.direct_call : R.string.relay_call);
+                            findViewById(R.id.layout_jingyin).setVisibility(View.VISIBLE);
+                            findViewById(R.id.layout_mianti).setVisibility(View.VISIBLE);
                             handsFreeImage.setImageResource(R.drawable.em_icon_speaker_on);
                             isHandsfreeState = true;
                             isInCalling = true;
@@ -408,7 +410,9 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                             String s8 = getResources().getString(R.string.did_not_answer);
                             String s9 = getResources().getString(R.string.Has_been_cancelled);
                             String s10 = getResources().getString(R.string.Refused);
-                            
+
+                            findViewById(R.id.layout_jingyin).setVisibility(View.INVISIBLE);
+                            findViewById(R.id.layout_mianti).setVisibility(View.INVISIBLE);
                             if (fError == CallError.REJECTED) {
                                 callingState = CallingState.BEREFUSED;
                                 callStateTextView.setText(s1);
@@ -488,7 +492,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
             if (ringtone != null)
                 ringtone.stop();
 
-            callStateTextView.setText("answering...");
+            callStateTextView.setText("待接听...");
             handler.sendEmptyMessage(MSG_CALL_ANSWER);
             handsFreeImage.setImageResource(R.drawable.em_icon_speaker_on);
             isAnswered = true;
@@ -513,7 +517,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
         } else if (i == R.id.iv_mute) {
             if (isMuteState) {
                 // resume voice transfer
-                muteImage.setImageResource(R.drawable.btn_mute_disabled);
+                muteImage.setImageResource(R.drawable.em_icon_mute_normal);
                 try {
                     EMClient.getInstance().callManager().resumeVoiceTransfer();
                 } catch (HyphenateException e) {
@@ -522,7 +526,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                 isMuteState = false;
             } else {
                 // pause voice transfer
-                muteImage.setImageResource(R.drawable.btn_mute_active);
+                muteImage.setImageResource(R.drawable.em_icon_mute_on);
                 try {
                     EMClient.getInstance().callManager().pauseVoiceTransfer();
                 } catch (HyphenateException e) {
@@ -534,11 +538,11 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
         } else if (i == R.id.iv_handsfree) {
             if (isHandsfreeState) {
                 // turn off speaker
-                handsFreeImage.setImageResource(R.drawable.btn_speaker_disabled);
+                handsFreeImage.setImageResource(R.drawable.em_icon_speaker_normal);
                 closeSpeakerOn();
                 isHandsfreeState = false;
             } else {
-                handsFreeImage.setImageResource(R.drawable.btn_speaker_active);
+                handsFreeImage.setImageResource(R.drawable.em_icon_speaker_on);
                 openSpeakerOn();
                 isHandsfreeState = true;
             }
