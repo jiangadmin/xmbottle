@@ -197,6 +197,13 @@
             android:name=".activity.PhotosActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.ShareInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PrizeInfoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".wxapi.WXEntryActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -46,6 +46,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.wt.piaoliuping.database.DataBaseHelper;
 import com.wt.piaoliuping.db.DaoMaster;
 import com.wt.piaoliuping.db.DaoSession;
@@ -88,6 +89,7 @@ public class App extends Application {
         initUMeng();
         Stetho.initializeWithDefaults(this);
         initBDMap();
+        ZXingLibrary.initDisplayOpinion(this);
     }
 
     private void initBDMap() {

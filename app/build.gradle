@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId "com.xm.bottle"
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 26
         versionCode 1
         versionName "0.1224"
         multiDexEnabled true
@@ -77,4 +77,5 @@ dependencies {
     compile 'com.facebook.stetho:stetho:1.4.2'
 //    compile 'com.umeng.analytics:analytics:latest.integration'
 //    compile project(':PushSDK')
+    compile 'cn.yipianfengye.android:zxing-library:2.2'
 }

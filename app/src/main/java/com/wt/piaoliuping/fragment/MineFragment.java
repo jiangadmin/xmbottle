@@ -23,10 +23,12 @@ import com.wt.piaoliuping.activity.FollowListActivity;
 import com.wt.piaoliuping.activity.GoodsListActivity;
 import com.wt.piaoliuping.activity.MinePrizeListActivity;
 import com.wt.piaoliuping.activity.PointActivity;
+import com.wt.piaoliuping.activity.PrizeInfoActivity;
 import com.wt.piaoliuping.activity.PrizeListActivity;
 import com.wt.piaoliuping.activity.RecommendActivity;
 import com.wt.piaoliuping.activity.RevokeListActivity;
 import com.wt.piaoliuping.activity.SettingTitleActivity;
+import com.wt.piaoliuping.activity.ShareInfoActivity;
 import com.wt.piaoliuping.base.PageFragment;
 import com.wt.piaoliuping.utils.DateUtils;
 
@@ -73,6 +75,8 @@ public class MineFragment extends PageFragment {
     @BindView(R.id.layout_top)
     LinearLayout layoutTop;
 
+    private String userId = "";
+
     @Override
     public void initView(View view) {
         super.initView(view);
@@ -110,7 +114,10 @@ public class MineFragment extends PageFragment {
                 startActivity(new Intent(getActivity(), GoodsListActivity.class));
                 break;
             case R.id.layout_7: {
-                loadShare();
+//                loadShare();
+                Intent intent = new Intent(getActivity(), ShareInfoActivity.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
             }
             break;
             case R.id.btn_right_title:
@@ -123,7 +130,7 @@ public class MineFragment extends PageFragment {
 
             }
             case R.id.layout_10: {
-                startActivity(new Intent(getActivity(), RecommendActivity.class));
+                startActivity(new Intent(getActivity(), PrizeInfoActivity.class));
                 break;
             }
         }
@@ -139,6 +146,7 @@ public class MineFragment extends PageFragment {
         HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
+                userId = result.findAsString("id");
                 ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead, App.app.getImageCircleOptions());
                 textName.setText("昵称：" + result.findAsString("nickname"));
                 textNo.setText("ID：" + result.findAsString("id"));
