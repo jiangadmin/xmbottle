@@ -76,6 +76,7 @@ public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.O
     private double lastLat;
     private double lastLong;
     private String lastAddress;
+    private boolean showLocation;
 
 
     public class BaiduSDKReceiver extends BroadcastReceiver {
@@ -256,6 +257,7 @@ public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.O
             lastLat = lastLocation.getLatitude();
             lastLong = lastLocation.getLongitude();
             lastAddress = lastLocation.getAddrStr();
+            showLocation = true;
         }
 
         public void onReceivePoi(BDLocation poiLocation) {
@@ -307,20 +309,22 @@ public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.O
             geoCoder = new Geocoder(this, Locale.CHINA);
         }
         // 设置反地理经纬度坐标,请求位置时,需要一个经纬度
-        try {
-            List<android.location.Address> list = geoCoder.getFromLocation(latitude, longitude, 1);
-            if (!list.isEmpty()) {
+        if (showLocation) {
+            try {
+                List<android.location.Address> list = geoCoder.getFromLocation(latitude, longitude, 1);
+                if (!list.isEmpty()) {
 
-                lastLocation.setLatitude(latitude);
-                lastLocation.setLongitude(longitude);
-                lastLocation.setAddrStr(list.get(0).getAddressLine(0));
+                    lastLocation.setLatitude(latitude);
+                    lastLocation.setLongitude(longitude);
+                    lastLocation.setAddrStr(list.get(0).getAddressLine(0));
 
-                lastLat = latitude;
-                lastLong = longitude;
-                lastAddress = list.get(0).getAddressLine(0);
+                    lastLat = latitude;
+                    lastLong = longitude;
+                    lastAddress = list.get(0).getAddressLine(0);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
