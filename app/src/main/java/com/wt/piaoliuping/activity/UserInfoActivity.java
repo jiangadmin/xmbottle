@@ -369,7 +369,7 @@ public class UserInfoActivity extends BaseTitleActivity {
 
         Log.e("size", fileTemp.length() + "");
         updateImage(fileTemp);
-        ImageLoader.getInstance().displayImage("file://" + currentImagePath, imageHead);
+//        ImageLoader.getInstance().displayImage("file://" + currentImagePath, imageHead);
     }
 
     private void updateUserInfo(String key, String value) {

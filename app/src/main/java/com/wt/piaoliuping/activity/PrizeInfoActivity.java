@@ -1,8 +1,6 @@
 package com.wt.piaoliuping.activity;
 
 import android.content.Intent;
-import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -58,7 +56,7 @@ public class PrizeInfoActivity extends BaseTitleActivity {
             @Override
             public void onSuccess(HaoResult result) {
                 textShare.setText(result.findAsString("myInviteUserCount") + "人");
-                textStar.setText(result.findAsString("myTotalAmount") + "人");
+                textStar.setText(result.findAsString("myTotalAmount") + "颗");
                 textStar1.setText(result.findAsString("userAmount"));
                 textStar2.setText(result.findAsString("unrevdAmount"));
                 textDesc.setText(result.findAsString("balanceRule"));

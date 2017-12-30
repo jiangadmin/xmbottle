@@ -16,10 +16,6 @@ import android.widget.Toast;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMMessage;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -27,7 +23,6 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
-import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseTitleActivity;
 
@@ -39,8 +34,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static android.R.attr.id;
 
 /**
  * Created by wangtao on 2017/12/30.
@@ -55,6 +48,8 @@ public class ShareInfoActivity extends BaseTitleActivity {
     TextView btnBind;
     @BindView(R.id.btn_share)
     TextView btnShare;
+    @BindView(R.id.text_desc)
+    TextView textDesc;
     @BindView(R.id.image_code)
     ImageView imageCode;
     Bitmap mBitmap;
@@ -71,6 +66,8 @@ public class ShareInfoActivity extends BaseTitleActivity {
                 startActivityForResult(intent, 1000);
             }
         });
+
+        loadDetail();
 
         mBitmap = CodeUtils.createImage(getIntent().getStringExtra("userId"), 400, 400, BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
         imageCode.setImageBitmap(mBitmap);
@@ -212,6 +209,21 @@ public class ShareInfoActivity extends BaseTitleActivity {
             @Override
             public void onFail(HaoResult result) {
                 showToast(result.errorStr);
+            }
+        }, this);
+    }
+
+
+    private void loadDetail() {
+        Map<String, Object> map = new HashMap<>();
+        HaoConnect.loadContent("user_invite/invite_code", map, "get", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                textDesc.setText(result.findAsString("inviteUserRule"));
+            }
+
+            @Override
+            public void onFail(HaoResult result) {
             }
         }, this);
     }
