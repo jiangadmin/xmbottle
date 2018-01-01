@@ -74,11 +74,12 @@ public class EaseShowVideoActivity extends EaseBaseActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         File file = new File(localPath);
         Uri fileUri;
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             fileUri = Uri.fromFile(file);
-//        } else {
+        } else {
+            fileUri = Uri.fromFile(file);
 //            fileUri = FileProvider.getUriForFile(this.getApplicationContext(), "com.xm.bottle.provider", file);
-//        }
+        }
         intent.setDataAndType(fileUri, "video/mp4");
         startActivity(intent);
         finish();

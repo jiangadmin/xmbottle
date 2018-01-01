@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId "com.xm.bottle"
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 23
         versionCode 1
         versionName "0.1224"
         multiDexEnabled true

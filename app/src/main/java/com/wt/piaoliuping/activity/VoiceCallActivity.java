@@ -171,8 +171,14 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 
                             @Override
                             public void run() {
-                                String st3 = getResources().getString(R.string.have_connected_with);
-                                callStateTextView.setText(st3);
+//                                String st3 = getResources().getString(R.string.have_connected_with);
+                                UserDao userDao = App.app.getDaoSession().getUserDaoDao().load(username);
+                                if (userDao != null) {
+                                    ImageLoader.getInstance().displayImage(userDao.getAvatar(), headImage, App.app.getImageCircleOptions());
+                                    if (!TextUtils.isEmpty(userDao.getNick())) {
+                                        callStateTextView.setText(userDao.getNick() + "邀请你进行语音通话");
+                                    }
+                                }
                             }
                         });
                         break;
