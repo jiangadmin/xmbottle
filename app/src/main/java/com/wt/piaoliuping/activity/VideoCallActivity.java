@@ -211,7 +211,12 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                 }
             }, 300);
         } else { // incoming call
-
+            if (userDao != null) {
+                ImageLoader.getInstance().displayImage(userDao.getAvatar(), headImage, App.app.getImageCircleOptions());
+                if (!TextUtils.isEmpty(userDao.getNick())) {
+                    callStateTextView.setText(userDao.getNick() + "邀请你进行视频通话");
+                }
+            }
 //            callStateTextView.setText("Ringing");
             if(EMClient.getInstance().callManager().getCallState() == EMCallStateChangeListener.CallState.IDLE
                     || EMClient.getInstance().callManager().getCallState() == EMCallStateChangeListener.CallState.DISCONNECTED) {
@@ -282,11 +287,13 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                         @Override
                         public void run() {
 //                            callStateTextView.setText(R.string.have_connected_with);
-                            UserDao userDao = App.app.getDaoSession().getUserDaoDao().load(username);
-                            if (userDao != null) {
-                                ImageLoader.getInstance().displayImage(userDao.getAvatar(), headImage, App.app.getImageCircleOptions());
-                                if (!TextUtils.isEmpty(userDao.getNick())) {
-                                    callStateTextView.setText(userDao.getNick() + "邀请你进行视频通话");
+                            if (isInComingCall) {
+                                UserDao userDao = App.app.getDaoSession().getUserDaoDao().load(username);
+                                if (userDao != null) {
+                                    ImageLoader.getInstance().displayImage(userDao.getAvatar(), headImage, App.app.getImageCircleOptions());
+                                    if (!TextUtils.isEmpty(userDao.getNick())) {
+                                        callStateTextView.setText(userDao.getNick() + "邀请你进行视频通话");
+                                    }
                                 }
                             }
                         }

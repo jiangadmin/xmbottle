@@ -95,7 +95,7 @@ public class BottleFragment extends PageFragment {
             @Override
             public void onSuccess(HaoResult result) {
                 ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead, App.app.getImageCircleOptions());
-                textName.setText("昵称：" + result.findAsString("nickname"));
+                textName.setText(result.findAsString("nickname"));
                 textNo.setText("星星：" + result.findAsString("amount"));
 
             }

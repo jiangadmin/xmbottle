@@ -148,6 +148,7 @@
         android:layout_marginTop="80dp"
         android:background="@drawable/corner_red_bg"
         android:text="提现"
+        android:visibility="gone"
         android:textColor="@color/white" />
 
     <TextView
