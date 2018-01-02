@@ -2,6 +2,7 @@ package com.hyphenate.easeui.widget.chatrow;
 
 import java.io.File;
 
+import com.bumptech.glide.Glide;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMImageMessageBody;
@@ -62,14 +63,22 @@ public class EaseChatRowImage extends EaseChatRowFile{
                 	// to make it compatible with thumbnail received in previous version
                     thumbPath = EaseImageUtils.getThumbnailImagePath(imgBody.getLocalUrl());
                 }
-                showImageView(thumbPath, imageView, imgBody.getLocalUrl(), message);
+//                showImageView(thumbPath, imageView, imgBody.getLocalUrl(), message);
+                Glide.with(context)
+                        .load(thumbPath)
+                        .crossFade()
+                        .into(imageView);
             }
             return;
         }
         
         String filePath = imgBody.getLocalUrl();
         String thumbPath = EaseImageUtils.getThumbnailImagePath(imgBody.getLocalUrl());
-        showImageView(thumbPath, imageView, filePath, message);
+//        showImageView(thumbPath, imageView, filePath, message);
+        Glide.with(context)
+                .load(filePath)
+                .crossFade()
+                .into(imageView);
         handleSendMessage();
     }
     

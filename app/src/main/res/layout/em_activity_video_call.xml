@@ -50,15 +50,6 @@
                 android:textSize="16sp"
                 android:visibility="visible" />
 
-            <com.wt.piaoliuping.widgt.MyChronometer
-                android:id="@+id/chronometer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chronometer"
-                android:textColor="#fff"
-                android:visibility="invisible"
-                tools:ignore="HardcodedText" />
-
             <TextView
                 android:id="@+id/tv_is_p2p"
                 android:layout_width="wrap_content"
@@ -67,8 +58,8 @@
 
             <ImageView
                 android:id="@+id/swing_card"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="10dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/em_default_avatar" />
@@ -150,6 +141,16 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px" />
+
+            <com.wt.piaoliuping.widgt.MyChronometer
+                android:id="@+id/chronometer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Chronometer"
+                android:textColor="#fff"
+                android:visibility="invisible"
+                tools:ignore="HardcodedText" />
 
             <LinearLayout
                 android:id="@+id/ll_bottom_container"
@@ -233,8 +234,8 @@
                         android:layout_gravity="right"
                         android:layout_marginRight="0dp"
                         android:gravity="center"
-                        android:visibility="invisible"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="invisible">
 
                         <ImageView
                             android:id="@+id/iv_mute"
@@ -247,8 +248,8 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
-                            android:text="@string/mute"
                             android:gravity="center"
+                            android:text="@string/mute"
                             android:textColor="#ffffff" />
                     </LinearLayout>
 

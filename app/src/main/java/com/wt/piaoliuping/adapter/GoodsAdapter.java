@@ -1,20 +1,30 @@
 package com.wt.piaoliuping.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.wt.piaoliuping.App;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.wt.piaoliuping.R;
+
+import java.io.ByteArrayOutputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * Created by wangtao on 2017/11/14.
@@ -56,7 +66,12 @@ public class GoodsAdapter extends BaseItemAdapter {
         });
         HaoResult result = (HaoResult) dataList.get(position);
         holder.textPoint.setText(result.findAsString("goodsPrice") + "星星");
-        ImageLoader.getInstance().displayImage(result.findAsString("goodsImgView"), holder.imagePrize);
+//        ImageLoader.getInstance().displayImage(result.findAsString("goodsImgView"), holder.imagePrize);
+        Glide.with(context)
+                .load(result.findAsString("goodsImgView"))
+                .placeholder(R.drawable.image_default)
+                .crossFade()
+                .into(holder.imagePrize);
         return convertView;
     }
 
