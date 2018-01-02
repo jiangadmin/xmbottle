@@ -65,7 +65,7 @@ public class EaseChatRowImage extends EaseChatRowFile{
                 }
 //                showImageView(thumbPath, imageView, imgBody.getLocalUrl(), message);
                 Glide.with(context)
-                        .load(thumbPath)
+                        .load(imgBody.getThumbnailUrl())
                         .crossFade()
                         .into(imageView);
             }
@@ -76,7 +76,7 @@ public class EaseChatRowImage extends EaseChatRowFile{
         String thumbPath = EaseImageUtils.getThumbnailImagePath(imgBody.getLocalUrl());
 //        showImageView(thumbPath, imageView, filePath, message);
         Glide.with(context)
-                .load(filePath)
+                .load(imgBody.getThumbnailUrl())
                 .crossFade()
                 .into(imageView);
         handleSendMessage();
