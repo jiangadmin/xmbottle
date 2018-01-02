@@ -90,6 +90,7 @@ public class EaseChatRowImage extends EaseChatRowFile{
     @Override
     protected void onBubbleClick() {
         Intent intent = new Intent(context, EaseShowBigImageActivity.class);
+        intent.putExtra("oriUrl", imgBody.getThumbnailUrl());
         File file = new File(imgBody.getLocalUrl());
         if (file.exists()) {
             Uri uri = Uri.fromFile(file);
@@ -100,8 +101,8 @@ public class EaseChatRowImage extends EaseChatRowFile{
             // first
             String msgId = message.getMsgId();
             intent.putExtra("messageId", msgId);
-            intent.putExtra("localUrl", imgBody.getLocalUrl());
         }
+        intent.putExtra("localUrl", imgBody.getLocalUrl());
         if (message != null && message.direct() == EMMessage.Direct.RECEIVE && !message.isAcked()
                 && message.getChatType() == ChatType.Chat) {
             try {
