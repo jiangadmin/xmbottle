@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.haoxitech.HaoConnect.HaoConnect;
@@ -149,7 +150,8 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
                                     @Override
                                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                                         String file = ImageLoader.getInstance().getDiskCache().get(imageUri).getAbsolutePath();
-                                        EMMessage imageMessage = EMMessage.createImageSendMessage(file, false, userId);
+//                                        String file = Glide.getPhotoCacheDir(GoodsListActivity.this, result.findAsString("goodsImgView")).getAbsolutePath();
+                                        EMMessage imageMessage = EMMessage.createImageSendMessage(file, true, userId);
                                         EMClient.getInstance().chatManager().sendMessage(imageMessage);
 
                                         try {

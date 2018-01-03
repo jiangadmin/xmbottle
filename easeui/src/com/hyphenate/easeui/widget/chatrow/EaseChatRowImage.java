@@ -44,7 +44,7 @@ public class EaseChatRowImage extends EaseChatRowFile{
         imageView = (ImageView) findViewById(R.id.image);
     }
 
-    
+
     @Override
     protected void onSetUpView() {
         imgBody = (EMImageMessageBody) message.getBody();
@@ -60,33 +60,33 @@ public class EaseChatRowImage extends EaseChatRowFile{
                 imageView.setImageResource(R.drawable.ease_default_image);
                 String thumbPath = imgBody.thumbnailLocalPath();
                 if (!new File(thumbPath).exists()) {
-                	// to make it compatible with thumbnail received in previous version
+                    // to make it compatible with thumbnail received in previous version
                     thumbPath = EaseImageUtils.getThumbnailImagePath(imgBody.getLocalUrl());
                 }
 //                showImageView(thumbPath, imageView, imgBody.getLocalUrl(), message);
                 Glide.with(context)
-                        .load(imgBody.getThumbnailUrl())
+                        .load(imgBody.getRemoteUrl())
                         .crossFade()
                         .into(imageView);
             }
             return;
         }
-        
+
         String filePath = imgBody.getLocalUrl();
         String thumbPath = EaseImageUtils.getThumbnailImagePath(imgBody.getLocalUrl());
 //        showImageView(thumbPath, imageView, filePath, message);
         Glide.with(context)
-                .load(filePath)
+                .load(imgBody.getLocalUrl())
                 .crossFade()
                 .into(imageView);
         handleSendMessage();
     }
-    
+
     @Override
     protected void onUpdateView() {
         super.onUpdateView();
     }
-    
+
     @Override
     protected void onBubbleClick() {
         Intent intent = new Intent(context, EaseShowBigImageActivity.class);
@@ -113,10 +113,10 @@ public class EaseChatRowImage extends EaseChatRowFile{
         }
         context.startActivity(intent);
     }
-    
+
     /**
      * load image into image view
-     * 
+     *
      * @param thumbernailPath
      * @param iv
      * @param position

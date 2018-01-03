@@ -2,12 +2,14 @@ package com.wt.piaoliuping.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.haoxitech.HaoConnect.HaoConnect;
@@ -16,6 +18,8 @@ import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.adapter.PrizeAdapter;
 import com.wt.piaoliuping.base.BaseTitleActivity;
@@ -90,22 +94,46 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
                                 map.put("give_user_id", userId);
                                 HaoConnect.loadContent("user_goods_item/give_user", map, "post", new HaoResultHttpResponseHandler() {
                                     @Override
-                                    public void onSuccess(HaoResult result) {
+                                    public void onSuccess(final HaoResult result) {
                                         showToast("赠送成功");
-                                        String file = ImageLoader.getInstance().getDiskCache().get(result.findAsString("goodsImgView")).getAbsolutePath();
-                                        EMMessage imageMessage = EMMessage.createImageSendMessage(file, false, userId);
-                                        EMClient.getInstance().chatManager().sendMessage(imageMessage);
+                                        ImageLoader.getInstance().loadImage(result.findAsString("goodsImgView"), new ImageLoadingListener() {
+                                            @Override
+                                            public void onLoadingStarted(String imageUri, View view) {
 
-                                        try {
-                                            Thread.sleep(100);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                        String desc = "【" + userId + "】" + "送您礼物 {" + result.findAsString("goodsName") + "}";
-                                        EMMessage message = EMMessage.createTxtSendMessage(desc, userId);
-                                        EMClient.getInstance().chatManager().sendMessage(message);
-                                        setResult(RESULT_OK);
-                                        finish();
+                                            }
+
+                                            @Override
+                                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                                            }
+
+                                            @Override
+                                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                                String file = ImageLoader.getInstance().getDiskCache().get(result.findAsString("goodsImgView")).getAbsolutePath();
+                                                EMMessage imageMessage = EMMessage.createImageSendMessage(file, true, userId);
+                                                EMClient.getInstance().chatManager().sendMessage(imageMessage);
+
+                                                try {
+                                                    Thread.sleep(100);
+                                                } catch (InterruptedException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                String desc = "【" + userId + "】" + "送您礼物 {" + result.findAsString("goodsName") + "}";
+                                                EMMessage message = EMMessage.createTxtSendMessage(desc, userId);
+                                                EMClient.getInstance().chatManager().sendMessage(message);
+                                                setResult(RESULT_OK);
+                                                finish();
+                                            }
+
+                                            @Override
+                                            public void onLoadingCancelled(String imageUri, View view) {
+
+                                            }
+                                        });
+//                                        String file = ImageLoader.getInstance().getDiskCache().get(result.findAsString("goodsImgView")).getAbsolutePath();
+
+//                                        String file = Glide.getPhotoCacheDir(PrizeListActivity.this, result.findAsString("goodsImgView")).getAbsolutePath();
+
                                     }
 
                                     @Override
