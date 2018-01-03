@@ -76,7 +76,7 @@ public class EaseChatRowImage extends EaseChatRowFile{
         String thumbPath = EaseImageUtils.getThumbnailImagePath(imgBody.getLocalUrl());
 //        showImageView(thumbPath, imageView, filePath, message);
         Glide.with(context)
-                .load(imgBody.getThumbnailUrl())
+                .load(filePath)
                 .crossFade()
                 .into(imageView);
         handleSendMessage();
