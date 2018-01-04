@@ -23,6 +23,7 @@ import android.content.IntentFilter;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -131,6 +132,18 @@ public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.O
         iFilter.addAction(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR);
         mBaiduReceiver = new BaiduSDKReceiver();
         registerReceiver(mBaiduReceiver, iFilter);
+        /*mMapView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (!inited) {
+                        inited = true;
+                        mBaiduMap.setOnMapStatusChangeListener(EaseBaiduMapActivity.this);
+                    }
+                }
+                return true;
+            }
+        });*/
     }
 
     private void showMap(double latitude, double longtitude, String address) {
@@ -181,6 +194,7 @@ public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.O
         option.setScanSpan(30000);
         option.setAddrType("all");
         mLocClient.setLocOption(option);
+
     }
 
     @Override
@@ -259,8 +273,12 @@ public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.O
             lastLong = lastLocation.getLongitude();
             lastAddress = lastLocation.getAddrStr();
             showLocation = true;
+            if (!inited) {
+                inited = true;
+                mBaiduMap.setOnMapStatusChangeListener(EaseBaiduMapActivity.this);
+            }
+//            mBaiduMap.setOnMapStatusChangeListener(EaseBaiduMapActivity.this);
 
-            mBaiduMap.setOnMapStatusChangeListener(EaseBaiduMapActivity.this);
         }
 
         public void onReceivePoi(BDLocation poiLocation) {
@@ -269,6 +287,8 @@ public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.O
             }
         }
     }
+
+    private boolean inited = false;
 
     public void back(View v) {
         finish();

@@ -198,36 +198,42 @@ public class SendBottleActivity extends BaseTitleActivity {
         }, this);
     }
 
-
-
     private void handleCameraPermission() {
-        rxPermissions.request(Manifest.permission.CAMERA)
-                .subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        if (aBoolean) {
-                            takeCamera();
-                        } else {
-                            showToast("已禁止相机权限，您可以在系统设置中打开");
-                        }
-                    }
-                });
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
 
+            rxPermissions.request(Manifest.permission.CAMERA)
+                    .subscribe(new Action1<Boolean>() {
+                        @Override
+                        public void call(Boolean aBoolean) {
+                            if (aBoolean) {
+                                takeCamera();
+                            } else {
+                                showToast("已禁止相机权限，您可以在系统设置中打开");
+                            }
+                        }
+                    });
+        } else {
+            takeCamera();
+        }
     }
 
     private void handleAlbumPermission() {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
 
-        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE)
-                .subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        if (aBoolean) {
-                            handleSelectPicture();
-                        } else {
-                            showToast("已禁止文件读写权限，您可以在系统设置中打开");
+            rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    .subscribe(new Action1<Boolean>() {
+                        @Override
+                        public void call(Boolean aBoolean) {
+                            if (aBoolean) {
+                                handleSelectPicture();
+                            } else {
+                                showToast("已禁止文件读写权限，您可以在系统设置中打开");
+                            }
                         }
-                    }
-                });
+                    });
+        } else {
+            handleSelectPicture();
+        }
     }
 
     private Uri photoUri;
