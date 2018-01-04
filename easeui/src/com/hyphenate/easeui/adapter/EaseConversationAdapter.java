@@ -141,6 +141,11 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             }
             holder.message.setText(EaseSmileUtils.getSmiledText(getContext(), EaseCommonUtils.getMessageDigest(lastMessage, (this.getContext()))),
                     BufferType.SPANNABLE);
+            if (lastMessage.getType() == EMMessage.Type.IMAGE) {
+                holder.message.setVisibility(View.INVISIBLE);
+            } else {
+                holder.message.setVisibility(View.VISIBLE);
+            }
             if(content != null){
                 holder.message.setText(content);
             }
