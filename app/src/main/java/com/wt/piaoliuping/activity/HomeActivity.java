@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -167,9 +168,10 @@ public class HomeActivity extends BaseTitleActivity {
                 });
             }
         }).start();
-
-        rxPermissions = new RxPermissions(this);
-        handleLocation();
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            rxPermissions = new RxPermissions(this);
+            handleLocation();
+        }
     }
 
     @Override

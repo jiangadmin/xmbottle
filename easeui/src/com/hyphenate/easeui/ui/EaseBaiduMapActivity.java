@@ -130,7 +130,6 @@ public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.O
         iFilter.addAction(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR);
         iFilter.addAction(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR);
         mBaiduReceiver = new BaiduSDKReceiver();
-        mBaiduMap.setOnMapStatusChangeListener(this);
         registerReceiver(mBaiduReceiver, iFilter);
     }
 
@@ -225,6 +224,8 @@ public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.O
             if (location == null) {
                 return;
             }
+
+            Log.e("wt", "onReceiveLocation");
             Log.d("map", "On location change received:" + location);
             Log.d("map", "addr:" + location.getAddrStr());
             sendButton.setEnabled(true);
@@ -258,6 +259,8 @@ public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.O
             lastLong = lastLocation.getLongitude();
             lastAddress = lastLocation.getAddrStr();
             showLocation = true;
+
+            mBaiduMap.setOnMapStatusChangeListener(EaseBaiduMapActivity.this);
         }
 
         public void onReceivePoi(BDLocation poiLocation) {
@@ -296,15 +299,23 @@ public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.O
 //        mBaiduMap.clear();
     }
 
+    private boolean isGecoder = false;
+
     @Override
     public void onMapStatusChangeFinish(MapStatus mapStatus) {
-        Log.e("wt", "lng" + mapStatus.target.longitude);
-        latlngToAddress(mapStatus.target.latitude,mapStatus.target.longitude);
+        Log.e("wt", "onMapStatusChangeFinish");
+        if (showLocation) {
+            latlngToAddress(mapStatus.target.latitude,mapStatus.target.longitude);
+        }
     }
 
     private Geocoder geoCoder;
 
     private void latlngToAddress(double latitude, double longitude) {
+        if (isGecoder) {
+            return;
+        }
+        isGecoder = true;
         if (geoCoder == null) {
             geoCoder = new Geocoder(this, Locale.CHINA);
         }
@@ -321,6 +332,7 @@ public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.O
                     lastLat = latitude;
                     lastLong = longitude;
                     lastAddress = list.get(0).getAddressLine(0);
+                    isGecoder = false;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
