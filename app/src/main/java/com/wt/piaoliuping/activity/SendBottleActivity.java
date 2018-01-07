@@ -393,4 +393,9 @@ public class SendBottleActivity extends BaseTitleActivity {
 //        return basePath + name + "_tmp.jpg";
     }
 
+    @Override
+    public void finish() {
+        setResult(RESULT_OK);
+        super.finish();
+    }
 }

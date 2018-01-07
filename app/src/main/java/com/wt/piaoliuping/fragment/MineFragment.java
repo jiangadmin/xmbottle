@@ -77,6 +77,8 @@ public class MineFragment extends PageFragment {
 
     private String userId = "";
 
+    private boolean inited = false;
+
     @Override
     public void initView(View view) {
         super.initView(view);
@@ -143,85 +145,23 @@ public class MineFragment extends PageFragment {
     }
 
     private void loadUser() {
-        HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
-            @Override
-            public void onSuccess(HaoResult result) {
-                userId = result.findAsString("id");
-                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead, App.app.getImageCircleOptions());
-                textName.setText("昵称：" + result.findAsString("nickname"));
-                textNo.setText("ID：" + result.findAsString("id"));
-                if (result.findAsInt("vipLevel") == 0) {
-                    textExpireTime.setVisibility(View.GONE);
+        userId = App.app.userInfo.findAsString("id");
+        ImageLoader.getInstance().displayImage(App.app.userInfo.findAsString("avatarPreView"), imageHead, App.app.getImageCircleOptions());
+        textName.setText("昵称：" + App.app.userInfo.findAsString("nickname"));
+        textNo.setText("ID：" + App.app.userInfo.findAsString("id"));
+        if (App.app.userInfo.findAsInt("vipLevel") == 0) {
+            textExpireTime.setVisibility(View.GONE);
 //                    layout5.setVisibility(View.GONE);
 //                    layout4.setVisibility(View.VISIBLE);
-                } else {
-                    textExpireTime.setVisibility(View.VISIBLE);
+        } else {
+            textExpireTime.setVisibility(View.VISIBLE);
 //                    layout4.setVisibility(View.GONE);
 //                    layout5.setVisibility(View.VISIBLE);
-                }
-                long time = DateUtils.getTime(result.findAsString("vipEndTime")) - System.currentTimeMillis() / 1000;
-                long day = time / 24 / 3600;
-                if (day > 0) {
-                    textExpireTime.setText("会员剩余：" + day + "天");
-                }
-            }
-        }, getActivity());
+        }
+        long time = DateUtils.getTime(App.app.userInfo.findAsString("vipEndTime")) - System.currentTimeMillis() / 1000;
+        long day = time / 24 / 3600;
+        if (day > 0) {
+            textExpireTime.setText("会员剩余：" + day + "天");
+        }
     }
-
-
-    private void loadShare() {
-        HaoConnect.loadContent("sys_config/share_info", null, "get", new HaoResultHttpResponseHandler() {
-            @Override
-            public void onSuccess(HaoResult result) {
-                UMImage umImage = new UMImage(getActivity(), R.mipmap.ic_launcher);
-                UMWeb web = new UMWeb(result.findAsString("shareUrl"));
-                web.setTitle(result.findAsString("shareTitle"));//标题
-                web.setThumb(umImage);  //缩略图
-                web.setDescription(result.findAsString("shareContent"));//描述
-
-                new ShareAction(getActivity())
-                        .withMedia(web)
-                        .setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
-                        .setCallback(new UMShareListener() {
-                            @Override
-                            public void onStart(SHARE_MEDIA share_media) {
-
-                            }
-
-                            @Override
-                            public void onResult(SHARE_MEDIA share_media) {
-                                if (share_media == SHARE_MEDIA.WEIXIN) {
-                                    upload("weixin");
-                                } else {
-                                    upload("weixincircle");
-                                }
-
-                            }
-
-                            @Override
-                            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-
-                            }
-
-                            @Override
-                            public void onCancel(SHARE_MEDIA share_media) {
-
-                            }
-                        })
-                        .open();
-            }
-        }, getActivity());
-    }
-
-    private void upload(String type) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("channel", type);
-        HaoConnect.loadContent("sys_config/share_ok", map, "post", new HaoResultHttpResponseHandler() {
-            @Override
-            public void onSuccess(HaoResult result) {
-
-            }
-        }, getActivity());
-    }
-
 }

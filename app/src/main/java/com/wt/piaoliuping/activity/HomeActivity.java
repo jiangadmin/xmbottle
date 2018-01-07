@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -30,6 +31,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.umeng.socialize.UMShareAPI;
 import com.wt.piaoliuping.App;
@@ -353,6 +355,8 @@ public class HomeActivity extends BaseTitleActivity {
     protected void onStart() {
         super.onStart();
         EMClient.getInstance().chatManager().addMessageListener(messageListener);
+
+        loadUser();
     }
 
     @Override
@@ -360,7 +364,6 @@ public class HomeActivity extends BaseTitleActivity {
         EMClient.getInstance().chatManager().removeMessageListener(messageListener);
         super.onStop();
     }
-
 
     private LocalBroadcastManager broadcastManager;
     private BroadcastReceiver broadcastReceiver;
@@ -370,32 +373,16 @@ public class HomeActivity extends BaseTitleActivity {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(EaseConstant.ACTION_CONTACT_CHANAGED);
         intentFilter.addAction(ACTION_GROUP_CHANAGED);
-//        intentFilter.addAction(RPConstant.REFRESH_GROUP_RED_PACKET_ACTION);
         broadcastReceiver = new BroadcastReceiver() {
 
             @Override
             public void onReceive(Context context, Intent intent) {
-//                updateUnreadLabel();
-//                updateUnreadAddressLable();
                 if (radioGroup.getCheckedRadioButtonId() == R.id.message_btn) {
                     // refresh conversation list
                     if (messageFragment != null) {
                         messageFragment.refresh();
                     }
                 }
-                String action = intent.getAction();
-//                if (action.equals(ACTION_GROUP_CHANAGED)) {
-//                    if (EaseCommonUtils.getTopActivity(HomeActivity.this).equals(GroupsActivity.class.getName())) {
-//                        GroupsActivity.instance.onResume();
-//                    }
-//                }
-                //red packet code : 处理红包回执透传消息
-//                if (action.equals(RPConstant.REFRESH_GROUP_RED_PACKET_ACTION)) {
-//                    if (conversationListFragment != null) {
-//                        conversationListFragment.refresh();
-//                    }
-//                }
-                //end of red packet code
             }
         };
         broadcastManager.registerReceiver(broadcastReceiver, intentFilter);
@@ -410,5 +397,15 @@ public class HomeActivity extends BaseTitleActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterBroadcastReceiver();
+    }
+
+
+    private void loadUser() {
+        HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                App.app.userInfo = result;
+            }
+        }, this);
     }
 }

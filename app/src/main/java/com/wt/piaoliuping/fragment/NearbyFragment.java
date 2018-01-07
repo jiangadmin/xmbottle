@@ -50,6 +50,14 @@ public class NearbyFragment extends PageFragment implements AdapterView.OnItemCl
 
         listView.setMode(PullToRefreshBase.Mode.DISABLED);
         listView.setOnItemClickListener(this);
+    }
+
+    private boolean inited = false;
+
+    @Override
+    protected void fetchData() {
+        super.fetchData();
+
         loadData();
         hideNoData();
     }

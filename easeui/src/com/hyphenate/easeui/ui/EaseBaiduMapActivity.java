@@ -20,17 +20,14 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.baidu.location.Address;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -38,24 +35,27 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BaiduMapOptions;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
-import com.baidu.mapapi.map.OverlayOptions;
-import com.baidu.mapapi.model.CoordUtil;
 import com.baidu.mapapi.model.LatLng;
-//import com.baidu.mapapi.utils.CoordinateConverter;
+import com.baidu.mapapi.search.core.PoiInfo;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
+import com.baidu.mapapi.search.poi.PoiDetailResult;
+import com.baidu.mapapi.search.poi.PoiIndoorResult;
+import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.platform.comapi.util.CoordTrans;
 import com.hyphenate.easeui.R;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
+//import com.baidu.mapapi.utils.CoordinateConverter;
 
 public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.OnMapStatusChangeListener {
 
@@ -153,12 +153,12 @@ public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.O
 //		converter.coord(llA);
 //		converter.from(CoordinateConverter.CoordType.COMMON);
 //		LatLng convertLatLng = converter.convert();
-        LatLng convertLatLng = CoordTrans.gcjToBaidu(llA);
+//        LatLng convertLatLng = CoordTrans.gcjToBaidu(llA);
 //        OverlayOptions ooA = new MarkerOptions().position(convertLatLng).icon(BitmapDescriptorFactory
 //                .fromResource(R.drawable.ease_icon_marka))
 //                .zIndex(4).draggable(true);
 //        mBaiduMap.addOverlay(ooA);
-        MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(convertLatLng, 17.0f);
+        MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(llA, 18.0f);
         mBaiduMap.animateMapStatus(u);
     }
 
@@ -220,6 +220,9 @@ public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.O
     protected void onDestroy() {
         if (mLocClient != null)
             mLocClient.stop();
+        if (geoCoder != null) {
+            geoCoder.destroy();
+        }
         mMapView.onDestroy();
         unregisterReceiver(mBaiduReceiver);
         super.onDestroy();
@@ -325,38 +328,111 @@ public class EaseBaiduMapActivity extends EaseBaseActivity implements BaiduMap.O
     public void onMapStatusChangeFinish(MapStatus mapStatus) {
         Log.e("wt", "onMapStatusChangeFinish");
         if (showLocation) {
-            latlngToAddress(mapStatus.target.latitude,mapStatus.target.longitude);
+
+            lastLong = mapStatus.target.longitude;
+            lastLat = mapStatus.target.latitude;
+//            lastAddress = "地点";
+            latlngToAddress(mapStatus);
         }
     }
 
-    private Geocoder geoCoder;
+    private GeoCoder geoCoder;
 
-    private void latlngToAddress(double latitude, double longitude) {
+    private void latlngToAddress(MapStatus mapStatus) {
         if (isGecoder) {
             return;
         }
         isGecoder = true;
         if (geoCoder == null) {
-            geoCoder = new Geocoder(this, Locale.CHINA);
+            geoCoder = GeoCoder.newInstance();
         }
         // 设置反地理经纬度坐标,请求位置时,需要一个经纬度
         if (showLocation) {
-            try {
-                List<android.location.Address> list = geoCoder.getFromLocation(latitude, longitude, 1);
-                if (!list.isEmpty()) {
-
-                    lastLocation.setLatitude(latitude);
-                    lastLocation.setLongitude(longitude);
-                    lastLocation.setAddrStr(list.get(0).getAddressLine(0));
-
-                    lastLat = latitude;
-                    lastLong = longitude;
-                    lastAddress = list.get(0).getAddressLine(0);
+            geoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(mapStatus.target));
+            geoCoder.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
+                @Override
+                public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
                     isGecoder = false;
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+                @Override
+                public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
+
+                    isGecoder = false;
+                    //获取地理编码结果
+                    lastAddress = reverseGeoCodeResult.getAddress();
+                    lastLong = reverseGeoCodeResult.getLocation().longitude;
+                    lastLat = reverseGeoCodeResult.getLocation().latitude;
+                }
+            });
+
+//            LatLng convertLatLng = CoordTrans.gcjToBaidu(llA);
+//            geoCoder.reverseGeoCode(new ReverseGeoCodeOption()
+//                    .location(llA));
+//            geoCoder.searchNearby(new PoiNearbySearchOption()
+//                    .keyword("路")
+//                    .sortType(PoiSortType.distance_from_near_to_far)
+//                    .location(mapStatus.target)
+//                    .radius(100)
+//                    .pageCapacity(20)
+//                    .pageNum(10));
+//            geoCoder.setOnGetPoiSearchResultListener(listener);
         }
     }
+
+    OnGetPoiSearchResultListener listener = new OnGetPoiSearchResultListener() {
+
+        public void onGetPoiResult(PoiResult result) {
+            //获取POI检索结果
+
+            isGecoder = false;
+
+            if (result != null && result.getAllPoi() != null && !result.getAllPoi().isEmpty()) {
+
+                PoiInfo info = result.getAllPoi().get(0);
+                //获取地理编码结果
+                lastAddress = info.address;
+                lastLong = info.location.longitude;
+                lastLat = info.location.latitude;
+            }
+        }
+
+        public void onGetPoiDetailResult(PoiDetailResult result) {
+            //获取Place详情页检索结果
+        }
+
+        @Override
+        public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
+
+        }
+    };
+    /*
+    OnGetGeoCoderResultListener listener = new OnGetGeoCoderResultListener() {
+
+        public void onGetGeoCodeResult(GeoCodeResult result) {
+
+            if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+                //没有检索到结果
+            }
+            isGecoder = false;
+
+            //获取地理编码结果
+            lastAddress = result.getAddress();
+            lastLong = result.getLocation().longitude;
+            lastLat = result.getLocation().latitude;
+        }
+
+        @Override
+
+        public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
+
+            isGecoder = false;
+            if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+                //没有找到检索结果
+            }
+
+            //获取反向地理编码结果
+        }
+    };*/
+
 }

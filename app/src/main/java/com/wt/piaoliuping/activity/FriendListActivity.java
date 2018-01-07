@@ -118,7 +118,7 @@ public class FriendListActivity extends BaseTitleActivity implements AdapterView
                                             EMClient.getInstance().chatManager().sendMessage(imageMessage);
 
                                             try {
-                                                Thread.sleep(100);
+                                                Thread.sleep(500);
                                             } catch (InterruptedException e) {
                                                 e.printStackTrace();
                                             }

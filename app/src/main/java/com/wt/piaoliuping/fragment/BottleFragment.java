@@ -1,5 +1,6 @@
 package com.wt.piaoliuping.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -42,6 +43,8 @@ public class BottleFragment extends PageFragment {
     @BindView(R.id.text_received)
     TextView textReceived;
 
+    private boolean inited = false;
+
     @Override
     public void initView(View view) {
         super.initView(view);
@@ -62,7 +65,7 @@ public class BottleFragment extends PageFragment {
 
     @OnClick(R.id.text_send)
     public void onTextSendClicked() {
-        startActivity(new Intent(getActivity(), SendBottleActivity.class));
+        startActivityForResult(new Intent(getActivity(), SendBottleActivity.class), 1001);
     }
 
     @OnClick(R.id.text_received)
@@ -91,14 +94,16 @@ public class BottleFragment extends PageFragment {
 
 
     private void loadUser() {
-        HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
-            @Override
-            public void onSuccess(HaoResult result) {
-                ImageLoader.getInstance().displayImage(result.findAsString("avatarPreView"), imageHead, App.app.getImageCircleOptions());
-                textName.setText(result.findAsString("nickname"));
-                textNo.setText("星星：" + result.findAsString("amount"));
+        ImageLoader.getInstance().displayImage(App.app.userInfo.findAsString("avatarPreView"), imageHead, App.app.getImageCircleOptions());
+        textName.setText(App.app.userInfo.findAsString("nickname"));
+        textNo.setText("星星：" + App.app.userInfo.findAsString("amount"));
+    }
 
-            }
-        }, getActivity());
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1001 && resultCode == Activity.RESULT_OK) {
+            loadUser();
+        }
     }
 }

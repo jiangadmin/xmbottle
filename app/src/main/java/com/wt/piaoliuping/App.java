@@ -31,6 +31,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
+import com.hyphenate.easeui.EaseLocationManager;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseNotifier;
@@ -77,6 +78,8 @@ public class App extends Application {
     public double longitude;
     private CallReceiver callReceiver;
     private DemoModel demoModel = null;
+
+    public HaoResult userInfo = new HaoResult();
 
     @Override
     public void onCreate() {
@@ -455,6 +458,9 @@ public class App extends Application {
         public void onReceiveLocation(BDLocation location) {
             latitude = location.getLatitude();    //获取纬度信息
             longitude = location.getLongitude();    //获取经度信息
+
+            EaseLocationManager.getInstance().latitude = latitude;
+            EaseLocationManager.getInstance().longitude = longitude;
         }
     }
 

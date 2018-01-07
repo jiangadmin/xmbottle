@@ -18,14 +18,19 @@ public class MessageFragment extends PageFragment {
     FrameLayout fragment;
     MessageListFragment messageListFragment;
 
+    private boolean inited = false;
+
     @Override
     public void initView(View view) {
 
         super.initView(view);
         setTitle("消息");
-        messageListFragment = new MessageListFragment();
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment, messageListFragment).commit();
+        if (inited == false) {
+            inited = true;
+            messageListFragment = new MessageListFragment();
+            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+            transaction.add(R.id.fragment, messageListFragment).commit();
+        }
     }
 
     @Override
