@@ -155,7 +155,7 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
                                         EMClient.getInstance().chatManager().sendMessage(imageMessage);
 
                                         try {
-                                            Thread.sleep(500);
+                                            Thread.sleep(1000);
                                         } catch (InterruptedException e) {
                                             e.printStackTrace();
                                         }

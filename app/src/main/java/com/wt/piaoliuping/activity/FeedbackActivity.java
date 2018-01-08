@@ -1,5 +1,6 @@
 package com.wt.piaoliuping.activity;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,11 +12,11 @@ import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseTitleActivity;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -29,6 +30,10 @@ public class FeedbackActivity extends BaseTitleActivity {
     Button btnSubmit;
     @BindView(R.id.text_tips)
     TextView textTips;
+    @BindView(R.id.text_name)
+    EditText textName;
+    @BindView(R.id.text_tel)
+    EditText textTel;
 
     @Override
     public void initView() {
@@ -49,6 +54,12 @@ public class FeedbackActivity extends BaseTitleActivity {
         startLoading();
         Map<String, Object> map = new HashMap<>();
         map.put("content", textInput.getText().toString());
+        if (TextUtils.isEmpty(textName.getText().toString())) {
+            map.put("contacts", textName.getText().toString());
+        }
+        if (TextUtils.isEmpty(textTel.getText().toString())) {
+            map.put("contacts_tel", textTel.getText().toString());
+        }
         HaoConnect.request("feedback/add", map, "post", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
@@ -56,6 +67,7 @@ public class FeedbackActivity extends BaseTitleActivity {
                 showToast("反馈成功");
                 finish();
             }
+
             @Override
             public void onFail(HaoResult result) {
                 stopLoading();
@@ -80,4 +92,5 @@ public class FeedbackActivity extends BaseTitleActivity {
             }
         }, this);
     }
+
 }

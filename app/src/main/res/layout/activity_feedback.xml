@@ -7,34 +7,69 @@
 
     <include layout="@layout/layout_title" />
 
-    <EditText
-        android:id="@+id/text_input"
-        style="@style/text_14_222222"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@drawable/bolder_white_view_bg"
-        android:gravity="top"
-        android:hint="请输入咨询内容后，通过以下方式添加我们"
-        android:padding="10dp"
-        android:textColorHint="@color/darKGrayColor" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_tips"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:lineSpacingExtra="3dp"
-        android:padding="10dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-    <Button
+            <EditText
+                android:id="@+id/text_input"
+                style="@style/text_14_222222"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@drawable/bolder_white_view_bg"
+                android:gravity="top"
+                android:hint="请输入咨询内容后，通过以下方式添加我们"
+                android:padding="10dp"
+                android:textColorHint="@color/darKGrayColor" />
 
-        android:id="@+id/btn_submit"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/corner_red_bg"
-        android:text="提交"
-        android:textColor="@color/white" />
+            <EditText
+                android:id="@+id/text_name"
+                style="@style/text_15_999999"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:hint="请输入您的姓名"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColorHint="@color/darKGrayColor" />
 
+            <EditText
+                android:id="@+id/text_tel"
+                style="@style/text_15_999999"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:hint="请输入您的联系方式"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColorHint="@color/darKGrayColor" />
+
+            <TextView
+                android:id="@+id/text_tips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="3dp"
+                android:padding="10dp" />
+
+            <Button
+
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/corner_red_bg"
+                android:text="提交"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
