@@ -79,4 +79,5 @@ dependencies {
 //    compile project(':PushSDK')
     compile 'cn.yipianfengye.android:zxing-library:2.2'
 //    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.10'
+    compile 'com.android.support:multidex:1.0.1'
 }

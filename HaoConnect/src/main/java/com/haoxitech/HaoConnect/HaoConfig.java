@@ -24,8 +24,8 @@ public class HaoConfig {
     }
 
     public static String getApiHost() {
-//        return "api.xplpz.com";
-        return "floating.api.yemaoka.com";
+        return "api.xhplpz.com";
+//        return "floating.api.yemaoka.com";
     }
 
 }
