@@ -128,6 +128,7 @@ public class LoginActivity extends BaseTitleActivity implements View.OnClickList
             @Override
             public void onFail(HaoResult result) {
                 showToast(result.errorStr);
+                stopLoading();
             }
         }, this);
     }

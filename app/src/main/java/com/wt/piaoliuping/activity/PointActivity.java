@@ -131,6 +131,13 @@ public class PointActivity extends BaseTitleActivity {
                 textMineStar.setText("我的星星：" + result.findAsString("amount"));
                 stopLoading();
             }
+
+            @Override
+            public void onFail(HaoResult result) {
+                super.onFail(result);
+
+                stopLoading();
+            }
         }, this);
     }
 

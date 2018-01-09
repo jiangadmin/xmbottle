@@ -174,6 +174,7 @@ public class RegisterActivity extends BaseTitleActivity {
                 @Override
                 public void onFail(HaoResult result) {
                     showToast(result.errorStr);
+                    stopLoading();
                 }
             }, this);
         }

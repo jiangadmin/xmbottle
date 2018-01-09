@@ -14,7 +14,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
+import android.support.multidex.MultiDexApplication;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -39,7 +39,6 @@ import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.LoadedFrom;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.imageaware.ImageAware;
@@ -68,7 +67,7 @@ import java.util.Map;
  * Created by wangtao on 2017/10/20.
  */
 
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     public static App app;
     public String userName;

@@ -194,6 +194,8 @@ public class SendBottleActivity extends BaseTitleActivity {
             public void onFail(HaoResult result) {
                 super.onFail(result);
                 showToast(result.errorStr);
+
+                stopLoading();
             }
         }, this);
     }
