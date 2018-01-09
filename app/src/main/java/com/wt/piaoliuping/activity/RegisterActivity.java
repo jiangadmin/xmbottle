@@ -188,7 +188,7 @@ public class RegisterActivity extends BaseTitleActivity {
 
     MyCount count = new MyCount(60000, 1000);
 
-    @OnClick(R.id.text_sex)
+    @OnClick(R.id.layout_sex)
     public void onViewClicked() {
         final SexDialog dialog = SexDialog.create(this, new View.OnClickListener() {
             @Override
