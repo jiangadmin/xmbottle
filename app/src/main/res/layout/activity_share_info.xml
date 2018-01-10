@@ -67,12 +67,24 @@
                 android:layout_marginTop="5dp"
                 android:text="面对面邀请好友" />
 
-            <ImageView
-                android:id="@+id/image_code"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:layout_marginTop="5dp"
-                android:background="#dddddd" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="140dp">
+
+                <ImageView
+                    android:id="@+id/image_code"
+                    android:layout_width="140dp"
+                    android:layout_centerInParent="true"
+                    android:layout_height="140dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#dddddd" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/image_code"
+                    android:src="@drawable/ic_person_share" />
+
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
