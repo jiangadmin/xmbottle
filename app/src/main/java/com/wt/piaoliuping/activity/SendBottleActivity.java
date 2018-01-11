@@ -318,6 +318,10 @@ public class SendBottleActivity extends BaseTitleActivity {
 
 
     public void onPhotoBack(Uri originalUri) {
+        if (originalUri == null) {
+            showToast("请检查相关权限");
+            return;
+        }
         String[] proj = {MediaStore.Images.Media.DATA};
         // 相册
         Cursor cursor = getContentResolver().query(

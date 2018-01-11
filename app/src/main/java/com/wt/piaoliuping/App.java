@@ -168,10 +168,10 @@ public class App extends MultiDexApplication {
 
     public DisplayImageOptions getImageCircleOptions() {
         return new DisplayImageOptions.Builder()
-                .showImageForEmptyUri(R.mipmap.ic_launcher)
+                .showImageForEmptyUri(R.drawable.image_default)
                 .cacheInMemory(true)
                 .cacheOnDisc(true)
-                .bitmapConfig(Bitmap.Config.ARGB_8888)   //设置图片的解码类型
+                .bitmapConfig(Bitmap.Config.RGB_565)   //设置图片的解码类型
                 .displayer(new Displayer(0))
                 .build();
     }
