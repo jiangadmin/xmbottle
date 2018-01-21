@@ -69,7 +69,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
     private static final int ITEM_RED_PACKET = 16;
 
     @Override
-    protected void sendVoiceMessage(String filePath, int length) {
+    protected void sendVoiceMessage(final String filePath, final int length) {
 
         if (send) {
             super.sendVoiceMessage(filePath, length);
@@ -91,28 +91,46 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
         Map<String, Object> map = new HashMap<>();
         map.put("to_user_id", toChatUsername);
         map.put("message_type", 2);
-        requestNum(map);
+//        requestNum(map);
+        HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                if (result.findAsInt("chatCount") <= 0) {
+                    send = false;
+                    showCharge();
+                } else {
+                    send = true;
+//                    ChatFragment.super.sendVoiceMessage(message);
+                    ChatFragment.super.sendVoiceMessage(filePath, length);
+                }
+            }
+
+            @Override
+            public void onFail(HaoResult result) {
+                send = false;
+            }
+        }, getActivity());
     }
 
     @Override
-    protected void sendMessage(EMMessage message) {
-        if (send) {
-            super.sendMessage(message);
-        } else {
-            new AlertDialog.Builder(getActivity())
-                    .setTitle("提示")
-                    .setMessage("您当前星星不足，请前往积分中心充值")
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(getActivity(), PointActivity.class);
-                            startActivity(intent);
-                        }
-                    })
-                    .setNegativeButton("取消", null)
-                    .create()
-                    .show();
-        }
+    protected void sendMessage(final EMMessage message) {
+//        if (send) {
+//            super.sendMessage(message);
+//        } else {
+//            new AlertDialog.Builder(getActivity())
+//                    .setTitle("提示")
+//                    .setMessage("您当前星星不足，请前往积分中心充值")
+//                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+//                            Intent intent = new Intent(getActivity(), PointActivity.class);
+//                            startActivity(intent);
+//                        }
+//                    })
+//                    .setNegativeButton("取消", null)
+//                    .create()
+//                    .show();
+//        }
 
         Map<String, Object> map = new HashMap<>();
         map.put("to_user_id", toChatUsername);
@@ -129,7 +147,41 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
         } else if (EMMessage.Type.LOCATION == message.getType()) {
             map.put("message_type", 5);
         }
-        requestNum(map);
+        HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                if (result.findAsInt("chatCount") <= 0) {
+                    send = false;
+                    showCharge();
+                } else {
+                    send = true;
+                    ChatFragment.super.sendMessage(message);
+                }
+            }
+
+            @Override
+            public void onFail(HaoResult result) {
+                send = false;
+            }
+        }, getActivity());
+//        requestNum(map);
+    }
+
+    private void showCharge() {
+
+        new AlertDialog.Builder(getActivity())
+                .setTitle("提示")
+                .setMessage("您当前星星不足，请前往积分中心充值")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(getActivity(), PointActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("取消", null)
+                .create()
+                .show();
     }
 
     private void requestNum(Map<String, Object> map) {

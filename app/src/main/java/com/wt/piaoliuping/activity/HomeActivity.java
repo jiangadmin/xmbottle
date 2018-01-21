@@ -1,6 +1,7 @@
 package com.wt.piaoliuping.activity;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -174,6 +176,9 @@ public class HomeActivity extends BaseTitleActivity {
             rxPermissions = new RxPermissions(this);
             handleLocation();
         }
+        /*else {
+            requestPermissions();
+        }*/
     }
 
     @Override
@@ -293,6 +298,21 @@ public class HomeActivity extends BaseTitleActivity {
                 });
     }
 
+
+    @TargetApi(23)
+    private void requestPermissions() {
+        PermissionsManager.getInstance().requestAllManifestPermissionsIfNecessary(this, new PermissionsResultAction() {
+            @Override
+            public void onGranted() {
+            }
+
+            @Override
+            public void onDenied(String permission) {
+            }
+        });
+    }
+
+
     EMMessageListener messageListener = new EMMessageListener() {
 
         @Override
@@ -407,5 +427,12 @@ public class HomeActivity extends BaseTitleActivity {
                 App.app.userInfo = result;
             }
         }, this);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        PermissionsManager.getInstance().notifyPermissionsChange(permissions, grantResults);
     }
 }
