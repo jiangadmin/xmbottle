@@ -57,6 +57,15 @@ public class LoginActivity extends BaseTitleActivity implements View.OnClickList
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        String telephone = HaoConnect.getString("telephone");
+        if (!TextUtils.isEmpty(telephone)) {
+            textTel.setText(telephone);
+        }
+    }
+
+    @Override
     public int getContentViewID() {
         return R.layout.activity_login;
     }
@@ -87,6 +96,9 @@ public class LoginActivity extends BaseTitleActivity implements View.OnClickList
                     Object authInfo = result.find("extraInfo>authInfo");
                     HaoConnect.setCurrentUserInfo(((JsonObject) authInfo).get("Userid").getAsString(), ((JsonObject) authInfo).get("Logintime").getAsString(), ((JsonObject) authInfo).get("Checkcode").getAsString());
                 }
+
+                HaoConnect.putString("telephone", textTel.getText().toString());
+
                 new Thread(new Runnable() {
                     public void run() {
                         EMClient.getInstance().login(UserManager.getInstance().getUserId(), HXManager.getInstance().formatPassword(UserManager.getInstance().getUserId()), new EMCallBack() {
