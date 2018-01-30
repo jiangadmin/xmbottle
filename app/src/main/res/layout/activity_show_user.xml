@@ -28,11 +28,11 @@
 
                 <TextView
                     android:id="@+id/text_num"
-                    android:layout_marginRight="10dp"
-                    android:textColor="@color/redColor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right" />
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/redColor" />
             </FrameLayout>
             <!--<ImageView-->
             <!--android:id="@+id/image_head"-->
@@ -97,6 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
+                    android:minWidth="80dp"
                     android:text="昵称" />
 
                 <TextView
@@ -123,6 +124,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
+                    android:minWidth="80dp"
                     android:text="ID" />
 
                 <TextView
@@ -176,6 +178,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
+                    android:minWidth="80dp"
                     android:text="城市" />
 
                 <TextView
@@ -202,6 +205,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
+                    android:minWidth="80dp"
                     android:text="年龄" />
 
                 <TextView
@@ -228,6 +232,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
+                    android:minWidth="80dp"
                     android:text="星座" />
 
                 <TextView
@@ -255,6 +260,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
+                    android:minWidth="80dp"
                     android:text="相册" />
 
                 <TextView
@@ -267,7 +273,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
+                android:minHeight="45dp"
                 android:background="@drawable/bolder_white_view_bg"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -276,16 +283,17 @@
 
                 <TextView
                     style="@style/text_15_222222"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
+                    android:minWidth="80dp"
                     android:text="签名" />
 
                 <TextView
                     android:id="@+id/text_sign"
                     style="@style/text_15_222222"
-                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp" />
 
