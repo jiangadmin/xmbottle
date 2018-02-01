@@ -162,6 +162,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             @Override
             public void onFail(HaoResult result) {
                 send = false;
+                showCharge();
             }
         }, getActivity());
 //        requestNum(map);
@@ -169,19 +170,24 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
     private void showCharge() {
 
-        new AlertDialog.Builder(getActivity())
-                .setTitle("提示")
-                .setMessage("您当前星星不足，请前往积分中心充值")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(getActivity(), PointActivity.class);
-                        startActivity(intent);
-                    }
-                })
-                .setNegativeButton("取消", null)
-                .create()
-                .show();
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("提示")
+                        .setMessage("您当前星星不足，请前往积分中心充值")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(getActivity(), PointActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("取消", null)
+                        .create()
+                        .show();
+            }
+        });
+
     }
 
     private void requestNum(Map<String, Object> map) {

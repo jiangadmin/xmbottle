@@ -140,6 +140,18 @@
         android:textColor="@color/white" />
 
     <Button
+        android:id="@+id/btn_weixin_charge"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/corner_red_bg"
+        android:text="微信充值"
+        android:textColor="@color/white" />
+
+
+    <Button
         android:id="@+id/btn_withdrew"
         android:layout_width="match_parent"
         android:layout_height="45dp"
