@@ -25,6 +25,7 @@ import com.wt.piaoliuping.activity.MinePrizeListActivity;
 import com.wt.piaoliuping.activity.PointActivity;
 import com.wt.piaoliuping.activity.PrizeInfoActivity;
 import com.wt.piaoliuping.activity.PrizeListActivity;
+import com.wt.piaoliuping.activity.RechargeListActivity;
 import com.wt.piaoliuping.activity.RecommendActivity;
 import com.wt.piaoliuping.activity.RevokeListActivity;
 import com.wt.piaoliuping.activity.SettingTitleActivity;
@@ -69,6 +70,8 @@ public class MineFragment extends PageFragment {
     LinearLayout layout9;
     @BindView(R.id.layout_10)
     LinearLayout layout10;
+    @BindView(R.id.layout_21)
+    LinearLayout layout21;
     @BindView(R.id.btn_right_title)
     ImageButton btnRightTitle;
 
@@ -92,7 +95,8 @@ public class MineFragment extends PageFragment {
         return R.layout.fragment_setting;
     }
 
-    @OnClick({R.id.image_head, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6, R.id.layout_7, R.id.layout_8, R.id.layout_9, R.id.layout_10, R.id.btn_right_title})
+    @OnClick({R.id.image_head, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6, R.id.layout_7, R.id.layout_8, R.id.layout_9, R.id.layout_10, R.id.btn_right_title,
+    R.id.layout_21})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_head:
@@ -133,6 +137,10 @@ public class MineFragment extends PageFragment {
             }
             case R.id.layout_10: {
                 startActivity(new Intent(getActivity(), PrizeInfoActivity.class));
+                break;
+            }
+            case R.id.layout_21: {
+                startActivity(new Intent(getActivity(), RechargeListActivity.class));
                 break;
             }
         }

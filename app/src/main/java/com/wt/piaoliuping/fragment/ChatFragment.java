@@ -70,102 +70,71 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
     @Override
     protected void sendVoiceMessage(final String filePath, final int length) {
-
         if (send) {
-            super.sendVoiceMessage(filePath, length);
-        } else {
-            new AlertDialog.Builder(getActivity())
-                    .setTitle("提示")
-                    .setMessage("您当前星星不足，请前往积分中心充值")
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(getActivity(), PointActivity.class);
-                            startActivity(intent);
-                        }
-                    })
-                    .setNegativeButton("取消", null)
-                    .create()
-                    .show();
-        }
-        Map<String, Object> map = new HashMap<>();
-        map.put("to_user_id", toChatUsername);
-        map.put("message_type", 2);
-//        requestNum(map);
-        HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
-            @Override
-            public void onSuccess(HaoResult result) {
-                if (result.findAsInt("chatCount") <= 0) {
-                    send = false;
-                    showCharge();
-                } else {
-                    send = true;
-//                    ChatFragment.super.sendVoiceMessage(message);
-                    ChatFragment.super.sendVoiceMessage(filePath, length);
+            Map<String, Object> map = new HashMap<>();
+            map.put("to_user_id", toChatUsername);
+            map.put("message_type", 2);
+            HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
+                @Override
+                public void onSuccess(HaoResult result) {
+                    if (result.findAsInt("chatCount") <= 0) {
+                        send = false;
+                        showCharge();
+                    } else {
+                        send = true;
+                        ChatFragment.super.sendVoiceMessage(filePath, length);
+                    }
                 }
-            }
 
-            @Override
-            public void onFail(HaoResult result) {
-                send = false;
-            }
-        }, getActivity());
+                @Override
+                public void onFail(HaoResult result) {
+                    send = false;
+                }
+            }, getActivity());
+        } else {
+            showCharge();
+        }
     }
 
     @Override
     protected void sendMessage(final EMMessage message) {
-//        if (send) {
-//            super.sendMessage(message);
-//        } else {
-//            new AlertDialog.Builder(getActivity())
-//                    .setTitle("提示")
-//                    .setMessage("您当前星星不足，请前往积分中心充值")
-//                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialogInterface, int i) {
-//                            Intent intent = new Intent(getActivity(), PointActivity.class);
-//                            startActivity(intent);
-//                        }
-//                    })
-//                    .setNegativeButton("取消", null)
-//                    .create()
-//                    .show();
-//        }
+        if (send) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("to_user_id", toChatUsername);
+            if (EMMessage.Type.TXT == message.getType()) {
+                map.put("message_type", 1);
+                EMTextMessageBody body = (EMTextMessageBody) message.getBody();
+                map.put("message", body.getMessage());
+            } else if (EMMessage.Type.IMAGE == message.getType()) {
+                map.put("message_type", 4);
+            } else if (EMMessage.Type.VIDEO == message.getType()) {
+                map.put("message_type", 6);
+            } else if (EMMessage.Type.VOICE == message.getType()) {
+                map.put("message_type", 7);
+            } else if (EMMessage.Type.LOCATION == message.getType()) {
+                map.put("message_type", 5);
+            }
+            HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
+                @Override
+                public void onSuccess(HaoResult result) {
+                    if (result.findAsInt("chatCount") <= 0) {
+                        send = false;
+                        showCharge();
+                    } else {
+                        send = true;
+                        ChatFragment.super.sendMessage(message);
+                    }
+                }
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("to_user_id", toChatUsername);
-        if (EMMessage.Type.TXT == message.getType()) {
-            map.put("message_type", 1);
-            EMTextMessageBody body = (EMTextMessageBody) message.getBody();
-            map.put("message", body.getMessage());
-        } else if (EMMessage.Type.IMAGE == message.getType()) {
-            map.put("message_type", 4);
-        } else if (EMMessage.Type.VIDEO == message.getType()) {
-            map.put("message_type", 6);
-        } else if (EMMessage.Type.VOICE == message.getType()) {
-            map.put("message_type", 7);
-        } else if (EMMessage.Type.LOCATION == message.getType()) {
-            map.put("message_type", 5);
-        }
-        HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
-            @Override
-            public void onSuccess(HaoResult result) {
-                if (result.findAsInt("chatCount") <= 0) {
+                @Override
+                public void onFail(HaoResult result) {
                     send = false;
                     showCharge();
-                } else {
-                    send = true;
-                    ChatFragment.super.sendMessage(message);
                 }
-            }
-
-            @Override
-            public void onFail(HaoResult result) {
-                send = false;
-                showCharge();
-            }
-        }, getActivity());
-//        requestNum(map);
+            }, getActivity());
+        } else {
+            showCharge();
+        }
     }
 
     private void showCharge() {
@@ -187,25 +156,6 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
                         .show();
             }
         });
-
-    }
-
-    private void requestNum(Map<String, Object> map) {
-        HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
-            @Override
-            public void onSuccess(HaoResult result) {
-                if (result.findAsInt("chatCount") <= 0) {
-                    send = false;
-                } else {
-                    send = true;
-                }
-            }
-
-            @Override
-            public void onFail(HaoResult result) {
-                send = false;
-            }
-        }, getActivity());
     }
 
     @Override
