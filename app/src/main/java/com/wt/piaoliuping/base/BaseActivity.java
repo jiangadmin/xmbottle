@@ -1,11 +1,14 @@
 package com.wt.piaoliuping.base;
 
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wt.piaoliuping.R;
+import com.wt.piaoliuping.utils.DisplayUtil;
+import com.wt.piaoliuping.utils.ViewUtils;
 import com.wt.piaoliuping.widgt.CustomProgressDialog;
 
 import butterknife.ButterKnife;
@@ -42,6 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             emptyImage.setVisibility(View.GONE);
         }
         AppManager.getInstance().addActivity(this);
+
     }
 
     public void showNoData() {

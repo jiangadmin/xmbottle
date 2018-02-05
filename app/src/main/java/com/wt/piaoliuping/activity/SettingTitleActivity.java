@@ -35,6 +35,10 @@ public class SettingTitleActivity extends BaseTitleActivity {
     LinearLayout layout1;
     @BindView(R.id.layout_2)
     LinearLayout layout2;
+    @BindView(R.id.layout_21)
+    LinearLayout layout21;
+    @BindView(R.id.layout_22)
+    LinearLayout layout22;
     @BindView(R.id.layout_3)
     LinearLayout layout3;
     @BindView(R.id.layout_4)
@@ -104,7 +108,7 @@ public class SettingTitleActivity extends BaseTitleActivity {
         });
     }
 
-    @OnClick({R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6})
+    @OnClick({R.id.layout_1, R.id.layout_2,R.id.layout_21, R.id.layout_22, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layout_1:
@@ -112,6 +116,12 @@ public class SettingTitleActivity extends BaseTitleActivity {
                 break;
             case R.id.layout_2:
                 startActivity(new Intent(this, AboutActivity.class));
+                break;
+            case R.id.layout_21:
+                startActivity(new Intent(this, FollowListActivity.class));
+                break;
+            case R.id.layout_22:
+                startActivity(new Intent(this, RevokeListActivity.class));
                 break;
             case R.id.layout_3:
 //                startActivity(new Intent(this, MoreSettingActivity.class));

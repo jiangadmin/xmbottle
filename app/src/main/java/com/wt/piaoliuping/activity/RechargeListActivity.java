@@ -35,6 +35,11 @@ public class RechargeListActivity extends BaseTitleActivity implements AdapterVi
     @BindView(R.id.text_desc)
     TextView testDesc;
 
+    @BindView(R.id.text_mine_star)
+    TextView textMineStar;
+    @BindView(R.id.text_mine_point)
+    TextView textMinePoint;
+
     RechargeAdapter adapter;
     @BindView(R.id.layout_pay)
     TabLayout layoutPay;
@@ -48,7 +53,7 @@ public class RechargeListActivity extends BaseTitleActivity implements AdapterVi
         gridView.setAdapter(adapter);
         gridView.setMode(PullToRefreshBase.Mode.DISABLED);
         gridView.setOnItemClickListener(this);
-
+        loadUser();
         loadData();
     }
 
@@ -60,7 +65,6 @@ public class RechargeListActivity extends BaseTitleActivity implements AdapterVi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         HaoResult result = (HaoResult) adapter.getItem(position);
-
         if (layoutPay.getSelectedTabPosition() == 0) {
             alipay(result.findAsString("id"));
         }
@@ -141,6 +145,7 @@ public class RechargeListActivity extends BaseTitleActivity implements AdapterVi
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         Toast.makeText(RechargeListActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        loadUser();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         Toast.makeText(RechargeListActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
@@ -154,4 +159,22 @@ public class RechargeListActivity extends BaseTitleActivity implements AdapterVi
 
         ;
     };
+
+    private void loadUser() {
+        startLoading();
+        HaoConnect.loadContent("user/my_detail", null, "get", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                textMinePoint.setText("系统积分：" + result.findAsString("score"));
+                textMineStar.setText("" + result.findAsString("amount"));
+                stopLoading();
+            }
+
+            @Override
+            public void onFail(HaoResult result) {
+                super.onFail(result);
+                stopLoading();
+            }
+        }, this);
+    }
 }

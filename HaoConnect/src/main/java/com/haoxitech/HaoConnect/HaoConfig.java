@@ -24,8 +24,11 @@ public class HaoConfig {
     }
 
     public static String getApiHost() {
-        return "api.xhplpz.com";
-//        return "floating.api.yemaoka.com";
+        if (null == HaoConnect.getString("sec") || HaoConnect.getString("sec").equals("prod")) {
+            return "api.xhplpz.com";
+        } else {
+            return "floating.api.yemaoka.com";
+        }
     }
 
 }

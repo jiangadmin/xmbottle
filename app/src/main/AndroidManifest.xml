@@ -93,6 +93,9 @@
         android:supportsRtl="true"
         android:name=".App"
         android:theme="@style/LaunchTheme">
+        <meta-data
+            android:name="CHANNEL"
+            android:value="${CHANNEL}" />
 
         <activity android:name=".activity.LaunchActivity">
             <intent-filter>

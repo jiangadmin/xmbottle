@@ -6,16 +6,58 @@
 
     <include layout="@layout/layout_title" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@drawable/top_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_mine_point"
+            style="@style/text_14_222222"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:text="系统积分："
+            android:layout_marginTop="10dp"
+            android:textColorHint="@color/darKGrayColor" />
+
+        <TextView
+            style="@style/text_14_222222"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:layout_marginTop="50dp"
+            android:text="我的星星："
+            android:textColorHint="@color/darKGrayColor" />
+
+        <TextView
+            android:id="@+id/text_mine_star"
+            style="@style/text_14_222222"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:textColorHint="@color/darKGrayColor" />
+
+    </LinearLayout>
+
     <android.support.design.widget.TabLayout
+        android:id="@+id/layout_pay"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:id="@+id/layout_pay"
         android:background="@color/white"
         android:orientation="horizontal">
 
         <android.support.design.widget.TabItem
-            android:layout_width="0dp"
             android:id="@+id/btn_alipay"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="支付宝" />
 
@@ -31,11 +73,11 @@
         android:id="@+id/grid_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="10dp"
         android:layout_weight="1"
         android:background="@color/grayColor"
         android:horizontalSpacing="10dp"
         android:numColumns="3"
-        android:layout_margin="10dp"
         android:stretchMode="columnWidth"
         android:verticalSpacing="10dp" />
 
