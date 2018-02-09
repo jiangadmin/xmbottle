@@ -57,7 +57,6 @@ public class BottleFragment extends PageFragment {
         loadUser();
     }
 
-
     @Override
     public int getFragmentLayoutId() {
         return R.layout.fragment_bottle;
@@ -96,7 +95,7 @@ public class BottleFragment extends PageFragment {
     private void loadUser() {
         ImageLoader.getInstance().displayImage(App.app.userInfo.findAsString("avatarPreView"), imageHead, App.app.getImageCircleOptions());
         textName.setText(App.app.userInfo.findAsString("nickname"));
-        textNo.setText("星星：" + App.app.userInfo.findAsString("amount"));
+//        textNo.setText("星星：" + App.app.userInfo.findAsString("amount"));
     }
 
     @Override

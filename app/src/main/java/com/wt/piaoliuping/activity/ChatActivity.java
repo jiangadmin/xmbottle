@@ -20,6 +20,13 @@ public class ChatActivity extends BaseActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.layout_content, fragment)
                 .commit();
+
+    }
+
+    @Override
+    public void finish() {
+        setResult(RESULT_OK);
+        super.finish();
     }
 
     @Override

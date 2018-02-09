@@ -171,7 +171,7 @@ public class ShowBottleActivity extends BaseActivity {
                 Intent intent = new Intent(ShowBottleActivity.this, ShowUserActivity.class);
                 intent.putExtra("userId", result.findAsString("throwUserLocal>id"));
                 intent.putExtra("userName", result.findAsString("throwUserLocal>nickname"));
-                startActivity(intent);
+                startActivityForResult(intent, 1000);
             }
 
             @Override
@@ -274,4 +274,11 @@ public class ShowBottleActivity extends BaseActivity {
         voiceAnimation.start();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000 && resultCode == RESULT_OK) {
+            finish();
+        }
+    }
 }

@@ -33,7 +33,7 @@ public class RechargeListActivity extends BaseTitleActivity implements AdapterVi
     @BindView(R.id.grid_view)
     PullToRefreshGridView gridView;
     @BindView(R.id.text_desc)
-    TextView testDesc;
+    TextView textDesc;
 
     @BindView(R.id.text_mine_star)
     TextView textMineStar;
@@ -55,6 +55,7 @@ public class RechargeListActivity extends BaseTitleActivity implements AdapterVi
         gridView.setOnItemClickListener(this);
         loadUser();
         loadData();
+        loadDetail();
     }
 
     @Override
@@ -174,6 +175,22 @@ public class RechargeListActivity extends BaseTitleActivity implements AdapterVi
             public void onFail(HaoResult result) {
                 super.onFail(result);
                 stopLoading();
+            }
+        }, this);
+    }
+
+    private void loadDetail() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("key", "goodsAmountLabel");
+        HaoConnect.loadContent("sys_config/detail", map, "get", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                textDesc.setText(result.findAsString("results>value"));
+            }
+
+            @Override
+            public void onFail(HaoResult result) {
+                showToast(result.errorStr);
             }
         }, this);
     }

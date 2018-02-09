@@ -37,6 +37,7 @@ import com.wt.piaoliuping.activity.RecommendActivity;
 import com.wt.piaoliuping.activity.RevokeListActivity;
 import com.wt.piaoliuping.activity.SettingTitleActivity;
 import com.wt.piaoliuping.activity.ShareInfoActivity;
+import com.wt.piaoliuping.activity.VipActivity;
 import com.wt.piaoliuping.base.AppManager;
 import com.wt.piaoliuping.base.PageFragment;
 import com.wt.piaoliuping.manager.UserManager;
@@ -154,7 +155,7 @@ public class MineFragment extends PageFragment {
     }
 
     @OnClick({R.id.image_head, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6, R.id.layout_7, R.id.layout_8, R.id.layout_9, R.id.layout_10, R.id.btn_right_title,
-            R.id.layout_21})
+            R.id.layout_21,R.id.layout_31})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_head:
@@ -166,7 +167,7 @@ public class MineFragment extends PageFragment {
                 startActivity(new Intent(getActivity(), RevokeListActivity.class));
                 break;
             case R.id.layout_3:
-                startActivity(new Intent(getActivity(), PointActivity.class));
+                startActivity(new Intent(getActivity(), RechargeListActivity.class));
                 break;
             case R.id.layout_4:
                 startActivity(new Intent(getActivity(), MinePrizeListActivity.class));
@@ -199,6 +200,11 @@ public class MineFragment extends PageFragment {
             }
             case R.id.layout_21: {
                 startActivity(new Intent(getActivity(), RechargeListActivity.class));
+                break;
+            }
+            case R.id.layout_31: {
+                showToast("正在升级中");
+//                startActivity(new Intent(getActivity(), VipActivity.class));
                 break;
             }
         }

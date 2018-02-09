@@ -85,4 +85,13 @@
         android:background="@drawable/corner_red_bg"
         android:text="扔出去"
         android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/text_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/bolder_white_view_bg"
+        android:padding="10dp" />
+
 </LinearLayout>

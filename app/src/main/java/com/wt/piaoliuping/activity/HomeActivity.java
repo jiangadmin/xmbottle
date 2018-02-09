@@ -113,7 +113,7 @@ public class HomeActivity extends BaseTitleActivity {
                 }
             }
         });
-
+        viewPager.setOffscreenPageLimit(3);
         sign();
         registerBroadcastReceiver();
         update();

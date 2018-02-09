@@ -208,6 +208,7 @@
 
         <activity
             android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MinePrizeListActivity"
@@ -271,7 +272,10 @@
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".activity.RechargeListActivity" />
+        <activity android:name=".activity.VipActivity" />
 
+        <activity android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"/>
 
         <!-- 设置环信应用的AppKey -->
         <meta-data
