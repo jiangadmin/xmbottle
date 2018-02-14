@@ -26,6 +26,7 @@ import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.activity.GoodsListActivity;
 import com.wt.piaoliuping.activity.PointActivity;
+import com.wt.piaoliuping.activity.RechargeListActivity;
 import com.wt.piaoliuping.activity.ShowUserActivity;
 import com.wt.piaoliuping.activity.VideoCallActivity;
 import com.wt.piaoliuping.activity.VipActivity;
@@ -42,7 +43,7 @@ import java.util.Map;
 
 public class ChatFragment extends EaseChatFragment implements EaseChatFragment.EaseChatFragmentHelper {
 
-    boolean send = true;
+    //    boolean send = true;
     private static final int ITEM_VIDEO = 11;
     private static final int ITEM_FILE = 12;
     private static final int ITEM_VOICE_CALL = 13;
@@ -72,52 +73,52 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
     @Override
     protected void sendVoiceMessage(final String filePath, final int length) {
-        if (send) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("to_user_id", toChatUsername);
-            map.put("message_type", 2);
-            HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
-                @Override
-                public void onSuccess(HaoResult result) {
-                    if (result.findAsInt("chatCount") <= 0) {
-                        send = false;
-                        showCharge();
-                    } else {
-                        send = true;
-                        ChatFragment.super.sendVoiceMessage(filePath, length);
-                    }
+        /*
+        Map<String, Object> map = new HashMap<>();
+        map.put("to_user_id", toChatUsername);
+        map.put("message_type", 2);
+        HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                if (result.findAsInt("chatCount") <= 0) {
+//                        send = false;
+                    showCharge();
+                } else {
+//                        send = true;
+                    ChatFragment.super.sendVoiceMessage(filePath, length);
                 }
+            }
 
-                @Override
-                public void onFail(HaoResult result) {
-                    send = false;
-                }
-            }, getActivity());
+            @Override
+            public void onFail(HaoResult result) {
+//                    send = false;
+                showCharge();
+            }
+        }, getActivity());
+
+*/
+        if (App.app.userInfo.findAsInt("vipLevel") == 0) {
+            showCharge();
         } else {
-            showCharge();
-        }
-
-        /*if (App.app.userInfo.findAsInt("vipLevel") == 0) {
-            showCharge();
-        } else  {
             ChatFragment.super.sendVoiceMessage(filePath, length);
-        }*/
+        }
     }
 
     @Override
     protected void sendMessage(final EMMessage message) {
 
-//        if (EMMessage.Type.TXT == message.getType()) {
-//
-//            ChatFragment.super.sendMessage(message);
-//        } else  {
-//            if (App.app.userInfo.findAsInt("vipLevel") == 0) {
-//                showCharge();
-//            } else  {
-//                ChatFragment.super.sendMessage(message);
-//            }
-//        }
-        if (send) {
+        if (EMMessage.Type.TXT == message.getType()) {
+
+            ChatFragment.super.sendMessage(message);
+        } else {
+            if (App.app.userInfo.findAsInt("vipLevel") == 0) {
+                showCharge();
+            } else {
+                ChatFragment.super.sendMessage(message);
+            }
+        }
+
+        /*
             Map<String, Object> map = new HashMap<>();
             map.put("to_user_id", toChatUsername);
             if (EMMessage.Type.TXT == message.getType()) {
@@ -137,23 +138,24 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
                 @Override
                 public void onSuccess(HaoResult result) {
                     if (result.findAsInt("chatCount") <= 0) {
-                        send = false;
+//                        send = false;
                         showCharge();
                     } else {
-                        send = true;
+//                        send = true;
                         ChatFragment.super.sendMessage(message);
                     }
                 }
 
                 @Override
                 public void onFail(HaoResult result) {
-                    send = false;
+//                    send = false;
                     showCharge();
                 }
             }, getActivity());
-        } else {
-            showCharge();
-        }
+//        } else {
+//            showCharge();
+//        }
+*/
     }
 
     private void showCharge() {
@@ -162,11 +164,11 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             public void run() {
                 new AlertDialog.Builder(getActivity())
                         .setTitle("提示")
-                        .setMessage("请先成为会员")
+                        .setMessage("您当前星星不足，请前往积分中心充值")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent intent = new Intent(getActivity(), VipActivity.class);
+                                Intent intent = new Intent(getActivity(), RechargeListActivity.class);
                                 startActivity(intent);
                             }
                         })
@@ -229,70 +231,79 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             case ITEM_FILE: //file
 //                selectFileFromLocal();
                 break;
-            case ITEM_VOICE_CALL:
-                if (send) {
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("to_user_id", toChatUsername);
-                    map.put("message_type", 7);
-                    HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(HaoResult result) {
-                            if (result.findAsInt("chatCount") <= 0) {
-                                send = false;
-                                showCharge();
-                            } else {
-                                send = true;
-                                startVoiceCall();
-                            }
+            case ITEM_VOICE_CALL: {
+//                if (send) {
+                /*
+                Map<String, Object> map = new HashMap<>();
+                map.put("to_user_id", toChatUsername);
+                map.put("message_type", 7);
+                HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(HaoResult result) {
+                        if (result.findAsInt("chatCount") <= 0) {
+//                                send = false;
+                            showCharge();
+                        } else {
+//                                send = true;
+                            startVoiceCall();
                         }
+                    }
 
-                        @Override
-                        public void onFail(HaoResult result) {
-                            send = false;
-                        }
-                    }, getActivity());
-                } else {
-                    showCharge();
-                }
-
-//                if (App.app.userInfo.findAsInt("vipLevel") == 0) {
+                    @Override
+                    public void onFail(HaoResult result) {
+//                            send = false;
+                        showCharge();
+                    }
+                }, getActivity());
+                */
+//                } else {
 //                    showCharge();
-//                } else  {
-//                    startVoiceCall();
 //                }
-                break;
-            case ITEM_VIDEO_CALL:
-                if (send) {
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("to_user_id", toChatUsername);
-                    map.put("message_type", 6);
-                    HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(HaoResult result) {
-                            if (result.findAsInt("chatCount") <= 0) {
-                                send = false;
-                                showCharge();
-                            } else {
-                                send = true;
-                                startVideoCall();
-                            }
-                        }
 
-                        @Override
-                        public void onFail(HaoResult result) {
-                            send = false;
-                        }
-                    }, getActivity());
-                } else {
+                if (App.app.userInfo.findAsInt("vipLevel") == 0) {
                     showCharge();
+                } else  {
+                    startVoiceCall();
                 }
+            }
+            break;
+            case ITEM_VIDEO_CALL: {
+                /*
+//                if (send) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("to_user_id", toChatUsername);
+                map.put("message_type", 6);
+                HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(HaoResult result) {
+                        if (result.findAsInt("chatCount") <= 0) {
+//                                send = false;
+                            showCharge();
+                        } else {
+//                                send = true;
+                            startVideoCall();
+                        }
+                    }
+
+                    @Override
+                    public void onFail(HaoResult result) {
+//                            send = false;
+                        showCharge();
+                    }
+                }, getActivity());
+                */
+//                } else {
+//                    showCharge();
+//                }
 //
-//                if (App.app.userInfo.findAsInt("vipLevel") == 0) {
-//                    showCharge();
-//                } else  {
-//                    startVideoCall();
-//                }
+                if (App.app.userInfo.findAsInt("vipLevel") == 0) {
+                    showCharge();
+                } else  {
+                    startVideoCall();
+                }
+
                 break;
+            }
             case ITEM_VIDEO_PRIZE: {
                 startPrize();
                 break;

@@ -20,6 +20,10 @@ import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.wt.piaoliuping.Constant;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.adapter.VipAdapter;
 import com.wt.piaoliuping.base.AppManager;
@@ -46,10 +50,13 @@ public class VipActivity extends BaseTitleActivity implements AdapterView.OnItem
 
     VipAdapter vipAdapter;
 
+    private IWXAPI api;
+
     @Override
     public void initView() {
         setTitle("会员中心");
 
+        api = WXAPIFactory.createWXAPI(this, Constant.WEIXIN_KEY);
         vipAdapter = new VipAdapter(this);
         listView.setAdapter(vipAdapter);
         listView.setMode(PullToRefreshBase.Mode.DISABLED);
@@ -174,20 +181,29 @@ public class VipActivity extends BaseTitleActivity implements AdapterView.OnItem
         startLoading();
         HaoConnect.loadContent("pay_order/buy_goods_vip", map, "post", new HaoResultHttpResponseHandler() {
             @Override
-            public void onSuccess(HaoResult result) {
+            public void onSuccess(final HaoResult result) {
                 stopLoading();
-                String payInfo = result.findAsString("results>");
-                final String orderInfo = payInfo;   // 订单信息
                 Runnable payRunnable = new Runnable() {
 
                     @Override
                     public void run() {
-                        PayTask alipay = new PayTask(VipActivity.this);
-                        Map<String, String> result = alipay.payV2(orderInfo, true);
-                        Message msg = new Message();
-                        msg.what = SDK_PAY_FLAG;
-                        msg.obj = result;
-                        mHandler.sendMessage(msg);
+                        PayReq request = new PayReq();
+
+                        request.appId = result.findAsString("results>appid");
+
+                        request.partnerId = result.findAsString("results>partnerid");
+
+                        request.prepayId= result.findAsString("results>prepayid");
+
+                        request.packageValue = result.findAsString("package");
+
+                        request.nonceStr= result.findAsString("noncestr");
+
+                        request.timeStamp= result.findAsString("timestamp");
+
+                        request.sign= result.findAsString("sign");
+
+                        api.sendReq(request);
                     }
                 };
 
@@ -222,6 +238,7 @@ public class VipActivity extends BaseTitleActivity implements AdapterView.OnItem
                 .setNegativeButton("微信", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+//                        showToast("微信支付正在申请中，下个版本正常使用");
                         weixinPay(itemId);
                     }
                 })

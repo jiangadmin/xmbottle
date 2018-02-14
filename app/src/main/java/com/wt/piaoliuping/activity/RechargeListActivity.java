@@ -5,7 +5,9 @@ import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,9 +17,15 @@ import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.wt.piaoliuping.Constant;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.adapter.RechargeAdapter;
 import com.wt.piaoliuping.base.BaseTitleActivity;
+import com.wt.piaoliuping.utils.DisplayUtil;
+import com.wt.piaoliuping.utils.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +52,8 @@ public class RechargeListActivity extends BaseTitleActivity implements AdapterVi
     @BindView(R.id.layout_pay)
     TabLayout layoutPay;
 
+    private IWXAPI api;
+
     private static final int SDK_PAY_FLAG = 1;
 
     @Override
@@ -53,9 +63,15 @@ public class RechargeListActivity extends BaseTitleActivity implements AdapterVi
         gridView.setAdapter(adapter);
         gridView.setMode(PullToRefreshBase.Mode.DISABLED);
         gridView.setOnItemClickListener(this);
-        loadUser();
+        api = WXAPIFactory.createWXAPI(this, Constant.WEIXIN_KEY);
         loadData();
         loadDetail();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadUser();
     }
 
     @Override
@@ -68,6 +84,9 @@ public class RechargeListActivity extends BaseTitleActivity implements AdapterVi
         HaoResult result = (HaoResult) adapter.getItem(position);
         if (layoutPay.getSelectedTabPosition() == 0) {
             alipay(result.findAsString("id"));
+        } else {
+            weixinpay(result.findAsString("id"));
+//            showToast("微信支付正在申请中，下个版本正常使用");
         }
     }
 
@@ -107,6 +126,53 @@ public class RechargeListActivity extends BaseTitleActivity implements AdapterVi
             }
         }, this);
     }
+
+    private void weixinpay(String itemId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("goods_amount_id", itemId);
+        map.put("pay_type", "wechat");
+        startLoading();
+        HaoConnect.loadContent("pay_order/buy_goods_amount", map, "post", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(final HaoResult result) {
+                stopLoading();
+                Runnable payRunnable = new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        PayReq request = new PayReq();
+
+                        request.appId = result.findAsString("results>appid");
+
+                        request.partnerId = result.findAsString("results>partnerid");
+
+                        request.prepayId= result.findAsString("results>prepayid");
+
+                        request.packageValue = result.findAsString("package");
+
+                        request.nonceStr= result.findAsString("noncestr");
+
+                        request.timeStamp= result.findAsString("timestamp");
+
+                        request.sign= result.findAsString("sign");
+
+                        api.sendReq(request);
+                    }
+                };
+
+                // 必须异步调用
+                Thread payThread = new Thread(payRunnable);
+                payThread.start();
+            }
+
+            @Override
+            public void onFail(HaoResult result) {
+                showToast(result.errorStr);
+                stopLoading();
+            }
+        }, this);
+    }
     private void loadData() {
         Map<String, Object> map = new HashMap<>();
         map.put("page", "1");
@@ -121,6 +187,9 @@ public class RechargeListActivity extends BaseTitleActivity implements AdapterVi
                 } else {
                     hideNoData();
                 }
+                int nume = adapter.dataList.size() / 3 + 1;
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, nume * DisplayUtil.dip2px(RechargeListActivity.this, 70 + 10));
+                gridView.setLayoutParams(layoutParams);
             }
 
             @Override

@@ -6,87 +6,105 @@
 
     <include layout="@layout/layout_title" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:background="@drawable/top_bg"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/text_mine_point"
-            style="@style/text_14_222222"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center_vertical"
-            android:text="系统积分："
-            android:layout_marginTop="10dp"
-            android:textColorHint="@color/darKGrayColor" />
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:background="@drawable/top_bg"
+                android:orientation="vertical">
 
-        <TextView
-            style="@style/text_14_222222"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:layout_marginTop="50dp"
-            android:text="我的星星："
-            android:textColorHint="@color/darKGrayColor" />
+                <TextView
+                    android:id="@+id/text_mine_point"
+                    style="@style/text_14_222222"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="系统积分："
+                    android:layout_marginTop="10dp"
+                    android:textColorHint="@color/darKGrayColor" />
 
-        <TextView
-            android:id="@+id/text_mine_star"
-            style="@style/text_14_222222"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:textColorHint="@color/darKGrayColor" />
+                <TextView
+                    style="@style/text_14_222222"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:layout_marginTop="50dp"
+                    android:text="我的星星："
+                    android:textColorHint="@color/darKGrayColor" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/text_mine_star"
+                    style="@style/text_14_222222"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:textColorHint="@color/darKGrayColor" />
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/layout_pay"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
+            </LinearLayout>
 
-        <android.support.design.widget.TabItem
-            android:id="@+id/btn_alipay"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="支付宝" />
+            <android.support.design.widget.TabLayout
+                android:id="@+id/layout_pay"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:orientation="horizontal">
 
-        <android.support.design.widget.TabItem
-            android:id="@+id/btn_wechat"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="微信" />
+                <android.support.design.widget.TabItem
+                    android:id="@+id/btn_alipay"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="支付宝" />
 
-    </android.support.design.widget.TabLayout>
+                <android.support.design.widget.TabItem
+                    android:id="@+id/btn_wechat"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="微信" />
 
-    <com.handmark.pulltorefresh.library.PullToRefreshGridView
-        android:id="@+id/grid_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:background="@color/grayColor"
-        android:horizontalSpacing="10dp"
-        android:numColumns="3"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp" />
+            </android.support.design.widget.TabLayout>
 
-    <TextView
-        android:id="@+id/text_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/bolder_white_view_bg"
-        android:padding="10dp" />
+            <com.handmark.pulltorefresh.library.PullToRefreshGridView
+                android:id="@+id/grid_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@color/grayColor"
+                android:horizontalSpacing="10dp"
+                android:padding="10dp"
+                android:numColumns="3"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/text_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/bolder_white_corner_view_bg"
+                android:padding="10dp" />
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>

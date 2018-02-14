@@ -160,7 +160,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/bolder_white_view_bg"
+                android:background="@drawable/bolder_white_corner_view_bg"
                 android:padding="10dp" />
         </LinearLayout>
     </ScrollView>

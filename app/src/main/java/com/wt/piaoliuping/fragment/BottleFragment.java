@@ -81,7 +81,7 @@ public class BottleFragment extends PageFragment {
 
             @Override
             public void onFail(HaoResult result) {
-                showToast("暂无瓶子");
+                showToast(result.errorStr);
             }
         }, getActivity());
     }

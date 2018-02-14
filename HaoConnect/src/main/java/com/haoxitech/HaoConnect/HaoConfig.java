@@ -1,5 +1,7 @@
 package com.haoxitech.HaoConnect;
 
+import android.text.TextUtils;
+
 /**
  * HaoConfig配置
  */
@@ -24,7 +26,7 @@ public class HaoConfig {
     }
 
     public static String getApiHost() {
-        if (null == HaoConnect.getString("sec") || HaoConnect.getString("sec").equals("prod")) {
+        if (TextUtils.isEmpty(HaoConnect.getString("sec")) || HaoConnect.getString("sec").equals("prod")) {
             return "api.xhplpz.com";
         } else {
             return "floating.api.yemaoka.com";

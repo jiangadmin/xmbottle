@@ -141,7 +141,6 @@ public class MineFragment extends PageFragment {
                     }
                 });
             } else {
-
                 layout22.setVisibility(View.GONE);
             }
         } catch (Exception e) {
@@ -203,8 +202,8 @@ public class MineFragment extends PageFragment {
                 break;
             }
             case R.id.layout_31: {
-                showToast("正在升级中");
-//                startActivity(new Intent(getActivity(), VipActivity.class));
+//                showToast("正在升级中");
+                startActivity(new Intent(getActivity(), VipActivity.class));
                 break;
             }
         }
