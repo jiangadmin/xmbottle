@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.hyphenate.chat.EMClient;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
@@ -128,6 +129,7 @@ public class MineFragment extends PageFragment {
                                         } else {
                                             HaoConnect.putString("sec", "prod");
                                         }
+                                        EMClient.getInstance().logout(true);
                                         UserManager.getInstance().logout();
                                         AppManager.getInstance().finishAllActivity();
                                         Intent intent = new Intent(getActivity(), LoginActivity.class);
