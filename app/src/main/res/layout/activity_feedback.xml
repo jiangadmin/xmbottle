@@ -21,7 +21,7 @@
                 android:id="@+id/text_input"
                 style="@style/text_14_222222"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="120dp"
                 android:background="@drawable/bolder_white_view_bg"
                 android:gravity="top"
                 android:hint="请输入咨询内容后，通过以下方式添加我们"
@@ -37,6 +37,7 @@
                 android:background="@color/white"
                 android:hint="请输入您的姓名"
                 android:padding="10dp"
+                android:visibility="gone"
                 android:textColorHint="@color/darKGrayColor" />
 
             <EditText
@@ -47,6 +48,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:hint="请输入您的联系方式"
+                android:visibility="gone"
                 android:padding="10dp"
                 android:textColorHint="@color/darKGrayColor" />
 

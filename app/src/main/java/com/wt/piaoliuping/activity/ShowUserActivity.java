@@ -122,13 +122,13 @@ public class ShowUserActivity extends BaseTitleActivity implements ViewPager.OnP
                 textBlack.setVisibility(View.GONE);
                 if (userFriendType == 0) {
                     isFriend = false;
-                    textAddFriend.setText("关注");
+                    textAddFriend.setText("+好友");
                 } else if (userFriendType == 1) {
                     isFriend = true;
-                    textAddFriend.setText("已关注");
+                    textAddFriend.setText("已添加");
                 } else if (userFriendType == 5) {
                     isFriend = true;
-                    textAddFriend.setText("相互关注");
+                    textAddFriend.setText("相互好友");
                     textBlack.setText("加入黑名单");
                     textBlack.setVisibility(View.VISIBLE);
                 } else if (userFriendType == 7) {
@@ -138,7 +138,7 @@ public class ShowUserActivity extends BaseTitleActivity implements ViewPager.OnP
                     textBlack.setText("移除黑名单");
                 } else {
                     isFriend = false;
-                    textAddFriend.setText("关注");
+                    textAddFriend.setText("+好友");
                 }
                 images.add(result.findAsString("avatarPreView"));
                 pagerAdapter = new ImagePagerAdapter(images);
@@ -177,7 +177,7 @@ public class ShowUserActivity extends BaseTitleActivity implements ViewPager.OnP
                 // EaseUI封装的聊天界面需要这两个参数，聊天者的username，以及聊天类型，单聊还是群聊
                 intent.putExtra("userId", userId);
                 intent.putExtra("chatType", EMMessage.ChatType.Chat);
-                startActivity(intent);
+                startActivityForResult(intent, 1000);
             }
             break;
             case R.id.text_right_title: {
@@ -206,7 +206,7 @@ public class ShowUserActivity extends BaseTitleActivity implements ViewPager.OnP
                 if (result.isResultsOK()) {
                     showToast("关注成功");
                     isFriend = true;
-                    textAddFriend.setText("已关注");
+                    textAddFriend.setText("已添加");
                 }
                 stopLoading();
             }
@@ -229,7 +229,7 @@ public class ShowUserActivity extends BaseTitleActivity implements ViewPager.OnP
                 if (result.isResultsOK()) {
                     showToast("删除成功");
                     isFriend = false;
-                    textAddFriend.setText("关注");
+                    textAddFriend.setText("+好友");
                 }
                 stopLoading();
             }
@@ -376,6 +376,17 @@ public class ShowUserActivity extends BaseTitleActivity implements ViewPager.OnP
 //                showToast(result.errorStr);
             }
         }, this);
+    }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000 && resultCode == RESULT_OK) {
+            setResult(RESULT_OK);
+            finish();
+        }
     }
 
 }

@@ -1,6 +1,5 @@
 package com.wt.piaoliuping;
 
-import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
@@ -419,10 +418,11 @@ public class App extends MultiDexApplication {
     }
 
     private EaseUser getUserInfo(String username) {
-        loadUser(username);
         UserDaoDao userDao = getDaoSession().getUserDaoDao();
         UserDao userDao1 = userDao.load(username);
         if (userDao1 == null) {
+
+            loadUser(username);
             return null;
         }
         EaseUser user = new EaseUser(username);

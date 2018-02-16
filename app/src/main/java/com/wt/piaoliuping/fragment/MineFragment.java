@@ -1,6 +1,11 @@
 package com.wt.piaoliuping.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -10,6 +15,7 @@ import android.widget.TextView;
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
+import com.hyphenate.chat.EMClient;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
@@ -21,15 +27,21 @@ import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.activity.FeedbackActivity;
 import com.wt.piaoliuping.activity.FollowListActivity;
 import com.wt.piaoliuping.activity.GoodsListActivity;
+import com.wt.piaoliuping.activity.HomeActivity;
+import com.wt.piaoliuping.activity.LoginActivity;
 import com.wt.piaoliuping.activity.MinePrizeListActivity;
 import com.wt.piaoliuping.activity.PointActivity;
 import com.wt.piaoliuping.activity.PrizeInfoActivity;
 import com.wt.piaoliuping.activity.PrizeListActivity;
+import com.wt.piaoliuping.activity.RechargeListActivity;
 import com.wt.piaoliuping.activity.RecommendActivity;
 import com.wt.piaoliuping.activity.RevokeListActivity;
 import com.wt.piaoliuping.activity.SettingTitleActivity;
 import com.wt.piaoliuping.activity.ShareInfoActivity;
+import com.wt.piaoliuping.activity.VipActivity;
+import com.wt.piaoliuping.base.AppManager;
 import com.wt.piaoliuping.base.PageFragment;
+import com.wt.piaoliuping.manager.UserManager;
 import com.wt.piaoliuping.utils.DateUtils;
 
 import java.util.HashMap;
@@ -69,6 +81,10 @@ public class MineFragment extends PageFragment {
     LinearLayout layout9;
     @BindView(R.id.layout_10)
     LinearLayout layout10;
+    @BindView(R.id.layout_21)
+    LinearLayout layout21;
+    @BindView(R.id.layout_22)
+    LinearLayout layout22;
     @BindView(R.id.btn_right_title)
     ImageButton btnRightTitle;
 
@@ -85,6 +101,53 @@ public class MineFragment extends PageFragment {
         setTitle("设置");
         btnRightTitle.setBackgroundResource(R.drawable.ic_setting);
         btnRightTitle.setVisibility(View.VISIBLE);
+
+        try {
+            ApplicationInfo appInfo = getActivity().getPackageManager()
+                    .getApplicationInfo(getActivity().getPackageName(),
+                            PackageManager.GET_META_DATA);
+            String channel = appInfo.metaData.getString("CHANNEL");
+
+            if ("dev".equals(channel)) {
+                boolean isProd = false;
+                if (null == HaoConnect.getString("sec") || HaoConnect.getString("sec").equals("prod")) {
+                    isProd = true;
+                }
+                layout22.setVisibility(View.VISIBLE);
+                final boolean finalIsProd = isProd;
+                layout22.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new AlertDialog.Builder(getActivity())
+                                .setTitle("提示")
+                                .setMessage(finalIsProd ? "是否需要切换测试环境" : "是否需要切换正式环境")
+                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (finalIsProd) {
+                                            HaoConnect.putString("sec", "dev");
+                                        } else {
+                                            HaoConnect.putString("sec", "prod");
+                                        }
+                                        EMClient.getInstance().logout(true);
+                                        UserManager.getInstance().logout();
+                                        AppManager.getInstance().finishAllActivity();
+                                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                        startActivity(intent);
+                                    }
+                                })
+                                .setNegativeButton("取消", null)
+                                .create()
+                                .show();
+                    }
+                });
+            } else {
+                layout22.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -92,7 +155,8 @@ public class MineFragment extends PageFragment {
         return R.layout.fragment_setting;
     }
 
-    @OnClick({R.id.image_head, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6, R.id.layout_7, R.id.layout_8, R.id.layout_9, R.id.layout_10, R.id.btn_right_title})
+    @OnClick({R.id.image_head, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6, R.id.layout_7, R.id.layout_8, R.id.layout_9, R.id.layout_10, R.id.btn_right_title,
+            R.id.layout_21,R.id.layout_31})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_head:
@@ -104,7 +168,7 @@ public class MineFragment extends PageFragment {
                 startActivity(new Intent(getActivity(), RevokeListActivity.class));
                 break;
             case R.id.layout_3:
-                startActivity(new Intent(getActivity(), PointActivity.class));
+                startActivity(new Intent(getActivity(), RechargeListActivity.class));
                 break;
             case R.id.layout_4:
                 startActivity(new Intent(getActivity(), MinePrizeListActivity.class));
@@ -133,6 +197,15 @@ public class MineFragment extends PageFragment {
             }
             case R.id.layout_10: {
                 startActivity(new Intent(getActivity(), PrizeInfoActivity.class));
+                break;
+            }
+            case R.id.layout_21: {
+                startActivity(new Intent(getActivity(), RechargeListActivity.class));
+                break;
+            }
+            case R.id.layout_31: {
+//                showToast("正在升级中");
+                startActivity(new Intent(getActivity(), VipActivity.class));
                 break;
             }
         }

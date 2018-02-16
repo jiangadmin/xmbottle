@@ -113,7 +113,7 @@ public class HomeActivity extends BaseTitleActivity {
                 }
             }
         });
-
+        viewPager.setOffscreenPageLimit(3);
         sign();
         registerBroadcastReceiver();
         update();
@@ -374,8 +374,8 @@ public class HomeActivity extends BaseTitleActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        refreshUIWithMessage();
         EMClient.getInstance().chatManager().addMessageListener(messageListener);
-
         loadUser();
     }
 

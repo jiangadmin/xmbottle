@@ -175,6 +175,7 @@ public class HaoConnect {
             Toast.makeText(context, "请先初始化HaoConnect,在程序开始的地方调用init()方法", Toast.LENGTH_SHORT).show();
             return null;
         }
+        Log.e("wt", "request -> " + urlParam + "  params " + params);
         RequestParams requestParams = new RequestParams();
         if (params != null) {
             for (Map.Entry<String, Object> entry : params.entrySet()) {

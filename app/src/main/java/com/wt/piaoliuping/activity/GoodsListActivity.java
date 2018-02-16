@@ -248,7 +248,7 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
 
     @OnClick(R.id.text_recharge)
     public void onViewClicked() {
-        startActivity(new Intent(this, PointActivity.class));
+        startActivity(new Intent(this, RechargeListActivity.class));
     }
 
 

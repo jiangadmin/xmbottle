@@ -22,11 +22,14 @@ import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.hyphenate.util.PathUtil;
+import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.activity.GoodsListActivity;
 import com.wt.piaoliuping.activity.PointActivity;
+import com.wt.piaoliuping.activity.RechargeListActivity;
 import com.wt.piaoliuping.activity.ShowUserActivity;
 import com.wt.piaoliuping.activity.VideoCallActivity;
+import com.wt.piaoliuping.activity.VipActivity;
 import com.wt.piaoliuping.activity.VoiceCallActivity;
 
 import java.io.File;
@@ -40,7 +43,7 @@ import java.util.Map;
 
 public class ChatFragment extends EaseChatFragment implements EaseChatFragment.EaseChatFragmentHelper {
 
-    boolean send = true;
+    //    boolean send = true;
     private static final int ITEM_VIDEO = 11;
     private static final int ITEM_FILE = 12;
     private static final int ITEM_VOICE_CALL = 13;
@@ -70,136 +73,110 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
     @Override
     protected void sendVoiceMessage(final String filePath, final int length) {
-
-        if (send) {
-            super.sendVoiceMessage(filePath, length);
-        } else {
-            new AlertDialog.Builder(getActivity())
-                    .setTitle("提示")
-                    .setMessage("您当前星星不足，请前往积分中心充值")
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(getActivity(), PointActivity.class);
-                            startActivity(intent);
-                        }
-                    })
-                    .setNegativeButton("取消", null)
-                    .create()
-                    .show();
-        }
+        /*
         Map<String, Object> map = new HashMap<>();
         map.put("to_user_id", toChatUsername);
         map.put("message_type", 2);
-//        requestNum(map);
         HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
                 if (result.findAsInt("chatCount") <= 0) {
-                    send = false;
+//                        send = false;
                     showCharge();
                 } else {
-                    send = true;
-//                    ChatFragment.super.sendVoiceMessage(message);
+//                        send = true;
                     ChatFragment.super.sendVoiceMessage(filePath, length);
                 }
             }
 
             @Override
             public void onFail(HaoResult result) {
-                send = false;
+//                    send = false;
+                showCharge();
             }
         }, getActivity());
+
+*/
+        if (App.app.userInfo.findAsInt("vipLevel") == 0) {
+            showCharge();
+        } else {
+            ChatFragment.super.sendVoiceMessage(filePath, length);
+        }
     }
 
     @Override
     protected void sendMessage(final EMMessage message) {
-//        if (send) {
-//            super.sendMessage(message);
-//        } else {
-//            new AlertDialog.Builder(getActivity())
-//                    .setTitle("提示")
-//                    .setMessage("您当前星星不足，请前往积分中心充值")
-//                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialogInterface, int i) {
-//                            Intent intent = new Intent(getActivity(), PointActivity.class);
-//                            startActivity(intent);
-//                        }
-//                    })
-//                    .setNegativeButton("取消", null)
-//                    .create()
-//                    .show();
-//        }
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("to_user_id", toChatUsername);
         if (EMMessage.Type.TXT == message.getType()) {
-            map.put("message_type", 1);
-            EMTextMessageBody body = (EMTextMessageBody) message.getBody();
-            map.put("message", body.getMessage());
-        } else if (EMMessage.Type.IMAGE == message.getType()) {
-            map.put("message_type", 4);
-        } else if (EMMessage.Type.VIDEO == message.getType()) {
-            map.put("message_type", 6);
-        } else if (EMMessage.Type.VOICE == message.getType()) {
-            map.put("message_type", 7);
-        } else if (EMMessage.Type.LOCATION == message.getType()) {
-            map.put("message_type", 5);
-        }
-        HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
-            @Override
-            public void onSuccess(HaoResult result) {
-                if (result.findAsInt("chatCount") <= 0) {
-                    send = false;
-                    showCharge();
-                } else {
-                    send = true;
-                    ChatFragment.super.sendMessage(message);
-                }
-            }
 
-            @Override
-            public void onFail(HaoResult result) {
-                send = false;
+            ChatFragment.super.sendMessage(message);
+        } else {
+            if (App.app.userInfo.findAsInt("vipLevel") == 0) {
+                showCharge();
+            } else {
+                ChatFragment.super.sendMessage(message);
             }
-        }, getActivity());
-//        requestNum(map);
+        }
+
+        /*
+            Map<String, Object> map = new HashMap<>();
+            map.put("to_user_id", toChatUsername);
+            if (EMMessage.Type.TXT == message.getType()) {
+                map.put("message_type", 1);
+                EMTextMessageBody body = (EMTextMessageBody) message.getBody();
+                map.put("message", body.getMessage());
+            } else if (EMMessage.Type.IMAGE == message.getType()) {
+                map.put("message_type", 4);
+            } else if (EMMessage.Type.VIDEO == message.getType()) {
+                map.put("message_type", 6);
+            } else if (EMMessage.Type.VOICE == message.getType()) {
+                map.put("message_type", 7);
+            } else if (EMMessage.Type.LOCATION == message.getType()) {
+                map.put("message_type", 5);
+            }
+            HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
+                @Override
+                public void onSuccess(HaoResult result) {
+                    if (result.findAsInt("chatCount") <= 0) {
+//                        send = false;
+                        showCharge();
+                    } else {
+//                        send = true;
+                        ChatFragment.super.sendMessage(message);
+                    }
+                }
+
+                @Override
+                public void onFail(HaoResult result) {
+//                    send = false;
+                    showCharge();
+                }
+            }, getActivity());
+//        } else {
+//            showCharge();
+//        }
+*/
     }
 
     private void showCharge() {
 
-        new AlertDialog.Builder(getActivity())
-                .setTitle("提示")
-                .setMessage("您当前星星不足，请前往积分中心充值")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(getActivity(), PointActivity.class);
-                        startActivity(intent);
-                    }
-                })
-                .setNegativeButton("取消", null)
-                .create()
-                .show();
-    }
-
-    private void requestNum(Map<String, Object> map) {
-        HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
-            @Override
-            public void onSuccess(HaoResult result) {
-                if (result.findAsInt("chatCount") <= 0) {
-                    send = false;
-                } else {
-                    send = true;
-                }
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("提示")
+                        .setMessage("您当前星星不足，请前往积分中心充值")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(getActivity(), RechargeListActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("取消", null)
+                        .create()
+                        .show();
             }
-
-            @Override
-            public void onFail(HaoResult result) {
-                send = false;
-            }
-        }, getActivity());
+        });
     }
 
     @Override
@@ -254,12 +231,79 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             case ITEM_FILE: //file
 //                selectFileFromLocal();
                 break;
-            case ITEM_VOICE_CALL:
-                startVoiceCall();
+            case ITEM_VOICE_CALL: {
+//                if (send) {
+                /*
+                Map<String, Object> map = new HashMap<>();
+                map.put("to_user_id", toChatUsername);
+                map.put("message_type", 7);
+                HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(HaoResult result) {
+                        if (result.findAsInt("chatCount") <= 0) {
+//                                send = false;
+                            showCharge();
+                        } else {
+//                                send = true;
+                            startVoiceCall();
+                        }
+                    }
+
+                    @Override
+                    public void onFail(HaoResult result) {
+//                            send = false;
+                        showCharge();
+                    }
+                }, getActivity());
+                */
+//                } else {
+//                    showCharge();
+//                }
+
+                if (App.app.userInfo.findAsInt("vipLevel") == 0) {
+                    showCharge();
+                } else  {
+                    startVoiceCall();
+                }
+            }
+            break;
+            case ITEM_VIDEO_CALL: {
+                /*
+//                if (send) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("to_user_id", toChatUsername);
+                map.put("message_type", 6);
+                HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(HaoResult result) {
+                        if (result.findAsInt("chatCount") <= 0) {
+//                                send = false;
+                            showCharge();
+                        } else {
+//                                send = true;
+                            startVideoCall();
+                        }
+                    }
+
+                    @Override
+                    public void onFail(HaoResult result) {
+//                            send = false;
+                        showCharge();
+                    }
+                }, getActivity());
+                */
+//                } else {
+//                    showCharge();
+//                }
+//
+                if (App.app.userInfo.findAsInt("vipLevel") == 0) {
+                    showCharge();
+                } else  {
+                    startVideoCall();
+                }
+
                 break;
-            case ITEM_VIDEO_CALL:
-                startVideoCall();
-                break;
+            }
             case ITEM_VIDEO_PRIZE: {
                 startPrize();
                 break;

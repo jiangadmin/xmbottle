@@ -52,6 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:minWidth="80dp"
             android:text="昵称" />
 
         <TextView
@@ -82,6 +83,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:minWidth="80dp"
             android:text="性别" />
 
         <TextView
@@ -106,6 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
+            android:minWidth="80dp"
             android:text="手机号" />
 
         <TextView
@@ -131,6 +134,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:minWidth="80dp"
             android:text="所在城市" />
 
         <TextView
@@ -162,6 +166,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:minWidth="80dp"
             android:text="生日" />
 
         <TextView
@@ -226,6 +231,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:minWidth="80dp"
             android:text="个性签名" />
 
         <TextView
@@ -258,6 +264,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:minWidth="80dp"
             android:text="相册" />
 
         <TextView

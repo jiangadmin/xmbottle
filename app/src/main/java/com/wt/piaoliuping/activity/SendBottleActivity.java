@@ -59,6 +59,8 @@ public class SendBottleActivity extends BaseTitleActivity {
     TextView textVoice;
     @BindView(R.id.voice_recorder)
     EaseVoiceRecorderView voiceRecorder;
+    @BindView(R.id.text_desc)
+    TextView textDesc;
 
     private String randId;
     RxPermissions rxPermissions;
@@ -81,6 +83,7 @@ public class SendBottleActivity extends BaseTitleActivity {
                 return false;
             }
         });
+        loadDetail();
     }
 
     @Override
@@ -133,7 +136,6 @@ public class SendBottleActivity extends BaseTitleActivity {
             }
         }, this);
     }
-
 
 
     @OnClick({R.id.text_pic, R.id.text_voice})
@@ -391,17 +393,29 @@ public class SendBottleActivity extends BaseTitleActivity {
     }
 
     public String getTempPath(String name) {
-
         return PathUtil.getInstance().getImagePath() + name + "_tmp.jpg";
-//        String path = StorageUtils.getIndividualCacheDirectory(this, "photos").getPath();
-//        return path + name + "_tmp.jpg";
-
-//        return basePath + name + "_tmp.jpg";
     }
 
     @Override
     public void finish() {
         setResult(RESULT_OK);
         super.finish();
+    }
+
+    private void loadDetail() {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("key", "bottleMessageLabel");
+        HaoConnect.loadContent("sys_config/detail", map, "get", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                textDesc.setText(result.findAsString("results>value"));
+            }
+
+            @Override
+            public void onFail(HaoResult result) {
+                showToast(result.errorStr);
+            }
+        }, this);
     }
 }

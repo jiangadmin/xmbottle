@@ -39,6 +39,8 @@
                 android:id="@+id/text_desc"
                 style="@style/text_14_999999"
                 android:layout_marginTop="5dp"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
