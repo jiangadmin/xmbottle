@@ -421,7 +421,6 @@ public class App extends MultiDexApplication {
         UserDaoDao userDao = getDaoSession().getUserDaoDao();
         UserDao userDao1 = userDao.load(username);
         if (userDao1 == null) {
-
             loadUser(username);
             return null;
         }

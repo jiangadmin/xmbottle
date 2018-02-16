@@ -66,4 +66,12 @@
         android:layout_weight="1"
         android:background="@color/grayColor"/>
 
+    <TextView
+        android:id="@+id/text_desc"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:textColor="#1f1f1f"
+        android:textSize="17sp" />
+
 </LinearLayout>

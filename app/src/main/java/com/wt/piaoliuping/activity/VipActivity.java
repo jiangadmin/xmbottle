@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
@@ -43,8 +44,13 @@ import butterknife.BindView;
 public class VipActivity extends BaseTitleActivity implements AdapterView.OnItemClickListener {
     @BindView(R.id.top_image_view)
     ImageView topImageView;
+
     @BindView(R.id.list_view)
     PullToRefreshListView listView;
+
+    @BindView(R.id.text_desc)
+    TextView textDesc;
+
 
     private static final int SDK_PAY_FLAG = 1;
 
@@ -63,6 +69,7 @@ public class VipActivity extends BaseTitleActivity implements AdapterView.OnItem
         loadData();
         listView.setOnItemClickListener(this);
         loadTips();
+        loadTopImage();
     }
 
     @Override
@@ -88,14 +95,33 @@ public class VipActivity extends BaseTitleActivity implements AdapterView.OnItem
         }, this);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 
     private void loadTips() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("key", "goodsVipLabel");
+        HaoConnect.loadContent("sys_config/detail", map, "get", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                textDesc.setText(result.findAsString("results>value"));
+            }
+
+            @Override
+            public void onFail(HaoResult result) {
+                showToast(result.errorStr);
+            }
+        }, this);
+    }
+    private void loadTopImage() {
         Map<String, Object> map = new HashMap<>();
         map.put("key", "goodsVipImg");
         HaoConnect.loadContent("sys_config/detail", map, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
-                ImageLoader.getInstance().displayImage(result.findAsString("results>content"), topImageView);
+                ImageLoader.getInstance().displayImage(result.findAsString("results>value"), topImageView);
             }
 
             @Override
