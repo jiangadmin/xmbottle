@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wt.piaoliuping.R;
+import com.wt.piaoliuping.widgt.CustomProgressDialog;
 
 import butterknife.ButterKnife;
 
@@ -32,6 +33,7 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(getFragmentLayoutId(), null);
         ButterKnife.bind(this, view);
+        customProgressDialog = new CustomProgressDialog(getActivity());
         initView(view);
         try {
             backBtn = view.findViewById(R.id.btn_back);
@@ -99,5 +101,15 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    public CustomProgressDialog customProgressDialog;
+
+    public void startLoading() {
+        customProgressDialog.startProgressDialog();
+    }
+
+    public void stopLoading() {
+        customProgressDialog.stopProgressDialog();
     }
 }

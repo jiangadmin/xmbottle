@@ -71,9 +71,11 @@ public class BottleFragment extends PageFragment {
     public void onTextReceivedClicked() {
         Map<String, Object> map = new HashMap<>();
 
+        startLoading();
         HaoConnect.loadContent("bottle_message/get", map, "get", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
+                stopLoading();
                 Intent intent = new Intent(getActivity(), ShowBottleActivity.class);
                 intent.putExtra("msgId", result.findAsString("id"));
                 startActivity(intent);
@@ -81,6 +83,7 @@ public class BottleFragment extends PageFragment {
 
             @Override
             public void onFail(HaoResult result) {
+                stopLoading();
                 showToast(result.errorStr);
             }
         }, getActivity());

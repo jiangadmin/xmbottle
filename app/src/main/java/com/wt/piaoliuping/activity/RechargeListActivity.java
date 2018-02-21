@@ -187,9 +187,9 @@ public class RechargeListActivity extends BaseTitleActivity implements AdapterVi
                 } else {
                     hideNoData();
                 }
-                int nume = adapter.dataList.size() / 3 + 1;
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, nume * DisplayUtil.dip2px(RechargeListActivity.this, 70 + 10));
-                gridView.setLayoutParams(layoutParams);
+//                int nume = adapter.dataList.size() / 3 + (adapter.dataList.size() % 3 == 0 ? 0 : 1);
+//                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, nume * DisplayUtil.dip2px(RechargeListActivity.this, 70 + 20));
+//                gridView.setLayoutParams(layoutParams);
             }
 
             @Override

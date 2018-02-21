@@ -92,6 +92,7 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
                                 Map<String, Object> map = new HashMap<>();
                                 map.put("user_goods_item_id", result.findAsString("id"));
                                 map.put("give_user_id", userId);
+                                startLoading();
                                 HaoConnect.loadContent("user_goods_item/give_user", map, "post", new HaoResultHttpResponseHandler() {
                                     @Override
                                     public void onSuccess(final HaoResult result) {
@@ -99,12 +100,12 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
                                         ImageLoader.getInstance().loadImage(result.findAsString("goodsImgView"), new ImageLoadingListener() {
                                             @Override
                                             public void onLoadingStarted(String imageUri, View view) {
-
+                                                stopLoading();
                                             }
 
                                             @Override
                                             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
+                                                stopLoading();
                                             }
 
                                             @Override
@@ -122,12 +123,13 @@ public class PrizeListActivity extends BaseTitleActivity implements PrizeAdapter
                                                 EMMessage message = EMMessage.createTxtSendMessage(desc, userId);
                                                 EMClient.getInstance().chatManager().sendMessage(message);
                                                 setResult(RESULT_OK);
+                                                stopLoading();
                                                 finish();
                                             }
 
                                             @Override
                                             public void onLoadingCancelled(String imageUri, View view) {
-
+                                                stopLoading();
                                             }
                                         });
 //                                        String file = ImageLoader.getInstance().getDiskCache().get(result.findAsString("goodsImgView")).getAbsolutePath();

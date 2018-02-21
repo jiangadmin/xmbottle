@@ -93,6 +93,7 @@ public class FriendListActivity extends BaseTitleActivity implements AdapterView
                             Map<String, Object> map = new HashMap<>();
                             map.put("user_goods_item_id", prizeId);
                             map.put("give_user_id", friendId);
+                            startLoading();
                             HaoConnect.loadContent("user_goods_item/give_user", map, "post", new HaoResultHttpResponseHandler() {
                                 @Override
                                 public void onSuccess(final HaoResult result) {
@@ -100,11 +101,13 @@ public class FriendListActivity extends BaseTitleActivity implements AdapterView
                                     ImageLoader.getInstance().loadImage(result.findAsString("goodsImgView"), new ImageLoadingListener() {
                                         @Override
                                         public void onLoadingStarted(String imageUri, View view) {
+                                            stopLoading();
 
                                         }
 
                                         @Override
                                         public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                                            stopLoading();
 
                                         }
 
@@ -125,12 +128,14 @@ public class FriendListActivity extends BaseTitleActivity implements AdapterView
                                             String desc = "【" + friendId + "】" + "送您礼物 {" + result.findAsString("goodsName") + "}";
                                             EMMessage message = EMMessage.createTxtSendMessage(desc, friendId);
                                             EMClient.getInstance().chatManager().sendMessage(message);
+                                            stopLoading();
                                             setResult(RESULT_OK);
                                             finish();
                                         }
 
                                         @Override
                                         public void onLoadingCancelled(String imageUri, View view) {
+                                            stopLoading();
 
                                         }
                                     });
