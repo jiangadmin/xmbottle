@@ -67,7 +67,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
     private static final int MESSAGE_TYPE_SEND_RANDOM = 12;
     private static final int ITEM_RED_PACKET = 16;
 
-    @Override
+   /* @Override
     protected void sendVoiceMessage(final String filePath, final int length) {
 
         if (App.app.userInfo.findAsInt("sex") == 1) {
@@ -93,13 +93,13 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             super.sendVoiceMessage(filePath, length);
         }
 
-        /*if (App.app.userInfo.findAsInt("vipLevel") == 0) {
+        *//*if (App.app.userInfo.findAsInt("vipLevel") == 0) {
             showCharge();
         } else {
             ChatFragment.super.sendVoiceMessage(filePath, length);
-        }*/
+        }*//*
     }
-
+*/
     @Override
     protected void sendMessage(final EMMessage message) {
 
@@ -127,7 +127,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             } else if (EMMessage.Type.VIDEO == message.getType()) {
                 map.put("message_type", 6);
             } else if (EMMessage.Type.VOICE == message.getType()) {
-                map.put("message_type", 7);
+                map.put("message_type", 2);
             } else if (EMMessage.Type.LOCATION == message.getType()) {
                 map.put("message_type", 5);
             }
@@ -334,8 +334,8 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
     @Override
     protected void registerExtendMenuItem() {
         super.registerExtendMenuItem();
-        inputMenu.registerExtendMenuItem(R.string.attach_voice_call, R.drawable.em_chat_voice_call_selector, ITEM_VOICE_CALL, extendMenuItemClickListener);
-        inputMenu.registerExtendMenuItem(R.string.attach_video_call, R.drawable.em_chat_video_call_selector, ITEM_VIDEO_CALL, extendMenuItemClickListener);
+//        inputMenu.registerExtendMenuItem(R.string.attach_voice_call, R.drawable.em_chat_voice_call_selector, ITEM_VOICE_CALL, extendMenuItemClickListener);
+//        inputMenu.registerExtendMenuItem(R.string.attach_video_call, R.drawable.em_chat_video_call_selector, ITEM_VIDEO_CALL, extendMenuItemClickListener);
         inputMenu.registerExtendMenuItem(R.string.prize, R.drawable.em_chat_prize_call_selector, ITEM_VIDEO_PRIZE, extendMenuItemClickListener);
     }
 
