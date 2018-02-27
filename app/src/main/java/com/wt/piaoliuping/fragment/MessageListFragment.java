@@ -119,4 +119,5 @@ public class MessageListFragment extends EaseConversationListFragment {
         return true;
     }
 
+
 }

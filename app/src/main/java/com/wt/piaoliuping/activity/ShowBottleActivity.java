@@ -115,7 +115,7 @@ public class ShowBottleActivity extends BaseActivity {
                 }
                 textName.setText("[" + city + "]" + result.findAsString("throwUserLocal>nickname"));
                 textSex.setText(result.findAsString("throwUserLocal>sexLabel") + " " + result.find("throwUserLocal>age") + result.find("throwUserLocal>constellation"));
-                textTime.setText(result.findAsString("throwUserLocal>createTime"));
+                textTime.setText(result.findAsString("createTime"));
                 setTitle("来自" + city + "的瓶子");
 
                 int type = result.findAsInt("messageType");

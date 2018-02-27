@@ -70,7 +70,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
    /* @Override
     protected void sendVoiceMessage(final String filePath, final int length) {
 
-        if (App.app.userInfo.findAsInt("sex") == 1) {
+//        if (App.app.userInfo.findAsInt("sex") == 1) {
             Map<String, Object> map = new HashMap<>();
             map.put("to_user_id", toChatUsername);
             map.put("message_type", 2);
@@ -89,9 +89,9 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
                     showCharge();
                 }
             }, getActivity());
-        } else {
-            super.sendVoiceMessage(filePath, length);
-        }
+//        } else {
+//            super.sendVoiceMessage(filePath, length);
+//        }
 
         *//*if (App.app.userInfo.findAsInt("vipLevel") == 0) {
             showCharge();
@@ -115,7 +115,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             }
         }*/
 
-        if (App.app.userInfo.findAsInt("sex") == 1) {
+//        if (App.app.userInfo.findAsInt("sex") == 1) {
             Map<String, Object> map = new HashMap<>();
             map.put("to_user_id", toChatUsername);
             if (EMMessage.Type.TXT == message.getType()) {
@@ -146,9 +146,9 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
                     showCharge();
                 }
             }, getActivity());
-        } else {
-            super.sendMessage(message);
-        }
+//        } else {
+//            super.sendMessage(message);
+//        }
     }
 
     private void showCharge() {
@@ -221,7 +221,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             case ITEM_FILE: //file
                 break;
             case ITEM_VOICE_CALL: {
-                if (App.app.userInfo.findAsInt("sex") == 1) {
+//                if (App.app.userInfo.findAsInt("sex") == 1) {
                     Map<String, Object> map = new HashMap<>();
                     map.put("to_user_id", toChatUsername);
                     map.put("message_type", 7);
@@ -240,9 +240,9 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
                             showCharge();
                         }
                     }, getActivity());
-                } else {
-                    startVoiceCall();
-                }
+//                } else {
+//                    startVoiceCall();
+//                }
                 /*if (App.app.userInfo.findAsInt("vipLevel") == 0) {
                     showCharge();
                 } else {
@@ -251,7 +251,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             }
             break;
             case ITEM_VIDEO_CALL: {
-                if (App.app.userInfo.findAsInt("sex") == 1) {
+//                if (App.app.userInfo.findAsInt("sex") == 1) {
                     Map<String, Object> map = new HashMap<>();
                     map.put("to_user_id", toChatUsername);
                     map.put("message_type", 6);
@@ -270,9 +270,9 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
                             showCharge();
                         }
                     }, getActivity());
-                } else {
-                    startVideoCall();
-                }
+//                } else {
+//                    startVideoCall();
+//                }
 
                 /*if (App.app.userInfo.findAsInt("vipLevel") == 0) {
                     showCharge();
