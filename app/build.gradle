@@ -16,8 +16,8 @@ android {
         applicationId "com.xm.bottle"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 5
-        versionName "1.0.4"
+        versionCode 6
+        versionName "1.0.5"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {

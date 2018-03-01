@@ -143,7 +143,8 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
                 @Override
                 public void onFail(HaoResult result) {
-                    showCharge();
+//                    showCharge();
+                    Toast.makeText(getActivity(), result.errorStr, Toast.LENGTH_LONG);
                 }
             }, getActivity());
 //        } else {
@@ -237,7 +238,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
                         @Override
                         public void onFail(HaoResult result) {
-                            showCharge();
+                            Toast.makeText(getActivity(), result.errorStr, Toast.LENGTH_LONG);
                         }
                     }, getActivity());
 //                } else {
@@ -267,7 +268,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
                         @Override
                         public void onFail(HaoResult result) {
-                            showCharge();
+                            Toast.makeText(getActivity(), result.errorStr, Toast.LENGTH_LONG);
                         }
                     }, getActivity());
 //                } else {

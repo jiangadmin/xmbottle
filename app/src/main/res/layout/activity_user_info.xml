@@ -109,7 +109,7 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:minWidth="80dp"
-            android:text="手机号" />
+            android:text="手机号仅自己可见" />
 
         <TextView
             android:id="@+id/text_phone"
