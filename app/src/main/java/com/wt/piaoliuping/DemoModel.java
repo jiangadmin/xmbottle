@@ -13,7 +13,7 @@ public class DemoModel {
 
     public DemoModel(Context ctx) {
         context = ctx;
-        PreferenceManager.init(context);
+//        PreferenceManager.init(context);
     }
 
     /**

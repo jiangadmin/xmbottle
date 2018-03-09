@@ -127,7 +127,7 @@ public class HomeActivity extends BaseTitleActivity {
             public void onDisconnected(int errorCode) {
                 if (errorCode == EMError.USER_LOGIN_ANOTHER_DEVICE) {
 
-                    runOnUiThread(new Runnable() {
+                    /*runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             new AlertDialog.Builder(HomeActivity.this)
@@ -148,7 +148,7 @@ public class HomeActivity extends BaseTitleActivity {
                                     .create()
                                     .show();
                         }
-                    });
+                    });*/
                 }
             }
         });

@@ -44,7 +44,6 @@ public class MessageListFragment extends EaseConversationListFragment {
         return view;
     }
 
-
     @Override
     protected void setUpView() {
         super.setUpView();

@@ -342,7 +342,7 @@ public class ShowUserActivity extends BaseTitleActivity implements ViewPager.OnP
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             ImageView imageView = new ImageView(ShowUserActivity.this);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             ImageLoader.getInstance().displayImage(imageList.get(position), imageView);
             container.addView(imageView);
             viewList.add(imageView);

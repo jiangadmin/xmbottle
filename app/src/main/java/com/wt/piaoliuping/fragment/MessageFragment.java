@@ -34,6 +34,12 @@ public class MessageFragment extends PageFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+    }
+
+    @Override
     public int getFragmentLayoutId() {
         return R.layout.fragment_message;
     }
