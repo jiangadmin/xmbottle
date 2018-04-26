@@ -3,6 +3,7 @@ package com.hyphenate.easeui.widget;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -26,7 +27,7 @@ import com.hyphenate.util.DensityUtil;
 public class EaseChatExtendMenu extends GridView{
 
     protected Context context;
-    private List<ChatMenuItemModel> itemModels = new ArrayList<ChatMenuItemModel>();
+    private List<ChatMenuItemModel> itemModels = new ArrayList<>();
 
     public EaseChatExtendMenu(Context context, AttributeSet attrs, int defStyle) {
         this(context, attrs);
@@ -103,6 +104,7 @@ public class EaseChatExtendMenu extends GridView{
 
         private Context context;
 
+        @SuppressLint("ResourceType")
         public ItemAdapter(Context context, List<ChatMenuItemModel> objects) {
             super(context, 1, objects);
             this.context = context;

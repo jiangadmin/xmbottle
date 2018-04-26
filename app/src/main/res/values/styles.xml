@@ -12,7 +12,7 @@
     </style>
 
     <style name="LaunchTheme" parent="AppTheme">
-        <item name="android:windowBackground">@color/grayColor</item>
+        <item name="android:windowBackground">@drawable/default_launch</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
@@ -59,4 +59,27 @@
         <item name="android:activityOpenEnterAnimation">@anim/pop_from_button_up</item>
         <item name="android:activityCloseExitAnimation">@anim/pop_from_button_down</item>
     </style>
+
+    <style name="LoadingDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="myDialogTheme" parent="@android:style/Theme.Holo.DialogWhenLarge">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:backgroundDimAmount">0.5</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
 </resources>

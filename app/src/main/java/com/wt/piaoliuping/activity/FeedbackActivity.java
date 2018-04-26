@@ -1,6 +1,5 @@
 package com.wt.piaoliuping.activity;
 
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -24,6 +22,8 @@ import butterknife.OnClick;
  */
 
 public class FeedbackActivity extends BaseTitleActivity {
+    private static final String TAG = "FeedbackActivity";
+
     @BindView(R.id.text_input)
     EditText textInput;
     @BindView(R.id.btn_submit)
@@ -37,7 +37,7 @@ public class FeedbackActivity extends BaseTitleActivity {
 
     @Override
     public void initView() {
-        setTitle("联系客服");
+        setTitle("帮助与咨询");
         loadData();
     }
 

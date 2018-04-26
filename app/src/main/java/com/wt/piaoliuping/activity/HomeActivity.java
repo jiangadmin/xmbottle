@@ -127,12 +127,12 @@ public class HomeActivity extends BaseTitleActivity {
             public void onDisconnected(int errorCode) {
                 if (errorCode == EMError.USER_LOGIN_ANOTHER_DEVICE) {
 
-                    /*runOnUiThread(new Runnable() {
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             new AlertDialog.Builder(HomeActivity.this)
                                     .setTitle("提示")
-                                    .setMessage("您的账号已在其他设备登陆，如非本人操作请修改密码")
+                                    .setMessage("网络连接失败，请重新登录")
                                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
@@ -148,7 +148,7 @@ public class HomeActivity extends BaseTitleActivity {
                                     .create()
                                     .show();
                         }
-                    });*/
+                    });
                 }
             }
         });

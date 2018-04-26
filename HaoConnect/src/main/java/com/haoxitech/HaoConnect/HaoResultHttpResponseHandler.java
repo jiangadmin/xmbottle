@@ -7,6 +7,8 @@ import com.google.gson.JsonObject;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 
+import org.json.JSONException;
+
 import cz.msebera.android.httpclient.Header;
 
 /**
@@ -16,7 +18,7 @@ public abstract class HaoResultHttpResponseHandler extends TextHttpResponseHandl
 
     private static final String LOG_TAG = "HaoHttpRH";
 
-    public abstract void onSuccess(HaoResult result);
+    public abstract void onSuccess(HaoResult result) throws JSONException;
 
     public void onFail(HaoResult result) {
         AsyncHttpClient.log.w(LOG_TAG, "onFailure(int, Header[], String, Throwable) was not overriden, but callback was received", null);

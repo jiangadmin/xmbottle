@@ -2,19 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
+    android:orientation="vertical">
+
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:verticalSpacing="6dp"
-        android:gravity="center"
         android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:fadingEdge="none"
         android:cacheColorHint="@android:color/transparent"
-        />
+        android:fadingEdge="none"
+        android:gravity="center"
+        android:scrollbars="none"
+        android:verticalSpacing="6dp" />
 
 </LinearLayout>

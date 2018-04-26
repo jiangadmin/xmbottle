@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.haoxitech.HaoConnect.HaoConnect;
@@ -159,7 +158,7 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
                                         } catch (InterruptedException e) {
                                             e.printStackTrace();
                                         }
-                                        String desc = "【" + userName + "】"+"送您礼物 {" + result.findAsString("goodsName") + "}";
+                                        String desc = "【" + userName + "】" + "送您礼物 {" + result.findAsString("goodsName") + "}";
                                         EMMessage message = EMMessage.createTxtSendMessage(desc, userId);
                                         EMClient.getInstance().chatManager().sendMessage(message);
                                         setResult(RESULT_OK);
@@ -262,7 +261,7 @@ public class GoodsListActivity extends BaseTitleActivity implements GoodsAdapter
         }, this);
     }
 
-    @OnClick(R.id.layout_5)
+    @OnClick(R.id.goods_mine)
     public void onLayout5licked() {
         startActivity(new Intent(this, PrizeListActivity.class));
     }

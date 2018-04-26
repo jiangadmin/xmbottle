@@ -2,18 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <include layout="@layout/layout_title" />
 
     <LinearLayout
+        android:id="@+id/layout_content"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="30dp"
-        android:id="@+id/layout_content"
         android:background="@drawable/corner_bg"
         android:orientation="vertical">
 
@@ -102,17 +103,18 @@
                 android:background="@color/white"
                 android:text="性别"
                 android:textColor="@color/black" />
+
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="3dp"
+                android:layout_weight="1"
                 android:background="@color/white"
                 android:text="（性别选择后不可更改）"
-                android:textSize="13dp"
-                android:textColor="@color/redColor" />
+                android:textColor="@color/redColor"
+                android:textSize="13dp" />
 
             <TextView
                 android:id="@+id/text_sex"
@@ -132,11 +134,29 @@
 
     </LinearLayout>
 
-    <TextView
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="手机号码所属国家或地区：中国 +86" />
+        android:layout_marginTop="20dp">
+
+        <CheckBox
+            android:id="@+id/btn_agreement"
+            style="@style/text_14_999999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="我同意" />
+
+        <TextView
+            android:id="@+id/register_xy"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="《用户使用协议书》"
+            android:textColor="@color/cc" />
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/btn_submit"
@@ -144,24 +164,15 @@
         android:layout_height="45dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/corner_red_bg"
         android:text="提    交"
         android:textColor="@color/white" />
 
-    <CheckBox
-        android:id="@+id/btn_agreement"
-        style="@style/text_14_999999"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:checked="true"
-        android:text="我同意用户协议" />
-
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"></LinearLayout>
+        android:layout_weight="1" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -178,10 +189,10 @@
 
         <TextView
             android:id="@+id/btn_login"
+            style="@style/text_14_ffffff"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_centerInParent="true"
-            style="@style/text_14_ffffff"
             android:background="@drawable/corner_big_red_bg"
             android:gravity="center"
             android:paddingLeft="15dp"

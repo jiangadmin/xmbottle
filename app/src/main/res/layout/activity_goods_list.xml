@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/layout_title" />
@@ -36,28 +37,17 @@
             android:src="@drawable/no_data" />
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/layout_5"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+    <TextView
         android:background="@drawable/bolder_white_view_bg"
+        android:id="@+id/goods_mine"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:drawableRight="@drawable/ic_in"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <TextView
-            style="@style/text_15_222222"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="我购买的礼物" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/arrow_right" />
-
-    </LinearLayout>
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="已购买的礼物"
+        android:textSize="16sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -81,7 +71,7 @@
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:drawablePadding="5dp"
-            android:drawableRight="@drawable/arrow_right"
+            android:drawableRight="@drawable/ic_in"
             android:gravity="right|center_vertical"
             android:text="充值" />
 

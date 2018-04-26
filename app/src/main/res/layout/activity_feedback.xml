@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -17,6 +18,118 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/text_tips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="3dp"
+                android:padding="10dp" />
+
+
+            <!--功能使用介绍-->
+            <Button
+                android:id="@+id/help_1"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:drawableRight="@drawable/ic_in"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="功能使用介绍" />
+
+
+            <!--如何获取积分/星星-->
+            <Button
+                android:layout_marginTop="0.5dp"
+                android:id="@+id/help_2"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:drawablePadding="15dp"
+                android:drawableRight="@drawable/ic_in"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="如何获取积分/星星" />
+
+            <!--聊天消耗-->
+            <Button
+                android:layout_marginTop="0.5dp"
+                android:id="@+id/help_3"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:drawablePadding="15dp"
+                android:drawableRight="@drawable/ic_in"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="功能使用介绍" />
+
+
+
+            <!--亲密度-->
+            <Button
+                android:layout_marginTop="0.5dp"
+                android:id="@+id/help_4"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:drawablePadding="15dp"
+                android:drawableRight="@drawable/ic_in"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="亲密度" />
+
+
+            <!--提现规则-->
+            <Button
+                android:layout_marginTop="0.5dp"
+                android:id="@+id/help_get"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:drawablePadding="15dp"
+                android:drawableRight="@drawable/ic_in"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="提现规则" />
+
+
+
+            <!--违规处理规则-->
+            <Button
+                android:layout_marginTop="0.5dp"
+                android:id="@+id/help_5"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:drawablePadding="15dp"
+                android:drawableRight="@drawable/ic_in"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="违规处理规则" />
+
+
+
+            <!--人工客服-->
+            <Button
+                android:layout_marginTop="0.5dp"
+                android:id="@+id/help_6"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/white"
+                android:drawablePadding="15dp"
+                android:drawableRight="@drawable/ic_in"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="人工客服" />
+
             <EditText
                 android:id="@+id/text_input"
                 style="@style/text_14_222222"
@@ -26,7 +139,8 @@
                 android:gravity="top"
                 android:hint="请输入咨询内容后，点击下方提交"
                 android:padding="10dp"
-                android:textColorHint="@color/darKGrayColor" />
+                android:textColorHint="@color/darKGrayColor"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/text_name"
@@ -37,8 +151,8 @@
                 android:background="@color/white"
                 android:hint="请输入您的姓名"
                 android:padding="10dp"
-                android:visibility="gone"
-                android:textColorHint="@color/darKGrayColor" />
+                android:textColorHint="@color/darKGrayColor"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/text_tel"
@@ -48,19 +162,13 @@
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:hint="请输入您的联系方式"
-                android:visibility="gone"
                 android:padding="10dp"
-                android:textColorHint="@color/darKGrayColor" />
+                android:textColorHint="@color/darKGrayColor"
+                android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/text_tips"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:lineSpacingExtra="3dp"
-                android:padding="10dp" />
+
 
             <Button
-
                 android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -69,7 +177,8 @@
                 android:layout_marginTop="30dp"
                 android:background="@drawable/corner_red_bg"
                 android:text="提交"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

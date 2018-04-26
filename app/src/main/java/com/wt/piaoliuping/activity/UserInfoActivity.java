@@ -114,9 +114,9 @@ public class UserInfoActivity extends BaseTitleActivity {
                 final CameraDialog dialog = CameraDialog.create(this, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (v.getId() == R.id.layout_camera) {
+                        if (v.getId() == R.id.dialog_camera) {
                             handleCameraPermission();
-                        } else if (v.getId() == R.id.layout_lib) {
+                        } else if (v.getId() == R.id.dialog_lib) {
                             handleAlbumPermission();
                         }
                     }

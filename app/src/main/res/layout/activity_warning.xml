@@ -2,28 +2,133 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <include layout="@layout/layout_title" />
 
+    <!--ID-->
+    <TextView
+        android:id="@+id/text_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_9" />
+
+    <!--公告位置-->
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="系统公告位置"
+        android:textColor="@color/gray_9" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_9" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center_vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="3dp"
+            android:layout_height="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/redColor" />
 
         <TextView
-            android:id="@+id/text_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp" />
+            android:text="举报对方原因"
+            android:textSize="16sp" />
     </LinearLayout>
+
+    <!--举报选项-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="欺诈骗钱" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="内容不适" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="性别作假" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="辱骂对方" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="资料虚假" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="垃圾广告" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <EditText
         android:id="@+id/text_input"
         style="@style/text_14_222222"
         android:layout_width="match_parent"
         android:layout_height="180dp"
+        android:layout_margin="16dp"
         android:background="@drawable/bolder_white_view_bg"
         android:gravity="top"
         android:hint="请输入投诉内容！"
@@ -35,13 +140,11 @@
         android:layout_width="match_parent"
         android:layout_height="110dp"
         android:layout_marginTop="10dp"
-        android:background="@color/grayColor"
         android:columnWidth="80dp"
         android:horizontalSpacing="10dp"
         android:numColumns="4"
         android:stretchMode="columnWidth"
         android:verticalSpacing="10dp" />
-
 
     <Button
         android:id="@+id/btn_submit"
@@ -51,7 +154,7 @@
         android:layout_marginRight="25dp"
         android:layout_marginTop="80dp"
         android:background="@drawable/corner_red_bg"
-        android:text="提交"
+        android:text="确定举报"
         android:textColor="@color/white" />
 
 </LinearLayout>

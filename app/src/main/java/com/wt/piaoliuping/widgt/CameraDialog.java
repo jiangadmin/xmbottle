@@ -19,6 +19,8 @@ import com.wt.piaoliuping.R;
  */
 
 public class CameraDialog extends Dialog {
+    private static final String TAG = "CameraDialog";
+
     public CameraDialog(@NonNull Context context) {
         super(context);
     }
@@ -43,7 +45,7 @@ public class CameraDialog extends Dialog {
         dialog.addContentView(layout, new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        layout.findViewById(R.id.layout_camera).setOnClickListener(new View.OnClickListener() {
+        layout.findViewById(R.id.dialog_camera).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -52,7 +54,8 @@ public class CameraDialog extends Dialog {
                 }
             }
         });
-        layout.findViewById(R.id.layout_cancel).setOnClickListener(new View.OnClickListener() {
+
+        layout.findViewById(R.id.dialog_lib).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -61,7 +64,8 @@ public class CameraDialog extends Dialog {
                 }
             }
         });
-        layout.findViewById(R.id.layout_lib).setOnClickListener(new View.OnClickListener() {
+
+        layout.findViewById(R.id.dialog_esc).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();

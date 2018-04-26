@@ -2,7 +2,6 @@ package com.wt.piaoliuping.fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AlertDialog;
@@ -10,42 +9,31 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.haoxitech.HaoConnect.HaoConnect;
-import com.haoxitech.HaoConnect.HaoResult;
-import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.hyphenate.chat.EMClient;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.UMShareListener;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.media.UMWeb;
 import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.activity.FeedbackActivity;
 import com.wt.piaoliuping.activity.FollowListActivity;
 import com.wt.piaoliuping.activity.GoodsListActivity;
-import com.wt.piaoliuping.activity.HomeActivity;
 import com.wt.piaoliuping.activity.LoginActivity;
 import com.wt.piaoliuping.activity.MinePrizeListActivity;
-import com.wt.piaoliuping.activity.PointActivity;
 import com.wt.piaoliuping.activity.PrizeInfoActivity;
 import com.wt.piaoliuping.activity.PrizeListActivity;
 import com.wt.piaoliuping.activity.RechargeListActivity;
-import com.wt.piaoliuping.activity.RecommendActivity;
 import com.wt.piaoliuping.activity.RevokeListActivity;
 import com.wt.piaoliuping.activity.SettingTitleActivity;
 import com.wt.piaoliuping.activity.ShareInfoActivity;
+import com.wt.piaoliuping.activity.UserInfoActivity;
 import com.wt.piaoliuping.activity.VipActivity;
 import com.wt.piaoliuping.base.AppManager;
 import com.wt.piaoliuping.base.PageFragment;
 import com.wt.piaoliuping.manager.UserManager;
 import com.wt.piaoliuping.utils.DateUtils;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -55,6 +43,8 @@ import butterknife.OnClick;
  */
 
 public class MineFragment extends PageFragment {
+    private static final String TAG = "MineFragment";
+
     @BindView(R.id.image_head)
     ImageView imageHead;
     @BindView(R.id.text_name)
@@ -77,10 +67,7 @@ public class MineFragment extends PageFragment {
     LinearLayout layout6;
     @BindView(R.id.layout_7)
     LinearLayout layout7;
-    @BindView(R.id.layout_9)
-    LinearLayout layout9;
-    @BindView(R.id.layout_10)
-    LinearLayout layout10;
+
     @BindView(R.id.layout_21)
     LinearLayout layout21;
     @BindView(R.id.layout_22)
@@ -88,8 +75,8 @@ public class MineFragment extends PageFragment {
     @BindView(R.id.btn_right_title)
     ImageButton btnRightTitle;
 
-    @BindView(R.id.layout_top)
-    LinearLayout layoutTop;
+    @BindView(R.id.mine_info)
+    RelativeLayout mine_info;
 
     private String userId = "";
 
@@ -98,9 +85,7 @@ public class MineFragment extends PageFragment {
     @Override
     public void initView(View view) {
         super.initView(view);
-        setTitle("设置");
-        btnRightTitle.setBackgroundResource(R.drawable.ic_setting);
-        btnRightTitle.setVisibility(View.VISIBLE);
+        setTitle("我的");
 
         try {
             ApplicationInfo appInfo = getActivity().getPackageManager()
@@ -152,33 +137,42 @@ public class MineFragment extends PageFragment {
 
     @Override
     public int getFragmentLayoutId() {
-        return R.layout.fragment_setting;
+        return R.layout.fragment_mine;
     }
 
-    @OnClick({R.id.image_head, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6, R.id.layout_7, R.id.layout_8, R.id.layout_9, R.id.layout_10, R.id.btn_right_title,
-            R.id.layout_21,R.id.layout_31})
+    @OnClick({R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4, R.id.layout_5, R.id.layout_6, R.id.layout_7, R.id.layout_8, R.id.btn_right_title,
+            R.id.layout_21, R.id.layout_31, R.id.mine_info,R.id.mine_help,R.id.mine_setting})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.image_head:
+            //个人资料
+            case R.id.mine_info:
+                startActivity(new Intent(getActivity(), UserInfoActivity.class));
                 break;
+            //关注
             case R.id.layout_1:
                 startActivity(new Intent(getActivity(), FollowListActivity.class));
                 break;
+            //黑名单
             case R.id.layout_2:
                 startActivity(new Intent(getActivity(), RevokeListActivity.class));
                 break;
+            //充值
             case R.id.layout_3:
                 startActivity(new Intent(getActivity(), RechargeListActivity.class));
                 break;
+            //礼物记录
             case R.id.layout_4:
                 startActivity(new Intent(getActivity(), MinePrizeListActivity.class));
                 break;
+            //礼物列表
             case R.id.layout_5:
                 startActivity(new Intent(getActivity(), PrizeListActivity.class));
                 break;
+            //礼品商场
             case R.id.layout_6:
                 startActivity(new Intent(getActivity(), GoodsListActivity.class));
                 break;
+            //邀请奖励
             case R.id.layout_7: {
 //                loadShare();
                 Intent intent = new Intent(getActivity(), ShareInfoActivity.class);
@@ -186,23 +180,28 @@ public class MineFragment extends PageFragment {
                 startActivity(intent);
             }
             break;
+            //设置中心
+            case R.id.mine_setting:
             case R.id.btn_right_title:
             case R.id.layout_8:
                 startActivity(new Intent(getActivity(), SettingTitleActivity.class));
                 break;
-            case R.id.layout_9: {
+            //联系客服
+            case R.id.mine_help:
                 startActivity(new Intent(getActivity(), FeedbackActivity.class));
                 break;
 
-            }
-            case R.id.layout_10: {
+            //查看奖励
+            case R.id.mine_reward: {
                 startActivity(new Intent(getActivity(), PrizeInfoActivity.class));
                 break;
             }
+            //充值
             case R.id.layout_21: {
                 startActivity(new Intent(getActivity(), RechargeListActivity.class));
                 break;
             }
+            //会员中心
             case R.id.layout_31: {
 //                showToast("正在升级中");
                 startActivity(new Intent(getActivity(), VipActivity.class));
@@ -220,7 +219,7 @@ public class MineFragment extends PageFragment {
     private void loadUser() {
         userId = App.app.userInfo.findAsString("id");
         ImageLoader.getInstance().displayImage(App.app.userInfo.findAsString("avatarPreView"), imageHead, App.app.getImageCircleOptions());
-        textName.setText("昵称：" + App.app.userInfo.findAsString("nickname"));
+        textName.setText(App.app.userInfo.findAsString("nickname"));
         textNo.setText("ID：" + App.app.userInfo.findAsString("id"));
         if (App.app.userInfo.findAsInt("vipLevel") == 0) {
             textExpireTime.setVisibility(View.GONE);

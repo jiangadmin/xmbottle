@@ -18,8 +18,8 @@ public abstract class BaseTitleActivity extends BaseActivity {
     public void setTitle(final String title) {
         if (titleText == null) {
             try {
-                titleText = (TextView) findViewById(R.id.text_title);
-                backBtn = (ImageButton) findViewById(R.id.btn_back);
+                titleText = findViewById(R.id.text_title);
+                backBtn = findViewById(R.id.btn_back);
                 backBtn.setVisibility(View.VISIBLE);
                 backBtn.setOnClickListener(new View.OnClickListener() {
                     @Override

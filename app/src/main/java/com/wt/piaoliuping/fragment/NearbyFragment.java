@@ -44,7 +44,7 @@ public class NearbyFragment extends PageFragment implements AdapterView.OnItemCl
     public void initView(View view) {
         super.initView(view);
 
-        setTitle("发现");
+        setTitle("好友");
         friendAdapter = new FriendAdapter(getActivity());
         listView.setAdapter(friendAdapter);
 
@@ -84,8 +84,8 @@ public class NearbyFragment extends PageFragment implements AdapterView.OnItemCl
 
     private void loadData() {
         Map<String, Object> map = new HashMap<>();
-        map.put("page", "1");
         map.put("size", "999");
+        map.put("page", "1");
         map.put("type", "5");
         HaoConnect.loadContent("user_friends/list", map, "get", new HaoResultHttpResponseHandler() {
             @Override

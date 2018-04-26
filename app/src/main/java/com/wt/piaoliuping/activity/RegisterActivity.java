@@ -1,7 +1,6 @@
 package com.wt.piaoliuping.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
@@ -27,7 +26,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -35,6 +33,10 @@ import butterknife.OnClick;
  */
 
 public class RegisterActivity extends BaseTitleActivity {
+    private static final String TAG = "RegisterActivity";
+
+    @BindView(R.id.register_xy)
+    TextView xy;
     @BindView(R.id.text_tel)
     EditText textTel;
     @BindView(R.id.text_code)
@@ -204,11 +206,11 @@ public class RegisterActivity extends BaseTitleActivity {
     }
 
 
-    @OnClick(R.id.btn_agreement)
+    @OnClick(R.id.register_xy)
     public void onBtnViewClicked() {
 
         Intent intent = new Intent(this, WebActivity.class);
-        intent.putExtra("title", "注册协议");
+        intent.putExtra("title", "用户使用协议书");
         startActivity(intent);
     }
 

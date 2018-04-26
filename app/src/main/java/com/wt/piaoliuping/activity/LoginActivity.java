@@ -1,11 +1,13 @@
 package com.wt.piaoliuping.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -16,45 +18,58 @@ import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
 import com.haoxitech.HaoConnect.HaoUtility;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-import com.wt.piaoliuping.App;
+import com.loopj.android.http.RequestHandle;
 import com.wt.piaoliuping.R;
-import com.wt.piaoliuping.base.BaseTitleActivity;
+import com.wt.piaoliuping.dialog.Loading;
 import com.wt.piaoliuping.manager.HXManager;
 import com.wt.piaoliuping.manager.UserManager;
+import com.wt.piaoliuping.view.TabToast;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import butterknife.BindView;
 
 /**
  * Created by wangtao on 2017/10/17.
  */
 
-public class LoginActivity extends BaseTitleActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = "LoginActivity";
 
-    @BindView(R.id.text_tel)
+    TextView textxy;
     EditText textTel;
-    @BindView(R.id.text_password)
     EditText textPassword;
-    @BindView(R.id.text_forget)
     TextView textForget;
-    @BindView(R.id.btn_login)
     Button btnLogin;
-    @BindView(R.id.btn_agreement)
     CheckBox btnAgreement;
-    @BindView(R.id.btn_register)
     TextView btnRegister;
 
     @Override
-    public void initView() {
-        setTitle("登录");
-        hideBackBtn();
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+
+        initview();
+        evenview();
+    }
+
+    private void initview() {
+        textxy = findViewById(R.id.login_xy);
+        textTel = findViewById(R.id.text_tel);
+        textPassword =findViewById(R.id.text_password);
+        textForget = findViewById(R.id.text_forget);
+        btnLogin = findViewById(R.id.btn_login);
+        btnAgreement = findViewById(R.id.btn_agreement);
+        btnRegister = findViewById(R.id.btn_register);
+    }
+
+    private void evenview() {
         btnRegister.setOnClickListener(this);
         textForget.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
-        btnAgreement.setOnClickListener(this);
+
+        textxy.setOnClickListener(this);
     }
+
 
     @Override
     protected void onStart() {
@@ -65,31 +80,27 @@ public class LoginActivity extends BaseTitleActivity implements View.OnClickList
         }
     }
 
-    @Override
-    public int getContentViewID() {
-        return R.layout.activity_login;
-    }
-
     public void onBtnLoginClicked() {
         if (TextUtils.isEmpty(textTel.getText().toString())) {
-            showToast("账号不能为空");
+            TabToast.makeText("账号不能为空！");
             return;
         }
         if (TextUtils.isEmpty(textPassword.getText().toString())) {
-            showToast("密码不能为空");
+            TabToast.makeText("密码不能为空");
             return;
         }
         if (!btnAgreement.isChecked()) {
-            showToast("请先同意相关协议");
+            TabToast.makeText("请先同意相关协议");
             return;
         }
 
-        startLoading();
+        Loading.show(this,"登录中");
+
         Map<String, Object> map = new HashMap<>();
         map.put("username", textTel.getText().toString());
         map.put("password", HaoUtility.encodeMD5String(textPassword.getText().toString()));
 
-        HaoConnect.loadContent("user/login", map, "post", new HaoResultHttpResponseHandler() {
+        RequestHandle requestHandle = HaoConnect.loadContent("user/login", map, "post", new HaoResultHttpResponseHandler() {
             @Override
             public void onSuccess(HaoResult result) {
                 if (result.isResultsOK()) {
@@ -110,7 +121,7 @@ public class LoginActivity extends BaseTitleActivity implements View.OnClickList
                                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                         startActivity(intent);
                                         finish();
-                                        stopLoading();
+                                        Loading.dismiss();
                                     }
                                 });
                             }
@@ -123,7 +134,7 @@ public class LoginActivity extends BaseTitleActivity implements View.OnClickList
                                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                         startActivity(intent);
                                         finish();
-                                        stopLoading();
+                                        Loading.dismiss();
                                     }
                                 });
                             }
@@ -139,18 +150,24 @@ public class LoginActivity extends BaseTitleActivity implements View.OnClickList
 
             @Override
             public void onFail(HaoResult result) {
-                showToast(result.errorStr);
-                stopLoading();
+                TabToast.makeText(result.errorStr);
+                Loading.dismiss();
             }
         }, this);
     }
 
+    /**
+     * 启动到注册页面
+     */
     public void onTextForgetClicked() {
         Intent intent = new Intent(this, RegisterActivity.class);
         intent.putExtra("type", 1);
         startActivity(intent);
     }
 
+    /**
+     * 启动到注册页面
+     */
     public void onBtnRegisterClicked() {
         startActivity(new Intent(this, RegisterActivity.class));
     }
@@ -158,21 +175,25 @@ public class LoginActivity extends BaseTitleActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+//            登录
             case R.id.btn_login:
                 onBtnLoginClicked();
                 break;
+//                注册
             case R.id.btn_register:
                 onBtnRegisterClicked();
                 break;
+//                忘记密码
             case R.id.text_forget:
                 onTextForgetClicked();
                 break;
-            case R.id.btn_agreement: {
+//                注册协议
+            case R.id.login_xy:
                 Intent intent = new Intent(this, WebActivity.class);
                 intent.putExtra("title", "注册协议");
                 startActivity(intent);
                 break;
-            }
+
         }
     }
 }

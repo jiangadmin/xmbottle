@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by wangtao on 2017/11/14.
+ * Created by wangtao on 2017/11/14.¬
  */
 
 public class GoodsAdapter extends BaseItemAdapter {

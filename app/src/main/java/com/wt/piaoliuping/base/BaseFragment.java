@@ -43,7 +43,7 @@ public abstract class BaseFragment extends Fragment {
         }
 
         if (emptyImage == null) {
-            emptyImage = (ImageView) view.findViewById(R.id.no_data);
+            emptyImage =  view.findViewById(R.id.no_data);
         }
         if (emptyImage != null) {
             emptyImage.setVisibility(View.GONE);

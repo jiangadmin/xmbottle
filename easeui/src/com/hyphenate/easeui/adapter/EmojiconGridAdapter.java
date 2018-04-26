@@ -35,8 +35,8 @@ public class EmojiconGridAdapter extends ArrayAdapter<EaseEmojicon>{
             }
         }
 
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.iv_expression);
-        TextView textView = (TextView) convertView.findViewById(R.id.tv_name);
+        ImageView imageView =  convertView.findViewById(R.id.iv_expression);
+        TextView textView =  convertView.findViewById(R.id.tv_name);
         EaseEmojicon emojicon = getItem(position);
         if(textView != null && emojicon.getName() != null){
             textView.setText(emojicon.getName());

@@ -22,13 +22,13 @@ import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.hyphenate.util.PathUtil;
-import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.activity.GoodsListActivity;
 import com.wt.piaoliuping.activity.RechargeListActivity;
 import com.wt.piaoliuping.activity.ShowUserActivity;
 import com.wt.piaoliuping.activity.VideoCallActivity;
 import com.wt.piaoliuping.activity.VoiceCallActivity;
+import com.wt.piaoliuping.view.TabToast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -67,33 +67,33 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
     private static final int MESSAGE_TYPE_SEND_RANDOM = 12;
     private static final int ITEM_RED_PACKET = 16;
 
-   /* @Override
-    protected void sendVoiceMessage(final String filePath, final int length) {
+    /* @Override
+     protected void sendVoiceMessage(final String filePath, final int length) {
 
-//        if (App.app.userInfo.findAsInt("sex") == 1) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("to_user_id", toChatUsername);
-            map.put("message_type", 2);
-            HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
-                @Override
-                public void onSuccess(HaoResult result) {
-                    if (result.findAsInt("chatCount") <= 0) {
-                        showCharge();
-                    } else {
-                        ChatFragment.super.sendVoiceMessage(filePath, length);
-                    }
-                }
+ //        if (App.app.userInfo.findAsInt("sex") == 1) {
+             Map<String, Object> map = new HashMap<>();
+             map.put("to_user_id", toChatUsername);
+             map.put("message_type", 2);
+             HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
+                 @Override
+                 public void onSuccess(HaoResult result) {
+                     if (result.findAsInt("chatCount") <= 0) {
+                         showCharge();
+                     } else {
+                         ChatFragment.super.sendVoiceMessage(filePath, length);
+                     }
+                 }
 
-                @Override
-                public void onFail(HaoResult result) {
-                    showCharge();
-                }
-            }, getActivity());
-//        } else {
-//            super.sendVoiceMessage(filePath, length);
-//        }
+                 @Override
+                 public void onFail(HaoResult result) {
+                     showCharge();
+                 }
+             }, getActivity());
+ //        } else {
+ //            super.sendVoiceMessage(filePath, length);
+ //        }
 
-        *//*if (App.app.userInfo.findAsInt("vipLevel") == 0) {
+         *//*if (App.app.userInfo.findAsInt("vipLevel") == 0) {
             showCharge();
         } else {
             ChatFragment.super.sendVoiceMessage(filePath, length);
@@ -116,40 +116,53 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
         }*/
 
 //        if (App.app.userInfo.findAsInt("sex") == 1) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("to_user_id", toChatUsername);
-            if (EMMessage.Type.TXT == message.getType()) {
-                map.put("message_type", 1);
-                EMTextMessageBody body = (EMTextMessageBody) message.getBody();
-                map.put("message", body.getMessage());
-            } else if (EMMessage.Type.IMAGE == message.getType()) {
-                map.put("message_type", 4);
-            } else if (EMMessage.Type.VIDEO == message.getType()) {
-                map.put("message_type", 6);
-            } else if (EMMessage.Type.VOICE == message.getType()) {
-                map.put("message_type", 2);
-            } else if (EMMessage.Type.LOCATION == message.getType()) {
-                map.put("message_type", 5);
-            }
-            HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
-                @Override
-                public void onSuccess(HaoResult result) {
-                    if (result.findAsInt("chatCount") <= 0) {
-                        showCharge();
-                    } else {
-                        ChatFragment.super.sendMessage(message);
-                    }
-                }
-
-                @Override
-                public void onFail(HaoResult result) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("to_user_id", toChatUsername);
+        if (EMMessage.Type.TXT == message.getType()) {
+            map.put("message_type", 1);
+            EMTextMessageBody body = (EMTextMessageBody) message.getBody();
+            map.put("message", body.getMessage());
+        } else if (EMMessage.Type.IMAGE == message.getType()) {
+            map.put("message_type", 4);
+        } else if (EMMessage.Type.VIDEO == message.getType()) {
+            map.put("message_type", 6);
+        } else if (EMMessage.Type.VOICE == message.getType()) {
+            map.put("message_type", 2);
+        } else if (EMMessage.Type.LOCATION == message.getType()) {
+            map.put("message_type", 5);
+        }
+        HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
+            @Override
+            public void onSuccess(HaoResult result) {
+                //消息体发送
+                ChatFragment.super.sendMessage(message);
+//                if (result.findAsInt("chatCount") <= 0) {
+//
 //                    showCharge();
-                    Toast.makeText(getActivity(), result.errorStr, Toast.LENGTH_LONG);
-                }
-            }, getActivity());
+//                } else {
+//
+//                }
+            }
+
+            @Override
+            public void onFail(HaoResult result) {
+//                    showCharge();
+                showError(result.errorStr);
+//                Toast.makeText(getActivity(), result.errorStr, Toast.LENGTH_LONG);
+            }
+        }, getActivity());
 //        } else {
 //            super.sendMessage(message);
 //        }
+    }
+
+    private void showError(final String msg) {
+
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                TabToast.makeText(msg);
+            }
+        });
     }
 
     private void showCharge() {
@@ -157,15 +170,21 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             public void run() {
                 new AlertDialog.Builder(getActivity())
                         .setTitle("提示")
-                        .setMessage("您当前星星不足，请前往积分中心充值")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        .setMessage("您当日签到赠送星星已消耗完，请充值星星继续使用")
+                        .setNeutralButton("详情", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                TabToast.makeText("跳转一个链接");
+                            }
+                        })
+                        .setPositiveButton("去看看", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Intent intent = new Intent(getActivity(), RechargeListActivity.class);
                                 startActivity(intent);
                             }
                         })
-                        .setNegativeButton("取消", null)
+                        .setNegativeButton("明天聊", null)
                         .create()
                         .show();
             }
@@ -223,24 +242,25 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
                 break;
             case ITEM_VOICE_CALL: {
 //                if (App.app.userInfo.findAsInt("sex") == 1) {
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("to_user_id", toChatUsername);
-                    map.put("message_type", 7);
-                    HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(HaoResult result) {
-                            if (result.findAsInt("chatCount") <= 0) {
-                                showCharge();
-                            } else {
-                                startVoiceCall();
-                            }
+                Map<String, Object> map = new HashMap<>();
+                map.put("to_user_id", toChatUsername);
+                map.put("message_type", 7);
+                HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(HaoResult result) {
+                        if (result.findAsInt("chatCount") <= 0) {
+                            showCharge();
+                        } else {
+                            startVoiceCall();
                         }
+                    }
 
-                        @Override
-                        public void onFail(HaoResult result) {
-                            Toast.makeText(getActivity(), result.errorStr, Toast.LENGTH_LONG);
-                        }
-                    }, getActivity());
+                    @Override
+                    public void onFail(HaoResult result) {
+//                        Toast.makeText(getActivity(), result.errorStr, Toast.LENGTH_LONG);
+                        showError(result.errorStr);
+                    }
+                }, getActivity());
 //                } else {
 //                    startVoiceCall();
 //                }
@@ -253,24 +273,25 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
             break;
             case ITEM_VIDEO_CALL: {
 //                if (App.app.userInfo.findAsInt("sex") == 1) {
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("to_user_id", toChatUsername);
-                    map.put("message_type", 6);
-                    HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(HaoResult result) {
-                            if (result.findAsInt("chatCount") <= 0) {
-                                showCharge();
-                            } else {
-                                startVideoCall();
-                            }
+                Map<String, Object> map = new HashMap<>();
+                map.put("to_user_id", toChatUsername);
+                map.put("message_type", 6);
+                HaoConnect.loadContent("user_messages/add", map, "post", new HaoResultHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(HaoResult result) {
+                        if (result.findAsInt("chatCount") <= 0) {
+                            showCharge();
+                        } else {
+                            startVideoCall();
                         }
+                    }
 
-                        @Override
-                        public void onFail(HaoResult result) {
-                            Toast.makeText(getActivity(), result.errorStr, Toast.LENGTH_LONG);
-                        }
-                    }, getActivity());
+                    @Override
+                    public void onFail(HaoResult result) {
+//                        Toast.makeText(getActivity(), result.errorStr, Toast.LENGTH_LONG);
+                        showError(result.errorStr);
+                    }
+                }, getActivity());
 //                } else {
 //                    startVideoCall();
 //                }

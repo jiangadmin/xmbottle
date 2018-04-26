@@ -61,7 +61,7 @@ public class CustomProgressDialog extends Dialog {
         if (customProgressDialog == null) {
             return;
         }
-        ImageView imageView = (ImageView) customProgressDialog.findViewById(R.id.loading_imageview);
+        ImageView imageView =  customProgressDialog.findViewById(R.id.loading_imageview);
         animationDrawable = (AnimationDrawable) imageView.getBackground();
         animationDrawable.start();
     }
@@ -95,7 +95,7 @@ public class CustomProgressDialog extends Dialog {
      *
      */
     public CustomProgressDialog setMessage(String strMessage) {
-        TextView tvMsg = (TextView) customProgressDialog.findViewById(R.id.id_tv_loadingmsg);
+        TextView tvMsg =  customProgressDialog.findViewById(R.id.id_tv_loadingmsg);
         if (tvMsg != null) {
             tvMsg.setText(strMessage);
         }
@@ -107,7 +107,7 @@ public class CustomProgressDialog extends Dialog {
             if (customProgressDialog == null) {
                 customProgressDialog = createDialog(context);
                 if (animationDrawable == null) {
-                    ImageView imageView = (ImageView) customProgressDialog.findViewById(R.id.loading_imageview);
+                    ImageView imageView =  customProgressDialog.findViewById(R.id.loading_imageview);
                     animationDrawable = (AnimationDrawable) imageView.getBackground();
                 }
             }

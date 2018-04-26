@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.wt.piaoliuping.R;
 
@@ -56,11 +55,11 @@ public class PrizeAdapter extends BaseItemAdapter {
         HaoResult result = (HaoResult) dataList.get(position);
         holder.textPoint.setText(result.findAsString("goodsPrice") + "星星");
 //        ImageLoader.getInstance().displayImage(result.findAsString("goodsImgView"), holder.imagePrize);
-        Glide.with(context)
-                .load(result.findAsString("goodsImgView"))
-                .placeholder(R.drawable.image_default)
-                .crossFade()
-                .into(holder.imagePrize);
+//        Glide.with(context)
+//                .load(result.findAsString("goodsImgView"))
+//                .placeholder(R.drawable.image_default)
+//                .crossFade()
+//                .into(holder.imagePrize);
         return convertView;
     }
 

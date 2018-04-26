@@ -5,15 +5,9 @@ import android.os.Build;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
-import com.hyphenate.EMCallBack;
-import com.hyphenate.chat.EMClient;
-import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.base.BaseTitleActivity;
-import com.wt.piaoliuping.manager.HXManager;
 import com.wt.piaoliuping.manager.UserManager;
 
 /**
@@ -52,6 +46,7 @@ public class LaunchActivity extends BaseTitleActivity implements Runnable {
 
     @Override
     public void run() {
+        //  判断快捷登录
         if (UserManager.getInstance().isLogin()) {
             if (TextUtils.isEmpty(UserManager.getInstance().getUserId())) {
                 Intent intent = new Intent(this, LoginActivity.class);

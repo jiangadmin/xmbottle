@@ -22,6 +22,7 @@ import java.util.Map;
  * Created by wangtao on 15/12/21.
  */
 public class HaoConnect {
+    private static final String TAG = "HaoConnect";
 
 //    private static String Clientinfo = "";
 //    private static String Clientversion = "";
@@ -144,7 +145,7 @@ public class HaoConnect {
         if (requestData != null) {
             signMap.putAll(requestData);
         }
-        Map<String, Object> linkMap = new HashMap<String, Object>();
+        Map<String, Object> linkMap = new HashMap<>();
         linkMap.put("link", HaoUtility.httpStringFilter("http://" + HaoConfig.getApiHost() + "/" + urlParam));
         signMap.putAll(linkMap);
         headers.put("Signature", getSignature(signMap));
@@ -155,7 +156,7 @@ public class HaoConnect {
      * 加密算法
      */
     private static String getSignature(Map<String, Object> map) {
-        List<String> tmpArr = new ArrayList<String>();
+        List<String> tmpArr = new ArrayList<>();
         String secret = "";
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             String data = entry.getKey() + "=" + entry.getValue();
@@ -175,11 +176,13 @@ public class HaoConnect {
             Toast.makeText(context, "请先初始化HaoConnect,在程序开始的地方调用init()方法", Toast.LENGTH_SHORT).show();
             return null;
         }
+
         Log.e("wt", "request -> " + urlParam + "  params " + params);
         RequestParams requestParams = new RequestParams();
         if (params != null) {
             for (Map.Entry<String, Object> entry : params.entrySet()) {
                 requestParams.put(entry.getKey(), entry.getValue() + "");
+                Log.e(TAG, entry.getKey() + ":" + entry.getValue());
             }
         }
         return HaoHttpClient.loadContent("http://" + HaoConfig.getApiHost() + "/" + urlParam, requestParams, method, getSecretHeaders(params, urlParam), resonpse, context);
@@ -244,8 +247,7 @@ public class HaoConnect {
 
     public static String getString(String key) {
         try {
-            SharedPreferences sharedPreferences = Ctx.getSharedPreferences("config",
-                    0);
+            SharedPreferences sharedPreferences = Ctx.getSharedPreferences("config", 0);
             return sharedPreferences.getString(key, "");
         } catch (Exception e) {
             Log.e("getStringInfo", e + "");

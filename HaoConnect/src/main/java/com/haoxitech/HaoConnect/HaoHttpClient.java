@@ -28,6 +28,7 @@ import cz.msebera.android.httpclient.ParseException;
  * Created by wangtao on 15/11/25.
  */
 public class HaoHttpClient {
+    private static final String TAG = "HaoHttpClient";
 
     public static AsyncHttpClient client = new AsyncHttpClient();
 
@@ -42,6 +43,11 @@ public class HaoHttpClient {
      */
 
     public static RequestHandle loadContent(String actionUrl, RequestParams params, String Method, Map<String, Object> headers, AsyncHttpResponseHandler response, Context context) {
+
+        Log.e(TAG, "\n请求地址: " + actionUrl);
+        Log.e(TAG, "请求参数: " + params.toString());
+        Log.e(TAG, "请求类型: " + Method);
+        Log.e(TAG, "请求头: " + headers.toString());
 
         RequestHeader[] headersArray = new RequestHeader[0];
         try {

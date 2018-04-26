@@ -13,4 +13,8 @@
     <color name="redColor">#FF7D77</color>
     <color name="transparent">#00ffffff</color>
     <color name="textBlackColor">#4a4a4a</color>
+
+    <color name="gray_3">#333</color>
+    <color name="gray_6">#666</color>
+    <color name="gray_9">#999</color>
 </resources>

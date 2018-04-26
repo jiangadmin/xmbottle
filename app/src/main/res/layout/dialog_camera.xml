@@ -5,58 +5,42 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="300dp"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/photo_bg"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/layout_lib"
+        <Button
+            android:id="@+id/dialog_lib"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/corner_bolder_white_view_bg"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:text="相    册" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="相册"
-                android:textColor="@color/textBlackColor"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_camera"
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/corner_bolder_white_view_bg"
-            android:gravity="center">
+            android:layout_height="0.5dp"
+            android:background="@color/cc" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="拍照"
-                android:textColor="@color/textBlackColor"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_cancel"
+        <Button
+            android:id="@+id/dialog_camera"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/corner_bolder_white_view_bg"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:text="拍    照" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/deepBlueColor"
-                android:textSize="15sp"
-                android:text="取消" />
-        </LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:background="@color/cc" />
 
+        <Button
+            android:id="@+id/dialog_esc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:text="取    消"
+            android:textColor="@color/redColor" />
 
     </LinearLayout>
 

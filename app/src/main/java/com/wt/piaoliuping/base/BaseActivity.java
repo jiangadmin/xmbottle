@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.wt.piaoliuping.R;
+import com.wt.piaoliuping.view.TabToast;
 import com.wt.piaoliuping.widgt.CustomProgressDialog;
 
 import butterknife.ButterKnife;
@@ -33,7 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         initView();
 
         if (emptyImage == null) {
-            emptyImage = (ImageView) findViewById(R.id.no_data);
+            emptyImage =  findViewById(R.id.no_data);
         }
         if (emptyImage != null) {
             emptyImage.setVisibility(View.GONE);
@@ -57,7 +58,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(msg)) {
             return;
         }
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        TabToast.makeText(msg);
     }
 
     public abstract void initView();

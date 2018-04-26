@@ -1,6 +1,7 @@
 package com.wt.piaoliuping;
 
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -77,7 +78,13 @@ public class App extends MultiDexApplication {
     private CallReceiver callReceiver;
     private DemoModel demoModel = null;
 
+    public static boolean LogShow =true;
+
     public HaoResult userInfo = new HaoResult();
+
+    public static Context getInstance(){
+        return app;
+    }
 
     @Override
     public void onCreate() {

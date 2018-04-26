@@ -113,10 +113,10 @@ public class EaseEmojiconPagerView extends ViewPager{
             itemSize = bigEmojiconColumns * bigEmojiconRows;
         }
         int pageSize = totalSize % itemSize == 0 ? totalSize/itemSize : totalSize/itemSize + 1;   
-        List<View> views = new ArrayList<View>();
+        List<View> views = new ArrayList<>();
         for(int i = 0; i < pageSize; i++){
             View view = View.inflate(context, R.layout.ease_expression_gridview, null);
-            GridView gv = (GridView) view.findViewById(R.id.gridview);
+            GridView gv =  view.findViewById(R.id.gridview);
             if(emojiType == Type.BIG_EXPRESSION){
                 gv.setNumColumns(bigEmojiconColumns);
             }else{

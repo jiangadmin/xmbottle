@@ -2,46 +2,40 @@ package com.wt.piaoliuping.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haoxitech.HaoConnect.HaoConnect;
 import com.haoxitech.HaoConnect.HaoResult;
 import com.haoxitech.HaoConnect.HaoResultHttpResponseHandler;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.wt.piaoliuping.App;
 import com.wt.piaoliuping.R;
 import com.wt.piaoliuping.activity.SendBottleActivity;
 import com.wt.piaoliuping.activity.ShowBottleActivity;
 import com.wt.piaoliuping.base.PageFragment;
+import com.wt.piaoliuping.view.TabToast;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * Created by wangtao on 2017/10/25.
  */
 
 public class BottleFragment extends PageFragment {
-    @BindView(R.id.image_head)
-    ImageView imageHead;
-    @BindView(R.id.text_name)
-    TextView textName;
+
     @BindView(R.id.text_no)
     TextView textNo;
-    @BindView(R.id.text_send)
-    TextView textSend;
-    @BindView(R.id.text_received)
-    TextView textReceived;
+
+    @BindView(R.id.bottle_set)
+    ImageView set;
+    @BindView(R.id.bottle_get)
+    ImageView get;
+    @BindView(R.id.bottle_ocr)
+    ImageView ocr;
 
     private boolean inited = false;
 
@@ -62,12 +56,14 @@ public class BottleFragment extends PageFragment {
         return R.layout.fragment_bottle;
     }
 
-    @OnClick(R.id.text_send)
+    //    扔一个
+    @OnClick(R.id.bottle_get)
     public void onTextSendClicked() {
         startActivityForResult(new Intent(getActivity(), SendBottleActivity.class), 1001);
     }
 
-    @OnClick(R.id.text_received)
+    //    捡一个
+    @OnClick(R.id.bottle_set)
     public void onTextReceivedClicked() {
         Map<String, Object> map = new HashMap<>();
 
@@ -89,6 +85,12 @@ public class BottleFragment extends PageFragment {
         }, getActivity());
     }
 
+    @OnClick(R.id.bottle_ocr)
+    public void Ocr() {
+        TabToast.makeText("捡星星");
+    }
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -96,8 +98,8 @@ public class BottleFragment extends PageFragment {
 
 
     private void loadUser() {
-        ImageLoader.getInstance().displayImage(App.app.userInfo.findAsString("avatarPreView"), imageHead, App.app.getImageCircleOptions());
-        textName.setText(App.app.userInfo.findAsString("nickname"));
+//        ImageLoader.getInstance().displayImage(App.app.userInfo.findAsString("avatarPreView"), imageHead, App.app.getImageCircleOptions());
+//        textName.setText(App.app.userInfo.findAsString("nickname"));
 //        textNo.setText("星星：" + App.app.userInfo.findAsString("amount"));
     }
 

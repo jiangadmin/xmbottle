@@ -55,7 +55,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
                                    List<EMConversation> objects) {
         super(context, resource, objects);
         conversationList = objects;
-        copyConversationList = new ArrayList<EMConversation>();
+        copyConversationList = new ArrayList<>();
         copyConversationList.addAll(objects);
     }
 
@@ -85,14 +85,14 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
         ViewHolder holder = (ViewHolder) convertView.getTag();
         if (holder == null) {
             holder = new ViewHolder();
-            holder.name = (TextView) convertView.findViewById(R.id.name);
-            holder.unreadLabel = (TextView) convertView.findViewById(R.id.unread_msg_number);
-            holder.message = (TextView) convertView.findViewById(R.id.message);
-            holder.time = (TextView) convertView.findViewById(R.id.time);
-            holder.avatar = (EaseImageView) convertView.findViewById(R.id.avatar);
+            holder.name =  convertView.findViewById(R.id.name);
+            holder.unreadLabel =  convertView.findViewById(R.id.unread_msg_number);
+            holder.message =  convertView.findViewById(R.id.message);
+            holder.time =  convertView.findViewById(R.id.time);
+            holder.avatar =  convertView.findViewById(R.id.avatar);
             holder.msgState = convertView.findViewById(R.id.msg_state);
-            holder.list_itease_layout = (RelativeLayout) convertView.findViewById(R.id.list_itease_layout);
-            holder.motioned = (TextView) convertView.findViewById(R.id.mentioned);
+            holder.list_itease_layout =  convertView.findViewById(R.id.list_itease_layout);
+            holder.motioned =  convertView.findViewById(R.id.mentioned);
             convertView.setTag(holder);
         }
         holder.list_itease_layout.setBackgroundResource(R.drawable.ease_mm_listitem);
@@ -227,7 +227,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             FilterResults results = new FilterResults();
 
             if (mOriginalValues == null) {
-                mOriginalValues = new ArrayList<EMConversation>();
+                mOriginalValues = new ArrayList<>();
             }
             if (prefix == null || prefix.length() == 0) {
                 results.values = copyConversationList;
@@ -235,7 +235,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             } else {
                 String prefixString = prefix.toString();
                 final int count = mOriginalValues.size();
-                final ArrayList<EMConversation> newValues = new ArrayList<EMConversation>();
+                final ArrayList<EMConversation> newValues = new ArrayList<>();
 
                 for (int i = 0; i < count; i++) {
                     final EMConversation value = mOriginalValues.get(i);

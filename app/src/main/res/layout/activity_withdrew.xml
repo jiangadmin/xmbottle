@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/layout_title" />
@@ -90,7 +91,7 @@
             android:layout_gravity="center_vertical"
             android:visibility="gone"
             android:background="@color/transparent"
-            android:src="@drawable/arrow_right" />
+            android:src="@drawable/ic_in" />
     </LinearLayout>
 
     <TextView
